@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>APR Withdrawal Level Income</header>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>S.N</th>
+                <th>Level</th>
+                <th>Member Count</th>
+                <th>Business</th>
+                <th>Percentage</th>
+                <th>Income</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (income of directs; track income) {
+                <tr>
+                  <td>{{ income.srno }}</td>
+                  <td>{{ income.level }}</td>
+                  <td>{{ income.memberCount }}</td>
+                  <td>{{ income.business }}</td>
+                  <td>{{ income.percentage }}%</td>
+                  <td>{{ income.income }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

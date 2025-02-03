@@ -1,0 +1,108 @@
+<div class="form-group text-center">
+  <b
+    >Sell Price: 1 {{ tokenSymbol }} ~ {{ tokenRate | number: "1.10" }}
+    {{ paymentToken }}</b
+  >
+</div>
+<form #sellForm="ngForm">
+  <div class="form-group">
+    <div class="col-md-12 text-right">
+      Balance: <b>{{ TokenBalance | number: "1.0" }} {{ tokenSymbol }}</b>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-12">
+      <mat-form-field appearance="fill" class="font-size-16">
+        <mat-label>{{ tokenSymbol }} Amount</mat-label>
+        <input
+          matInput
+          name="sellAmount"
+          [(ngModel)]="sellAmount"
+          required
+          #txtTokenAmount="ngModel"
+          type="number"
+          [max]="TokenBalance"
+          (input)="calculateMatic()"
+          class="width-100"
+        />
+      </mat-form-field>
+      <app-validation-message
+        [control]="txtTokenAmount"
+      ></app-validation-message>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="row justify-content-center">
+      <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+        <button class="btn btn-warning" (click)="setAmount(10)">10%</button>
+      </div>
+      <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+        <button class="btn btn-warning" (click)="setAmount(25)">25%</button>
+      </div>
+      <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+        <button class="btn btn-warning" (click)="setAmount(50)">50%</button>
+      </div>
+      <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+        <button class="btn btn-warning" (click)="setAmount(75)">75%</button>
+      </div>
+      <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+        <button class="btn btn-warning" (click)="setAmount(100)">100%</button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <a routerLink="../buy"
+      ><img src="assets/exchange.png" width="20" class="rotate-90"
+    /></a>
+  </div>
+  <div class="form-group">
+    <div class="col-md-12">
+      <mat-form-field appearance="fill" class="font-size-16">
+        <mat-label>{{ paymentToken }} Amount</mat-label>
+        <input
+          matInput
+          name="maticAmount_WithoutDeduction"
+          [(ngModel)]="maticAmount_WithoutDeduction"
+          #txtMaticAmount="ngModel"
+          disabled="true"
+          class="width-100 enabled"
+          type="number"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-12 text-right">
+      Deduction: <b>{{ deductionPercentage }}%</b>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-12">
+      <mat-form-field appearance="fill" class="font-size-16">
+        <mat-label>{{ paymentToken }} Amount Received</mat-label>
+        <input
+          matInput
+          name="maticAmount"
+          [(ngModel)]="maticAmount"
+          #txtMaticAmount="ngModel"
+          disabled="true"
+          class="width-100 enabled"
+          type="number"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-12 text-center">
+      <button
+        mat-raised-button
+        color="primary"
+        class="pl-4 pr-4 pt-1 pb-1"
+        (click)="sell()"
+        [disabled]="sellForm.invalid"
+      >
+        SELL
+      </button>
+    </div>
+  </div>
+</form>

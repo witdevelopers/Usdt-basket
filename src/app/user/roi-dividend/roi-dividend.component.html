@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Earn on Reflection</header>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          @if (earnonReflection.length > 0) {
+            <table class="table table-bordered table-striped panel">
+              <thead>
+                <tr>
+                  <th>S.N</th>
+                  <th>User ID</th>
+                  <th>From User ID</th>
+                  <th>Income</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (EoR of earnonReflection; track EoR) {
+                  <tr>
+                    <td>{{ EoR.srno }}</td>
+                    <td>{{ EoR.userId }}</td>
+                    <td>{{ EoR.fromUserId }}</td>
+                    <td>{{ EoR.income }}</td>
+                    <td>{{ EoR.ondate }}</td>
+                    <td>{{ EoR.onAmount }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+          @if (earnonReflection.length == 0) {
+            <label>No record found</label>
+          }
+        </div>
+      </div>
+
+      <!-- <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover panel">
+          <thead>
+            <tr>
+              <th>Srno</th>
+              <th>UserId</th>
+              <th>From UserId</th>
+              <th>Income</th>
+              <th>Ondate</th>
+              <th>OnAmount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let EoR of earnonReflection">
+              <td>{{EoR.srno}}</td>
+              <td>{{EoR.userid}}</td>
+              <td>{{EoR.fromuserid}}</td>
+              <td>{{EoR.income}}</td>
+              <td>{{EoR.ondate}}</td>
+              <td>{{EoR.onamount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+    </div>
+  </div>
+</div>

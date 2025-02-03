@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Compose</header>
+      </div>
+      <div class="card-body">
+        <!-- Conditionally show User ID input for Admin -->
+
+        <!-- From ID, which is always Admin -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">{{
+            userType === "Admin" ? "From ID" : "TO ID"
+          }}</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              value="Admin"
+              readonly
+              class="form-control"
+              [(ngModel)]="fromUserId"
+              placeholder="Admin"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="isVisible">
+          <div class="form-group row">
+            <label class="col-md-3 control-label">User ID</label>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="toUserId"
+                placeholder="Enter User ID"
+                [ngClass]="{ 'is-invalid': isSubmitted && !toUserId }"
+              />
+              <div *ngIf="isSubmitted && !toUserId" class="text-danger">
+                User ID is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subject Field with Validation -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Subject</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="Subject"
+              placeholder="Enter Subject"
+              [ngClass]="{ 'is-invalid': isSubmitted && !Subject }"
+            />
+            <div *ngIf="isSubmitted && !Subject" class="text-danger">
+              Subject is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Message Field with Validation -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Message</label>
+          <div class="col-md-6">
+            <textarea
+              class="form-control"
+              [(ngModel)]="Message"
+              placeholder="Enter Message"
+              [ngClass]="{ 'is-invalid': isSubmitted && !Message }"
+            ></textarea>
+            <div *ngIf="isSubmitted && !Message" class="text-danger">
+              Message is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group row mb-3">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6 d-flex justify-content-center mb-3">
+            <button class="btn btn-info" (click)="SendMessage()">
+              Send Message
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card card-box">
+            <div class="card-head">
+                <header>Token Sell History</header>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped panel">
+                        <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Token Amount</th>
+                                <th>Deduction</th>
+                                <th>Amount Received</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let income of directs">
+                                <td>{{income.srno}}</td>
+                                <td>{{income.tokenAmount}}</td>
+                                <td>{{income.deduction}}</td>
+                                <td>{{income.amountSentToWallet}}</td>
+                                <td>{{income.ondate }}</td>
+                                <td>{{income.status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

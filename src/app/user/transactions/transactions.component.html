@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Transaction History</header>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover panel">
+            <thead>
+              <tr>
+                <th>Srno</th>
+                <th>{{ paymentToken }} Amount</th>
+                <th>{{ tokenSymbol }} Amount</th>
+                <th>{{ tokenSymbol }} Rate</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (transaction of transactions; track transaction) {
+                <tr>
+                  <td>{{ transaction.Srno }}</td>
+                  <td>{{ transaction.MaticAmount }} {{ paymentToken }}</td>
+                  <td>{{ transaction.TokenAmount }} {{ tokenSymbol }}</td>
+                  <td>{{ transaction.Rate }}</td>
+                  <td>{{ transaction.Type }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

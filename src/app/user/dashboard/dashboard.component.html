@@ -1,0 +1,462 @@
+<marquee *ngIf="!isAdmin" behavior="scroll" direction="left" class="news-marquee">
+  Moneta World Moneta World Moneta World Moneta World Moneta World Moneta World Moneta World Moneta World
+</marquee>
+
+
+<div id="divDashboardContainer" *ngIf="userInfo">
+  <div class="row">
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/04.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">My Directs</h5>
+              <div class="text-center">
+                <span class="progress-description">{{
+                  userInfo?.totalDirects }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/04.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Directs Business</h5>
+              <div class="text-center">
+                <span class="progress-description">{{userInfo?.directInvestment }} {{paymentToken}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/03.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">My Team</h5>
+              <div class="text-center">
+                <span class="progress-description">{{
+                  userInfo?.totalTeam }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/03.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Team Business</h5>
+              <div class="text-center">
+                <span class="progress-description">{{
+                  userInfo?.teamBusiness }} {{paymentToken}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/07.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Profit Bonus</h5>
+              <div class="text-center">
+                <span class="progress-description"
+                  [ngClass]="{'text-success': userInfo?.roiIncome > 0, 'text-danger': userInfo?.roiIncome < 0, 'text-muted': userInfo?.roiIncome === 0}">{{paymentToken}}{{
+                  userInfo?.roiIncome }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/05.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Direct Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.directIncome }} {{paymentToken}}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/07.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Level Income</h5>
+              <div class="text-center">
+                <span class="progress-description">{{
+                  userInfo?.matrixIncome }} {{paymentToken}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/08.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Community Income</h5>
+              <div class="text-center">
+                <span class="progress-description">{{userInfo?.singleLegIncome }} {{paymentToken}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/07.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Profit Level Bonus</h5>
+              <div class="text-center">
+                <span class="progress-description"
+                  [ngClass]="{'text-success': userInfo?.levelROIIncome > 0, 'text-danger': userInfo?.levelROIIncome < 0, 'text-muted': userInfo?.levelROIIncome === 0}">{{paymentToken}}{{
+                  userInfo?.levelROIIncome }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/008.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Leader Support Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.leadershipIncome }} {{paymentToken}}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Leader Support Fund</h5>
+              <h2 style="    display: flex
+              ;
+                  text-align: center;
+                  flex-direction: column;" class="mb-0">
+                <span class="progress-description">
+                  {{ userInfoT3?.totalWeeklyBusiness }} {{ paymentToken }}
+                </span>
+                <div class="countdown-timer">
+                  <span>{{ timeLeftDays }}</span> :
+                  <span>{{ timeLeftHours }}</span> :
+                  <span>{{ timeLeftMinutes }}</span> :
+                  <span>{{ timeLeftSeconds }}</span>
+                </div>
+              </h2>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/008.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Rank</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.rank }} </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/08.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Total Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.totalIncome }} {{paymentToken}}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/08.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Total withdrawal</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.userWithdrawnAmount }} {{paymentToken}}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/008.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Deposit</h5>
+              <div class="text-center">
+                <span class="progress-description">
+                  {{ userInfo?.packageValue }} {{paymentToken}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/011.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Wallet Balance</h5>
+              <div class="text-center">
+                <span class="progress-description">
+                  {{ userInfo?.walletBalance }} {{paymentToken}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/011.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Deposit Wallet</h5>
+              <div class="text-center">
+                <span class="progress-description"
+                  [ngClass]="{'text-success': userInfo?.walletBalance_Cash > 0, 'text-danger': userInfo?.walletBalance_Cash < 0, 'text-muted': userInfo?.walletBalance_Cash === 0}">
+                  {{paymentToken}}{{ userInfo?.walletBalance_Cash }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+  </div>
+</div>
+
+
+
+<!-- -----------------------------------------card up side------------------------- -->
+<div *ngIf="!isAdmin" class="w-auto">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card border-radius-8 p-2 shadow">
+        <label><b>Referral Link</b></label>
+        <label id="lblReferralLink" class="form-control font-size-12 overflow-auto">
+          {{ website }}/auth/register/{{ userAddress }}
+        </label>
+        <div class="form-group1 row">
+
+          <div class="col-md-6 col-6 text-right">
+            <button onclick="CopyToClipboard('lblReferralLink'); return false;" mat-raised-button
+              class="btn-custom-color left">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card for Wallet Address -->
+    <div class="col-sm-6 ">
+      <div class="card border-radius-8 p-2 shadow">
+        <label><b>Sponsor Address</b></label>
+        <label id="sponsorUserId" class="form-control font-size-12 overflow-auto">
+          {{ userInfo?.sponsorUserId }}
+        </label>
+        <div class="form-group1 row">
+
+          <div class="col-md-6 col-6 text-right">
+            <!-- <button style="color: black !important;" onclick="CopyToClipboard('sponsorUserId'); return false;"
+              mat-raised-button class="btn-custom-color left">Copy</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card for Smart Contract Address -->
+    <div class="col-sm-12" style="display: none;">
+      <div class="card p-2 shadow border-radius-8">
+        <label><b>Smart Contract Address</b></label>
+        <label id="lblSmartContractAddress" class="form-control font-size-12 overflow-auto">
+          {{ contractAddress }}
+        </label>
+        <div class="form-group1 row">
+          <div class="col-md-6 col-12">
+            <a id="aSmartContractLink" href="{{ blockchainExplorer }}/address/{{ contractAddress }}#code"
+              target="_blank" mat-raised-button class="btn-custom-color-2 float">Open</a>
+          </div>
+          <div class="col-md-6 col-6 text-right">
+            <button onclick="CopyToClipboard('lblSmartContractAddress'); return false;" mat-raised-button
+              class="btn-custom-color left">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-6 " style="margin-top: 15px;">
+      <div class="card p-2 shadow border-radius-8">
+        <label><b>Level 2*2</b></label>
+        <div class="form-group1 row">
+          <div class="table-responsive mt-3">
+            <table *ngIf="userInfoT4.length > 0" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Count</th>
+                  <th>Income</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of userInfoT4">
+                  <td>{{ item.level }}</td>
+                  <td>{{ item.count }}</td>
+                  <td>{{ item.income }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-6 " style="margin-top: 15px;">
+      <div class="card p-2 shadow border-radius-8">
+        <label><b>Community Member</b></label>
+        <div class="form-group1 row">
+          <div class="table-responsive mt-3">
+            <table *ngIf="userInfoT2.length > 0" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>User ID</th>
+                  <th>Investment Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of userInfoT2;">
+                  <td>{{ user.level }}</td>
+                  <td>{{ user.userId }}</td>
+                  <td>{{ user.investmentAmount | currency:'USD':'symbol':'1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="userInfoT2.length === 0">
+              <p>No data available.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

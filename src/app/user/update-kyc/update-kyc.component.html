@@ -1,0 +1,205 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>KYC Submission</header>
+      </div>
+
+      <div class="card-body">
+        <form
+          #kycForm="ngForm"
+          (ngSubmit)="submitKYC()"
+          class="user-form"
+          *ngIf="kycData.length <= 0"
+        >
+          <div *ngIf="userType === 'Admin'" class="form-group row">
+            <label class="col-md-3 control-label">User ID</label>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="userId"
+                placeholder="Enter User ID for KYC"
+                name="userId"
+                required
+              />
+              <div
+                [ngClass]="{
+                  'text-danger':
+                    kycForm.controls['userId']?.touched &&
+                    kycForm.controls['userId']?.invalid,
+                }"
+                *ngIf="
+                  kycForm.controls['userId']?.touched &&
+                  kycForm.controls['userId']?.invalid
+                "
+              >
+                User ID is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label">Pancard No</label>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="pancardNo"
+                placeholder="Enter Pancard Number"
+                name="pancardNo"
+                required
+              />
+              <div
+                [ngClass]="{
+                  'text-danger':
+                    kycForm.controls['pancardNo']?.touched &&
+                    kycForm.controls['pancardNo']?.invalid,
+                }"
+                *ngIf="
+                  kycForm.controls['pancardNo']?.touched &&
+                  kycForm.controls['pancardNo']?.invalid
+                "
+              >
+                Pancard No is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label">Pan Name</label>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="panName"
+                placeholder="Enter PAN Card Name"
+                name="panName"
+                required
+              />
+              <div
+                [ngClass]="{
+                  'text-danger':
+                    kycForm.controls['panName']?.touched &&
+                    kycForm.controls['panName']?.invalid,
+                }"
+                *ngIf="
+                  kycForm.controls['panName']?.touched &&
+                  kycForm.controls['panName']?.invalid
+                "
+              >
+                Pan Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label">Aadhaar No</label>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="aadhaarNo"
+                placeholder="Enter Aadhaar Number"
+                name="aadhaarNo"
+                required
+              />
+              <div
+                [ngClass]="{
+                  'text-danger':
+                    kycForm.controls['aadhaarNo']?.touched &&
+                    kycForm.controls['aadhaarNo']?.invalid,
+                }"
+                *ngIf="
+                  kycForm.controls['aadhaarNo']?.touched &&
+                  kycForm.controls['aadhaarNo']?.invalid
+                "
+              >
+                Aadhaar No is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label">Aadhaar Name</label>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="aadhaarName"
+                placeholder="Enter Aadhaar Name"
+                name="aadhaarName"
+                required
+              />
+              <div
+                [ngClass]="{
+                  'text-danger':
+                    kycForm.controls['aadhaarName']?.touched &&
+                    kycForm.controls['aadhaarName']?.invalid,
+                }"
+                *ngIf="
+                  kycForm.controls['aadhaarName']?.touched &&
+                  kycForm.controls['aadhaarName']?.invalid
+                "
+              >
+                Aadhaar Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="kycForm.invalid"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+
+        <!-- Message indicating that KYC data already exists -->
+        <div *ngIf="kycData.length > 0" class="alert alert-warning text-center">
+          <strong
+            >Multiple KYC records found. Input fields are disabled.</strong
+          >
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <!-- Check if kycData has items -->
+        <div *ngIf="kycData.length > 0">
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>SR No.</th>
+                <th>Request ID</th>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Aadhar Card No</th>
+                <th>PAN Card No</th>
+                <th>Requested Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of kycData">
+                <td>{{ item.srno }}</td>
+                <td>{{ item.requestId }}</td>
+                <td>{{ item.userId }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.aadharCardNo }}</td>
+                <td>{{ item.panCardNo }}</td>
+                <td>{{ item.requestedDate | date: "short" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Display message when no KYC data is available -->
+        <div *ngIf="kycData.length <= 0">
+          <label>{{ noDataMessage }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

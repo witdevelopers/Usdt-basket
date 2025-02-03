@@ -1,0 +1,21 @@
+.card-head{
+  padding: 0px !important;
+}
+
+.active{
+  background-color:transparent;
+}
+
+.no-margin{
+  margin-top: 0px !important;
+  margin-left: 0px !important;
+  margin-bottom: 0px !important;
+  margin-right: 0px !important;
+}
+
+.nav-link{
+  color:#fff;
+}
+.text-right{
+  color:#fff;
+}

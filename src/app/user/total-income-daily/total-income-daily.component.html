@@ -1,0 +1,128 @@
+<div class="container mt-5">
+  <div class="card card-box">
+    <div class="card-head">
+      <header>Total Income (Daily)</header>
+    </div>
+    <div class="card-body">
+      <!--Add this in the below class for visibility property:- *ngIf="isVisible" -->
+      <div class="form-group row">
+        <label class="col-md-3 control-label">User Id</label>
+        <div class="col-md-6">
+          <input
+            [(ngModel)]="userId"
+            type="text"
+            class="form-control"
+            [readonly]="isReadOnly"
+            placeholder="Enter User ID"
+          />
+        </div>
+      </div>
+
+      <!-- Slots Dropdown -->
+      <div class="form-group row">
+        <label class="col-md-3 control-label">Select Slot</label>
+        <div class="col-md-6">
+          <select
+            [(ngModel)]="selectedPayoutNo"
+            (ngModelChange)="onSlotChange()"
+            class="form-control"
+            *ngIf="slots.length > 0"
+          >
+            <option *ngFor="let slot of slots" [value]="slot.payoutNo">
+              {{ slot.slot }}
+            </option>
+          </select>
+          <p *ngIf="slots.length === 0" class="text-danger">Loading slots...</p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-group row text-center">
+        <!-- Centered "View Details" Button -->
+        <div class="col-md-12">
+          <button
+            class="btn btn-info view-details-btn"
+            (click)="getTotalIncomeDaily()"
+          >
+            View Details
+          </button>
+        </div>
+
+        <!-- Smaller Pagination Buttons Below -->
+        <div class="col-md-12">
+          <button
+            class="btn btn-info pagination-btn me-2"
+            (click)="OnPreviousClick()"
+            [disabled]="pageNo <= 1"
+          >
+            Previous
+          </button>
+          <span class="mx-2">Page {{ pageNo }} of {{ pageCount }}</span>
+          <button
+            class="btn btn-info pagination-btn"
+            (click)="OnNextClick()"
+            [disabled]="!hasNextPage"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <!-- Table for displaying income data -->
+      <div *ngIf="paginatedData.length > 0">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Payout No</th>
+              <th>Date Range</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Binary Income</th>
+              <th>Level Income</th>
+              <th>Roi Income</th>
+              <th>Net Income</th>
+              <th>Paid Status</th>
+              <th>Amount Paid</th>
+              <th>Balance Amount</th>
+              <th *ngIf="isAdmin">Action</th>
+              <!-- New column for the "Pay" button -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of paginatedData; let i = index">
+              <td>{{ (pageNo - 1) * pageSize + i + 1 }}</td>
+              <td>{{ data.payoutNo }}</td>
+              <td>{{ data.dateRange }}</td>
+              <td>{{ data.userId }}</td>
+              <td>{{ data.name }}</td>
+              <td>{{ data["binary Income"] }}</td>
+              <td>{{ data["level Income"] }}</td>
+              <td>{{ data["roi Income"] }}</td>
+              <td>{{ data["net Income"] }}</td>
+              <td>{{ data.paidStatus }}</td>
+              <td>{{ data.amountPaid }}</td>
+              <td>{{ data.balanceAmount }}</td>
+              <td *ngIf="isAdmin">
+                <!-- Pay Button -->
+                <button
+                  class="btn btn-success btn-sm"
+                  (click)="
+                    onPayClick(data.userId, data.payoutNo, data.balanceAmount)
+                  "
+                >
+                  Pay
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Error Message if No Data -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+/* Tree Container */
+#treeContainer {
+  width: 100%;
+  height: 400px;
+  border: 1px solid #ccc; /* Light grey border */
+  background-color: #f9f9f9; /* Light background */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Inner spacing */
+  overflow: auto; /* Scroll if content overflows */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Tooltip Styles */
+.tooltip {
+  position: absolute; /* Absolute positioning */
+  text-align: center; /* Center the text */
+  width: auto; /* Auto width */
+  background-color: #fff; /* White background */
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Inner spacing */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  z-index: 1000; /* Ensure it appears above other elements */
+  transition: opacity 0.2s ease-in-out; /* Smooth transition for fade in/out */
+  opacity: 0; /* Start hidden */
+}
+
+/* Tooltip Table Styles */
+.tooltip table {
+  border-collapse: collapse; /* Collapses borders */
+  width: 200px; /* Fixed width for the table */
+  margin: 0; /* No margin */
+}
+
+.tooltip th {
+  background-color: #f2f2f2; /* Light grey background for headers */
+  text-align: left; /* Align text to the left */
+  padding: 8px; /* Inner padding for headers */
+  font-weight: bold; /* Bold text for headers */
+}
+
+.tooltip td {
+  padding: 8px; /* Inner padding for table cells */
+  border-bottom: 1px solid #ddd; /* Light grey border for rows */
+  font-size: 14px; /* Font size for data */
+}
+
+.tooltip tr:last-child td {
+  border-bottom: none; /* Remove border from last row */
+}
+
+/* Node Styles */
+.node {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Align children in a column */
+  align-items: center; /* Center items horizontally */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.node circle {
+  stroke: #5c5c5c; /* Darker stroke for circles */
+  stroke-width: 2; /* Circle stroke width */
+  fill: #e7e7e7; /* Light fill color */
+  transition: fill 0.3s ease; /* Smooth fill transition */
+}
+
+/* Change fill on hover */
+.node:hover circle {
+  fill: #d0d0d0; /* Darker fill on hover */
+}
+
+/* Node Text Styles */
+.node text {
+  font-size: 14px; /* Font size for node text */
+  fill: #333; /* Dark text color */
+}
+
+/* Link Styles */
+.link {
+  fill: none; /* No fill */
+  stroke: #ccc; /* Light grey stroke */
+  stroke-width: 2; /* Stroke width */
+}

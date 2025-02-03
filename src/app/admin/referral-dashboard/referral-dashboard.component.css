@@ -1,0 +1,325 @@
+.widget-section {
+  margin: 0 0 20px 0;
+  padding: 16px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-gradient-danger {
+  background: #e3e3e3; /* Set solid background color */
+  height: 200px;
+  border: 1px solid rgba(204, 204, 204, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.widget-card {
+  border-radius: 28px;
+  box-shadow: 6px 11px 41px -28px rgba(169, 157, 231, 0.5);
+  width: calc(25% - 20px); /* 4 cards per row, adjust for spacing */
+  width: 100%;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  background: #ffffff; /* Set solid background color */
+}
+
+.widget-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 8px 14px 51px -24px rgba(169, 157, 231, 0.6);
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.infobox-icon {
+  display: flex;
+  /* justify-content: center;
+    align-items: center; */
+}
+
+.infobox-icon img {
+  width: 55px;
+  margin: 10px 0;
+}
+
+h6.font-weight-normal a {
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+h6.font-weight-normal a:hover {
+  color: #d3cedf; /* Lighten color on hover */
+}
+
+.progress-description {
+  font-size: 16px;
+  padding-top: 7px;
+  font-weight: 700;
+}
+
+.marquee-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.infobox-data h5 {
+  color: #000 !important;
+  font-size: 15px;
+  font-weight: 800 !important;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding-top: 0;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 3px;
+}
+
+.infobox-data h2 {
+  font-size: 24px;
+  color: #000;
+}
+
+.mat-raised-button {
+  cursor: pointer;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition:
+    background 0.4s,
+    box-shadow 0.3s;
+}
+
+.mat-raised-button:hover {
+  background: rgba(16, 236, 218, 0.7);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Timer CSS */
+.counter {
+  width: 70px;
+  height: 70px;
+  background: #eb9a03; /* Change to neutral color */
+  text-align: center;
+  border-radius: 50%;
+  padding-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.counter p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.button {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.to20 {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box {
+  animation: animName 2s linear infinite;
+}
+
+@keyframes animName {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.sarcal {
+  width: 490px;
+  margin: 30px auto;
+  position: relative;
+}
+
+.box2 {
+  animation: inherit;
+}
+
+@media (max-width: 767px) {
+  .sarcal {
+    width: 320px;
+    margin: 30px auto;
+  }
+
+  .app-content {
+    padding: 30px 0;
+  }
+}
+
+.sarcal img {
+  display: block;
+  width: 100%;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+  margin: 0 auto;
+  border-radius: 0;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #4a4a4a; /* Changed golden color to gray */
+  border-radius: 20px !important;
+  padding: 8px 14px !important;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #3a3a3a; /* Darken color on hover */
+}
+
+#btnMint {
+  background: transparent;
+  border: none;
+}
+
+.table-border {
+  border: 1px solid black;
+}
+
+@media (max-width: 768px) {
+  #divDashboardContainer .widget-card {
+    padding: 10px; /* Adjust as necessary */
+  }
+
+  #divDashboardContainer .infobox-icon img {
+    width: 50px; /* Adjust image size as necessary */
+  }
+}
+p {
+  color: black !important;
+}
+
+span {
+  color: black !important;
+}
+
+/* Card styles */
+.card {
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Form controls inside cards */
+.form-control {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  font-size: 12px;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+/* Button styles */
+.btn-custom-color {
+  background-color: #007bff; /* Custom button color */
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom-color:hover {
+  background-color: #0056b3;
+}
+
+/* Font and text styles */
+.font-size-12 {
+  font-size: 12px;
+}
+
+label b {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Ensure layout adjusts properly on small screens */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 20px; /* Space between stacked cards on small screens */
+  }
+}
+
+/* Spacing for form groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Remove padding for better alignment */
+.form-group1 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Flex alignment for button row */
+.form-group1.row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Remove margins for smaller views */
+@media (max-width: 768px) {
+  mat-sidenav-content.content {
+    margin-left: 0 !important; /* Use !important if necessary */
+  }
+  .widget-card {
+    width: 100% !important; /* Change to 1 card per row on smaller devices */
+  }
+}
+
+.infobox {
+  display: flex; /* Enable flexbox */
+  align-items: center; /* Align items vertically in the center */
+  padding: 16px; /* Optional: Add padding for spacing */
+}
+
+.infobox-icon {
+  margin-right: 16px; /* Space between icon and text */
+}
+
+.infobox-icon img {
+  max-width: 50px; /* Adjust icon size as necessary */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.infobox-data {
+  flex-grow: 1; /* Allow text area to take remaining space */
+}

@@ -1,0 +1,19 @@
+.mat-option-text {
+  color: #000;
+}
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background: rgb(0 0 0 / 94%);
+}
+.mat-focus-indicator span {
+  color: #000;
+}
+.card-head{
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+mat-label{
+  color: #000;
+}

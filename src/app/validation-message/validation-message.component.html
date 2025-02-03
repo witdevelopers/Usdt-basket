@@ -1,0 +1,22 @@
+@if (control && control.errors && (control.dirty || control.touched)) {
+  <div class="text-danger">
+    @if (control.errors.required) {
+      <div>This field is required.</div>
+    }
+    @if (control.errors.min) {
+      <div>Minimum value should be {{ control.errors.min.min }}.</div>
+    }
+    @if (control.errors.max) {
+      <div>Maximum value should be {{ control.errors.max.max }}.</div>
+    }
+    @if (control.errors.email) {
+      <div>Invalid email!</div>
+    }
+    @if (control.errors.mobile) {
+      <div>Invalid mobile number!</div>
+    }
+    @if (control.errors.confirmPassword) {
+      <div>{{ control.errors.confirmPassword }}</div>
+    }
+  </div>
+}

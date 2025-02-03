@@ -1,0 +1,168 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>View Allotted Pin(s)</header>
+      </div>
+      <div class="card-body">
+        <div class="grid-7">
+          <h6>
+            <span class="error-message"></span>
+          </h6>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-1 control-label"></label>
+          <div class="col-md-11">
+            <table style="width: 100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <input type="radio" name="pinType" id="pintome" value="ToUser" (change)="onPinTypeChange('ToUser')"
+                      checked />
+                    <label for="pintome">Pins To Me</label>
+                  </td>
+                  <td>
+                    <input type="radio" name="pinType" id="pinbyme" value="ByUser"
+                      (change)="onPinTypeChange('ByUser')" />
+                    <label for="pinbyme">Pins By Me</label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="isVisible">
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="filterInput">User ID:</label>
+            <div class="col-md-6">
+              <input
+                id="filterInput"
+                type="text"
+                class="form-control"
+                [(ngModel)]="adminUserId"
+                placeholder="Enter User ID"
+                [ngClass]="{ 'is-invalid': isSubmitted && !adminUserId && userType !== 'Admin' }" 
+                [readonly]="userType === 'User'" 
+              />
+            </div>
+          </div>
+        </div>
+        
+        
+
+        <div *ngIf="isPinsToUser" class="form-group row">
+          <label class="col-md-3 control-label">Alloted or Transferred</label>
+          <div class="col-md-6">
+            <select class="form-control" [(ngModel)]="allotedType">
+              <option selected value="All">All</option>
+              <option value="Allotted">Allotted Only</option>
+              <option value="Transferred">Transferred Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Pin Number</label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" [(ngModel)]="pinNumber" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input type="date" class="form-control" [(ngModel)]="toDate" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Status</label>
+          <div class="col-md-6">
+            <select class="form-control" [(ngModel)]="status">
+              <option selected value="-1">All</option>
+              <option value="0">Unused</option>
+              <option value="1">Used</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6">
+            <input type="submit" value="View Details" class="btn btn-info" (click)="viewDetails()" />
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table *ngIf="pinDetails.length > 0" class="table table-bordered table-striped panel">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Full Pin No</th>
+              <th>Pin Password</th>
+              <th>Pin Value</th>
+              <th>Pin Value Paid</th>
+              <th>Balance Value</th>
+              <th>On Date</th>
+              <th>Used By</th>
+              <th>Used Name</th>
+              <th>Used On</th>
+              <th *ngIf="isVisible">Allotted By</th>
+              <th *ngIf="isVisible">Delete Pin</th>
+              <th>Topup Here</th>
+              <th>Register Here</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pin of pinDetails">
+              <td>{{ pin.srno }}</td>
+              <td>{{ pin.userId }}</td>
+              <td>{{ pin.name }}</td>
+              <td>{{ pin.description }}</td>
+              <td>{{ pin.fullPinNo }}</td>
+              <td>{{ pin.pinPassword }}</td>
+              <td>{{ pin.pinValue }}</td>
+              <td>{{ pin.pinValuePaid }}</td>
+              <td>{{ pin.balanceValue }}</td>
+              <td>{{ pin.ondate | date : "medium" }}</td>
+              <td>{{ pin.usedby }}</td>
+              <td>{{ pin.usedName }}</td>
+              <td>{{ pin.usedOn | date : "medium" }}</td>
+              <td *ngIf="isVisible">{{ pin.allottedBy }}</td>
+
+              <!-- Pass pin.fullPinNo and pin.pinPassword to deletePin method -->
+              <td>
+                <button *ngIf="isVisible && pin.usedFlag === false" (click)="deletePin(pin.fullPinNo, pin.pinPassword)"
+                  class="btn btn-danger">
+                  Delete Pin
+                </button>
+              </td>
+
+              <td>
+                <button *ngIf="!pin.usedby" (click)="topupPin(pin)" class="btn btn-primary">
+                  Topup Here
+                </button>
+              </td>
+              <td>
+                <button *ngIf="!pin.usedby" (click)="registerPin(pin)" class="btn btn-success">
+                  Register Here
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="DataMessage" *ngIf="noDataMessage">
+          <label>{{ noDataMessage }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

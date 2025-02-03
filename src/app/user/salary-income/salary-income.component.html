@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Salary Income</header>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>S.N</th>
+                <th>Rank</th>
+                <th>Income (MTA)</th>
+                <th>USD Value</th>
+                <th>MTA Rate</th>
+                <th>On Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (income of directs; track income) {
+                <tr>
+                  <td>{{ income.srno }}</td>
+                  <td>{{ income.rankName }}</td>
+                  <td>{{ income.income }}</td>
+                  <td>{{ income.usdValue }}</td>
+                  <td>{{ income.rate }}</td>
+                  <td>{{ income.onDate }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

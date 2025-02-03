@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Package</header>
+      </div>
+
+      <div class="card-body">
+        <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" class="user-form">
+          <!-- User Id -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="userIdForTopup">User ID</label>
+            <div class="col-md-6">
+              <input type="text" placeholder="User ID" id="userIdForTopup" class="form-control" name="userIdForTopup"
+                [(ngModel)]="userIdForTopup" (blur)="onUserIdChange()" #userIdInput="ngModel" required [ngClass]="{
+                  'is-invalid':
+                    (userIdInput.touched || isSubmitted) && userIdInput.invalid,
+                }" />
+              <!-- Error message -->
+              <div class="error-message text-danger" *ngIf="
+                  (userIdInput.touched || isSubmitted) &&
+                  userIdInput.errors?.['required']
+                ">
+                User ID is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- User Name -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="userName">User Name</label>
+            <div class="col-md-6">
+              <input type="text" id="userName" class="form-control" name="userName" [value]="fullName" readonly />
+            </div>
+          </div>
+
+          <!-- Select Package -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="package">Select Package</label>
+            <div class="col-md-6">
+              <select id="package" class="form-control" name="package" ngModel required
+                (change)="onPackageChange($event)" #packageSelect="ngModel" [ngClass]="{
+                  'is-invalid':
+                    (packageSelect.touched || isSubmitted) &&
+                    packageSelect.invalid,
+                }">
+                <option value="" disabled selected>Select a package</option>
+                <option *ngFor="let pkg of packages" [value]="pkg.srno">
+                  {{ pkg.description }} - {{ pkg.value }}
+                </option>
+              </select>
+
+              <!-- Error message -->
+              <div class="text-danger" *ngIf="
+                  (packageSelect.touched || isSubmitted) &&
+                  packageSelect.invalid
+                ">
+                Package selection is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Amount -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="amount">Amount</label>
+            <div class="col-md-6">
+              <input type="text" id="amount" class="form-control" name="amount" [(ngModel)]="amount" required
+                placeholder="Enter the Amount" [readonly]="!selectedPackage?.hasRange" [min]="selectedPackage?.minRange"
+                [max]="selectedPackage?.maxRange" (input)="validateAmount()"
+                [ngClass]="{ 'is-invalid': !isAmountValid }" />
+              <!-- Error message -->
+              <div *ngIf="!isAmountValid" class="text-danger">
+                Please enter an amount between
+                {{ selectedPackage?.minRange }} and
+                {{ selectedPackage?.maxRange }}.
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="isVisible" class="form-group row">
+            <label class="col-md-3 control-label" for="wallet">Select Wallet</label>
+            <div class="col-md-6">
+              <select class="form-control" name="wallet" [(ngModel)]="selectedWallet" (change)="onWalletChange()"
+                [disabled]="wallets.length === 1">
+                <option *ngFor="let w of wallets" [value]="w.srno">
+                  {{ w.walletName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Available Balance -->
+          <div *ngIf="isVisible" class="form-group row">
+            <label class="col-md-3 control-label" for="balance">Available Balance</label>
+            <div class="col-md-6">
+              <input type="text" id="balance" class="form-control" name="balance"
+                [value]="paymentToken + ' ' + mainWalletBal" readonly />
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-info" [ngClass]="{ highlighted: userForm.valid }">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

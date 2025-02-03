@@ -1,0 +1,47 @@
+<form #buyForm="ngForm">
+    <div class="form-group">
+      <div class="col-md-12">
+        <mat-form-field appearance="fill" class="font-size-16">
+          <mat-label>XRP Amount</mat-label>
+          <input
+            matInput
+            id="txtAmount"
+            name="Amount"
+            [(ngModel)]="Amount"
+            required
+            #txtAmount="ngModel"
+            type="number"
+            class="width-100"
+            [min]="selectedPackage?.minRange ?? 0"
+            (change)="calculateTokens()" />
+        </mat-form-field>
+        <app-validation-message [control]="txtAmount"></app-validation-message>
+      </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+          <mat-form-field appearance="fill" class="width-100">
+            <mat-label>Select Package</mat-label>
+            <mat-select [(value)]="selectedPackage" (selectionChange)="onPackageChange()">
+              <mat-option *ngFor="let pack of packages" [value]="pack">
+                {{ pack.description }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>      
+    <div class="form-group">
+      <div class="col-md-12 text-center">
+        <button
+          mat-raised-button
+          color="primary"
+          class="btn btn-info"
+          (click)="buy()"
+          [disabled]="buyForm.invalid"
+        >
+          Re-invest
+        </button>
+      </div>
+    </div>
+  </form>
+  

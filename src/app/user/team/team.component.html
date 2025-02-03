@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Team Details</header>
+      </div>
+
+      <div class="card-body">
+        <div *ngIf="isVisible">
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="filterInput">User ID:</label>
+            <div class="col-md-6">
+              <input id="filterInput" type="text" class="form-control" [(ngModel)]="filterUserId"
+                placeholder="Enter User ID" [ngClass]="{ 'is-invalid': isSubmitted && !filterUserId }" />
+              <!-- Error message -->
+              <div *ngIf="isSubmitted && !filterUserId" class="text-danger">
+                User ID is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="filterLevel">Level:</label>
+          <div class="col-md-6">
+            <input id="filterLevel" type="number" class="form-control" [(ngModel)]="level" placeholder="Enter Level" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="startDate" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="endDate" class="form-control" />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button mat-raised-button class="btn btn-info" (click)="onSearchClick()">
+            View
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-center mt-3" *ngIf="filteredTeam.length > 0">
+          <button mat-raised-button class="primary" (click)="OnPreviousClick(); ">
+            Prev
+          </button>
+          <button mat-raised-button class="primary" (click)="OnNextClick();">
+            Next
+          </button>
+        </div>
+
+        <div class="table-responsive mt-3">
+          @if (filteredTeam.length > 0) {
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>S.N.</th>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Sponsor UserId</th>
+                <th>Sponsor Name</th>
+                <th>Joining Date</th>
+                <th>Mobile No.</th>
+                <th>Email Id</th>
+                <th>Deposit Date</th>
+                <th>Deposit Amount</th>
+                <th>Total Team</th>
+                <th>Active Team</th>
+                <th>Team Business</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredTeam; trackBy: trackByFn">
+                <td>{{ user.srno }}</td>
+                <td>{{ user.userId }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user["sponsor UserId"] }}</td>
+                <td>{{ user["sponsor Name"] }}</td>
+                <td>{{ user["joining Date"] }}</td>
+                <td>{{ user.mobile }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user["gsy Date"] }}</td>
+                <td>{{ user["gsy Amount"] }}</td>
+                <td>{{ user["total Team"] }}</td>
+                <td>{{ user["activeTeam"] }}</td>
+                <td>{{ user["team Business"] }}</td>
+                <td>{{ user.level }}</td>
+              </tr>
+            </tbody>
+          </table>
+          }
+        </div>
+        <div class="text-center ">
+          <label>{{ message }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

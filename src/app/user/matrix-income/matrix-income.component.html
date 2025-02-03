@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Level Income</header>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isAdmin">
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="filterInput">User ID:</label>
+            <div class="col-md-6">
+              <input id="filterInput" type="text" class="form-control" [(ngModel)]="filterUserId"
+                placeholder="Enter User ID" [ngClass]="{ 'is-invalid': isSubmitted && !filterUserId }" />
+              <!-- Error message -->
+              <div *ngIf="isSubmitted && !filterUserId" class="text-danger">
+                User ID is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="startDate" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="endDate" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group row mb-3">
+          <!-- 'mb-3' is roughly 1rem or 16px -->
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6 d-flex justify-content-center mb-3">
+            <button class="btn btn-info" (click)="getDirectIncome()">
+              View Details
+            </button>
+          </div>
+
+          <div class="d-flex justify-content-center" *ngIf="filteredDirects.length > 0">
+            <div class="d-flex justify-content-center mt-3" *ngIf="filteredDirects.length > 0">
+              <button mat-raised-button class="primary" (click)="OnPreviousClick(); getDirectIncome()">
+                Prev
+              </button>
+              <button mat-raised-button class="primary" (click)="OnNextClick(); getDirectIncome()">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+          @if (filteredDirects.length > 0) {
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>S.N</th>
+                <th>User ID</th>
+                <th>Date</th>
+                <th>Income</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (income of directs; track income) {
+              <tr>
+                <td>{{ income.srno }}</td>
+                <td>{{ income.userId }}</td>
+                <td>{{ income.ondate | date:'dd.MM.yyyy' }}</td>
+                <td>{{ income.income | number:'1.4-4' }}</td>
+                <td>{{ income.level }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          }
+          <div *ngIf="filteredDirects.length <= 0">
+            <label>No data found yet!</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

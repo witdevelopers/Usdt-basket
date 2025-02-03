@@ -1,0 +1,350 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav">
+    <!-- Close button -->
+    <button
+      class="closetop"
+      mat-icon-button
+      (click)="closeSidenav(sidenav)"
+      style="margin: 0 0 0 80%"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <mat-nav-list>
+      <a
+        style="margin: 50px 0 0 0"
+        mat-list-item
+        routerLink="/admin/admin-menu"
+        (click)="closeSidenav(sidenav)"
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 55px;
+          "
+        >
+          <mat-icon class="small-icon">dashboard</mat-icon>
+          Admin Dashboard
+        </div>
+      </a>
+
+      <mat-expansion-panel *ngIf="userType !== 'Admin'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">person</mat-icon>
+            Profile
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/user/profile"
+            (click)="closeSidenav(sidenav)"
+            >Profile</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/change-password"
+            (click)="closeSidenav(sidenav)"
+            >Password</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/update-account-details"
+            (click)="closeSidenav(sidenav)"
+            >Bank Details</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon> attach_money</mat-icon>
+            Crypto
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            *ngIf="userType !== 'Admin'"
+            routerLink="/user/deposit-crypto"
+            (click)="closeSidenav(sidenav)"
+            >Deposit Crypto</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/deposit-crypto-deatils"
+            (click)="closeSidenav(sidenav)"
+            >Deposit Details</a
+          >
+          <!-- <a mat-list-item routerLink="/user/change-password" (click)="closeSidenav(sidenav)">Password</a>
+            <a mat-list-item routerLink="/user/update-account-details" (click)="closeSidenav(sidenav)">Bank Details</a> -->
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">group</mat-icon>
+            Team
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/user/team"
+            (click)="closeSidenav(sidenav)"
+            >Team</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/binary-tree"
+            (click)="closeSidenav(sidenav)"
+            >Binary Tree</a
+          >
+          <!-- *ngIf="isBinary" -->
+          <a
+            mat-list-item
+            routerLink="/user/directs"
+            (click)="closeSidenav(sidenav)"
+            >Referral</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/business-count-details"
+            (click)="closeSidenav(sidenav)"
+            >Business Details</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">card_travel</mat-icon>
+            Package
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/user/topup"
+            (click)="closeSidenav(sidenav)"
+            >Topup</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/topup-by-e-pin"
+            (click)="closeSidenav(sidenav)"
+            >Topup By E-PIN</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/topup-details"
+            (click)="closeSidenav(sidenav)"
+            >Topup Details</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">account_balance_wallet</mat-icon>
+            E-Pin
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/user/view-pin"
+            (click)="closeSidenav(sidenav)"
+            >View Pin</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/transfer-pin"
+            (click)="closeSidenav(sidenav)"
+            >Transfer Pin</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/transfer-pin-details"
+            (click)="closeSidenav(sidenav)"
+            >Transfer Pin Details</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/transfer-pin-statistic"
+            (click)="closeSidenav(sidenav)"
+            >Pin Statistic</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">attach_money</mat-icon>
+            Earning
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            *ngIf="isDirectCommission"
+            mat-list-item
+            routerLink="/user/direct-income"
+            (click)="closeSidenav(sidenav)"
+            >Direct Income</a
+          >
+          <a
+            *ngIf="isBinary"
+            mat-list-item
+            routerLink="/user/matching-income"
+            (click)="closeSidenav(sidenav)"
+            >Matching Income</a
+          >
+          <a
+            *ngIf="isROICommission"
+            mat-list-item
+            routerLink="/user/mining-income"
+            (click)="closeSidenav(sidenav)"
+            >Cashback Bonus</a
+          >
+          <a
+            *ngIf="isLevelROICommission"
+            mat-list-item
+            routerLink="/user/level-roi-income"
+            (click)="closeSidenav(sidenav)"
+            >Level ROI Income</a
+          >
+          <a
+            *ngIf="isLevelCommission"
+            mat-list-item
+            routerLink="/user/level-dividend"
+            (click)="closeSidenav(sidenav)"
+            >Level Income</a
+          >
+          <a
+            *ngIf="isMatrixPlan"
+            mat-list-item
+            routerLink="/user/matrix-income"
+            (click)="closeSidenav(sidenav)"
+            >Matrix Income</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">account_balance</mat-icon>
+            Wallet
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/user/transactions-details"
+            (click)="closeSidenav(sidenav)"
+            >Summary</a
+          >
+          <a
+            *ngIf="userType !== 'Admin'"
+            mat-list-item
+            routerLink="/user/withdraw-amount-mlm"
+            (click)="closeSidenav(sidenav)"
+            >Withdraw</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">sports_esports</mat-icon>
+            Game
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/games/color-game-dashboard"
+            (click)="closeSidenav(sidenav)"
+            >Color Game</a
+          >
+          <a
+            mat-list-item
+            routerLink="/games/spin-game"
+            (click)="closeSidenav(sidenav)"
+            >Spin Game</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="small-icon">help</mat-icon>
+            Support
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/user/compose-tickets"
+            (click)="closeSidenav(sidenav)"
+            >Compose</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/inbox-tickets"
+            (click)="closeSidenav(sidenav)"
+            >Inbox</a
+          >
+          <a
+            mat-list-item
+            routerLink="/user/sent-tickets"
+            (click)="closeSidenav(sidenav)"
+            >Sent</a
+          >
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <a mat-list-item routerLink="/user/news" (click)="closeSidenav(sidenav)">
+        <mat-icon class="small-icon">announcement</mat-icon>
+        News
+      </a>
+    </mat-nav-list>
+
+    <a mat-list-item (click)="logout()">
+      <mat-icon class="small-icon">logout</mat-icon>
+      Logout
+    </a>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <div id="biggerr" class="space-buttton">
+      <button
+        style="font-size: 15px"
+        id="biggerr1"
+        type="button"
+        mat-button
+        (click)="toggleSidenav(sidenav)"
+        class="top-corner-icon"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+    <div class="container">
+      <router-outlet
+        (activate)="showComponents = false"
+        (deactivate)="showComponents = true"
+      ></router-outlet>
+      <app-dashboard *ngIf="showComponents"></app-dashboard>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

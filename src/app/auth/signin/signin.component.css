@@ -1,0 +1,190 @@
+/* General Styles */
+.main-parent-div {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff !important;
+}
+
+/* Right Side (Form Container) */
+.right-side {
+  background: #f89cab !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .right-side {
+    padding: 20px;
+    max-width: 90%;
+  }
+  .main-parent-div {
+    height: 100vh !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5em;
+  }
+
+  .right-side {
+    padding: 15px;
+    max-width: 95%;
+  }
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  color: #ffffff !important; 
+  font-size: 24px; 
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Paragraphs */
+p {
+  color: #ff4c4c;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #fff !important;
+}
+
+/* Input Fields */
+input.form-control {
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+input.form-control:focus {
+  border-color: #537ba7;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Validation Messages */
+.validation-message {
+  font-size: 12px;
+  color: #ff4c4c;
+  margin-bottom: 10px;
+}
+
+/* Forgot Password & Toggle Links */
+.links {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.forgot-password-link,
+.links a {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.forgot-password-link:hover,
+.links a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+/* Submit Button */
+.login-btn {
+  background-color: #537ba7;
+  border: none;
+  border-radius: 4px;
+  padding: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.login-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 10px rgba(0, 91, 179, 0.5);
+}
+
+/* Snowfall Effect (Optional Background Animation) */
+.snow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .main-parent-div {
+    padding: 20px;
+  }
+
+  .right-side {
+    padding: 20px;
+  }
+}
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group-text {
+  height: 31px;
+  cursor: pointer;
+  background-color: black;
+  margin-bottom: 15px;
+  border: none;
+  padding: 0.5rem;
+}
+.mat-icon{
+  color: pink;
+  margin-top: -2px;
+}

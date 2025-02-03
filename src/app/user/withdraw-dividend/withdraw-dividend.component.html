@@ -1,0 +1,77 @@
+<form #withdrawForm=ngForm>
+    <style>
+        .mat-focus-indicator span {
+            color: #000;
+        }
+    </style>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <div class="card card-box">
+                <div class="card-head">
+                    <header>Withdraw</header>
+                </div>
+                <div class="card-body">
+
+                    <div *ngIf="wallets.length !== 1" class="form-group">
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" class="font-size-16">
+                                <mat-label>Select Wallet</mat-label>
+                                <mat-select name="wallet" [(ngModel)]="selectedWallet" (change)="onWalletChange()">
+                                    <mat-option *ngFor="let w of wallets" [value]="w.srno">{{ w.walletName }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <app-validation-message [control]=txtReceivedAmount></app-validation-message>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12 text-right">
+                            <b>Balance : {{mainWalletBal | number : "1.8"}} {{paymentToken}} </b>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" class="font-size-16">
+                                <mat-label>Amount to Withdraw ({{paymentToken}})</mat-label>
+                                <input matInput name="withdrawalAmount" [(ngModel)]=withdrawalAmount required [min]=0.1
+                                    [max]=mainWalletBal #txtWithdrawalAmount=ngModel class="width-100 enabled" type="number"
+                                    (input)=calculateAmountReceived() />
+
+                                <button mat-button matSuffix class="btn btn-info"
+                                    (click)="$event.stopPropagation(); $event.preventDefault(); max();">
+                                    <span> Max </span>
+                                </button>
+                            </mat-form-field>
+                            <app-validation-message [control]=txtWithdrawalAmount></app-validation-message>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 text-right">
+                            <b> Re-distribution : {{ info.withdrawalPercentage }}%</b>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <mat-form-field appearance="fill" class="font-size-16">
+                                <mat-label>Amount Received ({{paymentToken}})</mat-label>
+                                <input matInput name="receivedAmount" [(ngModel)]=amountReceived required [min]=0.1
+                                    [max]=balanceDividend #txtReceivedAmount=ngModel class="width-100 enabled"
+                                    type="number" disabled=true />
+                            </mat-form-field>
+                            <app-validation-message [control]=txtReceivedAmount></app-validation-message>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <button mat-raised-button color="primary" class="pl-4 pr-4 pt-1 pb-1" (click)=withdraw()
+                                [disabled]=withdrawForm.invalid>Withdraw</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<app-income-withdrawal-history></app-income-withdrawal-history>

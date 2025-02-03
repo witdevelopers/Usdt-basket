@@ -1,0 +1,136 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Topup E-Pin</header>
+      </div>
+      <div class="card-body">
+        <form
+          #userForm="ngForm"
+          (ngSubmit)="onSubmit(userForm)"
+          class="user-form"
+        >
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="userIdForTopup"
+              >User ID</label
+            >
+            <div class="col-md-6">
+              <input
+                type="text"
+                placeholder="User ID"
+                id="userIdForTopup"
+                class="form-control"
+                name="userIdForTopup"
+                [(ngModel)]="userIdForTopup"
+                (blur)="onUserIdChange($event)"
+                #userIdInput="ngModel"
+                required
+                [ngClass]="{
+                  'is-invalid':
+                    (userIdInput.touched || isSubmitted) && userIdInput.invalid,
+                }"
+              />
+              <!-- Error message -->
+              <div
+                class="error-message text-danger"
+                *ngIf="
+                  (userIdInput.touched || isSubmitted) &&
+                  userIdInput.errors?.['required']
+                "
+              >
+                User ID is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="userName"
+              >User Name</label
+            >
+            <div class="col-md-6">
+              <input
+                type="text"
+                id="userName"
+                class="form-control"
+                name="userName"
+                [(ngModel)]="fullName"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="pinnumber"
+              >Pin Number</label
+            >
+            <div class="col-md-6">
+              <input
+                type="number"
+                id="pinnumber"
+                class="form-control"
+                name="pinnumber"
+                [(ngModel)]="pinnumber"
+                #pinNumberInput="ngModel"
+                required
+                placeholder="Enter the pin number"
+                [ngClass]="{
+                  'is-invalid':
+                    (pinNumberInput.dirty || isSubmitted) &&
+                    pinNumberInput.invalid,
+                }"
+              />
+              <!-- Error message -->
+              <div
+                class="error-message text-danger"
+                *ngIf="
+                  (pinNumberInput.dirty || isSubmitted) &&
+                  pinNumberInput.errors?.['required']
+                "
+              >
+                Pin number is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="pinPassword"
+              >Pin Password</label
+            >
+            <div class="col-md-6">
+              <input
+                type="text"
+                id="pinPassword"
+                class="form-control"
+                name="pinPassword"
+                [(ngModel)]="pinPassword"
+                #pinPasswordInput="ngModel"
+                required
+                placeholder="Enter the pin password"
+                [ngClass]="{
+                  'is-invalid':
+                    (pinPasswordInput.dirty || isSubmitted) &&
+                    pinPasswordInput.invalid,
+                }"
+              />
+              <!-- Error message -->
+              <div
+                class="error-message text-danger"
+                *ngIf="
+                  (pinPasswordInput.dirty || isSubmitted) &&
+                  pinPasswordInput.errors?.['required']
+                "
+              >
+                Pin password is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-info">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

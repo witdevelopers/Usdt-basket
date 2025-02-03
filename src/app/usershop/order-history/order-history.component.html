@@ -1,0 +1,49 @@
+<div class="order-history">
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (!errorMessage && orderHistory.length === 0) {
+    <div class="alert alert-info">
+      <div class="empty-cart">
+        <img
+          src="assets/Shopimg/empty-cart.png"
+          alt="Empty Cart"
+          class="empty-cart-image"
+        />
+        <h2>Your order is empty!</h2>
+        <button class="checkout-cta empty1" routerLink="/home">Shop Now</button>
+      </div>
+    </div>
+  }
+
+  @for (order of orderHistory; track order) {
+    <div class="order-card">
+      <img [src]="order.imageUrl" alt="Order Image" class="order-image" />
+      <div class="order-details">
+        <h3>Order No: {{ order.orderNo }}</h3>
+        <p>Order Date: {{ order.orderDate }}</p>
+        <p>Status: {{ order.singleProductOrderStatus }}</p>
+        <p>Delivery Status: {{ order.isDelivered }}</p>
+        <p>Amount: Rs. {{ order.singleProductOrderPrice }}</p>
+
+        <div class="buttons">
+          <button (click)="showOrderDetails(order.id)" class="btn btn-primary">
+            View Details
+          </button>
+
+          <!-- Hide 'Cancel Order' button if the order is delivered -->
+          <button
+            *ngIf="!order.isDelivered && order.status !== 'Canceled'"
+            (click)="cancelOrder(order.id, order.productDtId)"
+            class="btn btn-danger"
+          >
+            Cancel Order
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

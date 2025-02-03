@@ -1,0 +1,28 @@
+<form #loginForm=ngForm>
+    <h3 class="h3">Sign In</h3>
+
+    <!-- <div class="form-group">
+      <button mat-raised-button type="button" class="btn-theme btn-md" (click)="demoLogin()" id="btnDemoLogin">Demo Login</button>
+  </div> -->
+
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput name="acc" [(ngModel)]=account required #txtIdOrAddress=ngModel disabled=false
+                onkeyup="this.value = this.value.replace(/[^0-9a-z]/i, '')" />
+        </mat-form-field>
+        <app-validation-message [control]=txtIdOrAddress></app-validation-message>
+    </div>
+    <div class="form-group" [ngStyle]="{'display': (!loginForm.invalid?'block':'none')}">
+        <button mat-raised-button type="button" class="btn-theme btn-md" (click)="login()" id="btnLogin"
+            [disabled]=loginForm.invalid>Login</button>
+    </div>
+    <div class="form-group" [ngStyle]="{'display': (loginForm.invalid?'block':'none')}">
+        <button mat-raised-button type="button" class="btn-theme btn-md" (click)="connect()" id="btnConnect"
+            [disabled]=!loginForm.invalid>Connect Wallet</button>
+    </div>
+</form>
+<div class="form-group mt-5">
+    <h4 class="form-group"><b>If you haven't joined yet!</b></h4><button mat-raised-button
+        class="btn-md btn-theme btn-register" (click)=registerClick()>Join here</button>
+</div>

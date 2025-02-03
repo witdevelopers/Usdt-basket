@@ -1,0 +1,53 @@
+<div class="container">
+  <h2>Update Bank Account Details</h2>
+  <form [formGroup]="bankForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="isAdmin" class="form-group">
+      <label for="userId">User ID:</label>
+      <input id="userId" formControlName="userId" type="text" class="form-control" [readonly]="!isAdmin" />
+    </div>
+
+    <div class="form-group">
+      <label for="bankName">Bank Name:</label>
+      <input id="bankName" formControlName="bankName" type="text" [readonly]="!isAdmin" required />
+    </div>
+
+    <div class="form-group">
+      <label for="branchName">Branch Name:</label>
+      <input id="branchName" formControlName="branchName" type="text" [readonly]="!isAdmin" required />
+    </div>
+
+    <div class="form-group">
+      <label for="accountNo">Account No:</label>
+      <input id="accountNo" formControlName="accountNo" type="text" [readonly]="!isAdmin" required />
+    </div>
+
+    <div class="form-group">
+      <label for="ifsCode">IFS Code:</label>
+      <input id="ifsCode" formControlName="ifsCode" type="text" [readonly]="!isAdmin" required />
+    </div>
+
+    <div class="form-group">
+      <label for="accountHolderName">Account Holder Name:</label>
+      <input id="accountHolderName" formControlName="accountHolderName" type="text" [readonly]="!isAdmin" required />
+    </div>
+
+    <div class="form-group">
+      <label for="upiId">UPI ID:</label>
+      <input id="upiId" formControlName="upiId" type="text" [readonly]="!isAdmin" />
+    </div>
+    
+    <div class="form-group">
+      <label for="gpay">Gpay:</label>
+      <input id="gpay" formControlName="gpay" type="text" [readonly]="!isAdmin" />
+    </div>
+    
+    <div class="form-group">
+      <label for="phonePe">PhonePe:</label>
+      <input id="phonePe" formControlName="phonePe" type="text" [readonly]="!isAdmin" />
+    </div>
+
+    <button *ngIf="isAdmin" type="submit" [disabled]="!isFormValid()">
+      Submit
+    </button>
+  </form>
+</div>

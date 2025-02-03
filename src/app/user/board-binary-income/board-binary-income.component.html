@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Booster Income</header>
+      </div>
+      <div class="card-body">
+        <!-- <div class="d-flex justify-content-center">
+        <button mat-raised-button color="primary" [disabled]="pageNo==1"
+        (click)="OnPreviousClick()">Prev</button>
+        <label>
+          &nbsp;&nbsp;
+          Page
+          <input type="number" min="1" [max]="pageCount" [(ngModel)]="pageNo" (change)="OnPageNoChange()">
+          of {{pageCount}}
+          &nbsp;&nbsp;
+        </label>
+        <button mat-raised-button color="primary" [disabled]="!hasNextPage"
+        (click)="OnNextClick()">Next</button>
+      </div> -->
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover panel">
+            <thead>
+              <tr>
+                <th>S.N</th>
+                <th>User ID</th>
+                <th>Income</th>
+                <th>Next Pool Deduction</th>
+                <th>Other Deduction</th>
+                <th>Net Income</th>
+                <th>Date</th>
+                <th>Pool</th>
+                <th>Hold Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (boardInc of directs; track boardInc) {
+                <tr>
+                  <td>{{ boardInc.srno }}</td>
+                  <td>{{ boardInc.userId }}</td>
+                  <td>{{ boardInc.income }}</td>
+                  <td>{{ boardInc.nextPoolDeduction }}</td>
+                  <td>{{ boardInc.otherDeduction }}</td>
+                  <td>{{ boardInc.netIncome }}</td>
+                  <td>{{ boardInc.ondate }}</td>
+                  <td>{{ boardInc.poolId }}</td>
+                  <td>{{ boardInc.isHold }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+          @if (directs.length == 0) {
+            <label>No booster income yet!</label>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

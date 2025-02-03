@@ -1,0 +1,152 @@
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Package Details</header>
+      </div>
+
+      <div class="card-body">
+        <!-- User Type Selection -->
+        <div class="form-group row">
+          <label class="col-md-1 control-label"></label>
+          <div class="col-md-11">
+            <table style="width: 100%">
+              <tr>
+                <td>
+                  <input type="radio" name="userType" id="usertopup" value="UserTopup"
+                         (change)="onUserTypeChange('UserTopup')" checked />
+                  <label for="usertopup">User Package</label>
+                </td>
+                <td>
+                  <input type="radio" name="userType" id="topupbyuser" value="TopupByUser"
+                         (change)="onUserTypeChange('TopupByUser')" />
+                  <label for="topupbyuser">Package by User</label>
+                </td>
+                <td>
+                  <input type="radio" name="userType" id="userdownlinetopup" value="UserDownlineTopup"
+                         (change)="onUserTypeChange('UserDownlineTopup')" />
+                  <label for="userdownlinetopup">User Downline Package</label>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- User ID field only shown if the user type is admin -->
+        <div class="form-group row" *ngIf="isAdmin">
+          <label class="col-md-3 control-label">User ID</label>
+          <div class="col-md-6">
+            <input name="userId" type="text" class="form-control" 
+                   [(ngModel)]="inputUserId" placeholder="Enter User ID" />
+          </div>
+        </div>
+
+        <!-- Date Range Filters -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input type="date" class="form-control" [(ngModel)]="startDate" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input type="date" class="form-control" [(ngModel)]="endDate" />
+          </div>
+        </div>
+
+        <!-- Select Top-Up Type -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Select Type</label>
+          <div class="col-md-6">
+
+            <select class="form-control" [(ngModel)]="selectedTopUpType" name="selectedType"
+              (change)="onUserTopUpTypeChange($event)">
+              <option value="">All</option>
+              <option value="Topup">Topup</option>
+              <option value="Register">Register</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-center mt-3">         
+            <button type="submit" class="btn btn-info" (click)="onSubmit()">
+              View Details
+            </button>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="d-flex justify-content-center mt-3" *ngIf="incomeData.length > 0">
+          <button mat-raised-button class="btn btn-primary" (click)="OnPreviousClick()">
+            Prev
+          </button>
+          <button mat-raised-button class="btn btn-primary" (click)="OnNextClick()">
+            Next
+          </button>
+        </div>
+
+        <!-- Display No Data Message -->
+        <div *ngIf="noDataMessage" class="text-center mt-3">
+          {{ noDataMessage }}
+        </div>
+
+      <!-- Display income data -->
+
+      <div class="table-responsive">
+        @if (incomeData.length > 0) {
+        <table class="table table-bordered table-striped panel">
+          <thead>
+            <tr>
+              <th>Sr.no</th>
+
+              <th>User Id</th>
+              <th>Name</th>
+              <th>Full Pin No</th>
+              <th>Package Date</th>
+              <th>Package By</th>
+              <th>Remarks</th>
+              <th>Amount Value</th>
+              <!-- <th>Amount  Value Paid</th> -->
+              <!-- <th *ngIf="isAdmin">ROI Blocked</th> -->
+              <th *ngIf="isAdmin">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of incomeData">
+              <td>{{ item.srno }}</td>
+
+              <td>{{ item.userId }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.fullPinNo }}</td>
+              <td>{{ item.topupDate }}</td>
+              <td>{{ item.topupBy }}</td>
+              <td>{{ item.remarks }}</td>
+              <td>{{ item.pinValue }}</td>
+              <!-- <td >{{ item.pinValuePaid }}</td> -->
+              <!-- <td *ngIf="isAdmin">{{ item.isROIBlocked }}</td> -->
+              <td *ngIf="isAdmin">
+
+                <button class="btn" [ngClass]="
+                      item.isROIBlocked === 'True' ? 'btn-success' : 'btn-danger'" (click)="
+                  toggleROIBlocked(item.pinSrno, item.isROIBlocked, 1)
+                ">
+                  {{ item.isROIBlocked === "True" ? 'Unblock' : 'Block' }}
+                </button>
+
+                <button class="btn" [ngClass]="'btn-primary'" *ngIf="isToday(item.topupDate)" (click)=" DeleteTopupDetails(item.pinSrno, item.ByAdminidMemberid)">
+                Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        }
+
+        <div *ngIf="incomeData.length === 0">
+          <label>{{ noDataMessage }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

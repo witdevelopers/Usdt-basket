@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Pin Transfer Details</header>
+      </div>
+
+      <div class="card-body">
+        <div class="grid-7">
+          <h6>
+            <span class="error-1"></span>
+          </h6>
+        </div>
+
+        <!-- Conditionally show User ID input field for Admin -->
+        <div class="form-group row" *ngIf="isVisible">
+          <label class="col-md-3 control-label">User Id</label>
+          <div class="col-md-6">
+            <input
+              name="userId"
+              [(ngModel)]="userIdInput"
+              type="text"
+              class="form-control"
+              placeholder="Enter User Id"
+            />
+          </div>
+        </div>
+
+        <!-- From Date input -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input
+              name="fromDate"
+              [(ngModel)]="fromDate"
+              type="date"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <!-- To Date input -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input
+              name="toDate"
+              [(ngModel)]="toDate"
+              type="date"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <!-- Button to view details -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6">
+            <button (click)="ViewTransferPinStatistic()" class="btn btn-info">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table
+          *ngIf="pinDetails.length > 0"
+          class="table table-bordered table-striped panel"
+        >
+          <thead>
+            <tr>
+              <th>S.N.</th>
+              <th>User ID</th>
+              <th>Package</th>
+              <th>Unused Pins</th>
+              <th>Used Pin</th>
+              <th>Total Pin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of pinDetails">
+              <td>{{ user.srno }}</td>
+              <td>{{ user.userId }}</td>
+              <td>{{ user.package }}</td>
+              <td>{{ user.unusedPins }}</td>
+              <td>{{ user.usedPins }}</td>
+              <td>{{ user.totalPins }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="message" class="maassag">
+          <label>{{ message }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

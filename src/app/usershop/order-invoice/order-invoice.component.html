@@ -1,0 +1,52 @@
+@if (invoiceData) {
+  <div class="invoice-container" id="invoice-content">
+    <h2>Invoice for Order: {{ invoiceData.order.orderNo }}</h2>
+    <div class="order-info">
+      <h3>Order Details</h3>
+      <p>
+        <strong>Order Date:</strong>
+        {{ invoiceData.order.orderDate | date: "mediumDate" }}
+      </p>
+      <p><strong>Total Amount:</strong> ₹{{ invoiceData.order.orderAmount }}</p>
+      <p><strong>Status:</strong> {{ invoiceData.order.orderStatus }}</p>
+    </div>
+    <div class="shipping-info">
+      <h3>Shipping Address</h3>
+      <p>{{ invoiceData.shippingAddress.name }}</p>
+      <p>{{ invoiceData.shippingAddress.phone }}</p>
+      <p>{{ invoiceData.shippingAddress.address1 }}</p>
+      <p>
+        {{ invoiceData.shippingAddress.cityName }},
+        {{ invoiceData.shippingAddress.postalCode }}
+      </p>
+    </div>
+    <div class="order-items">
+      <h3>Order Items</h3>
+      <ul>
+        @for (item of invoiceData.orderDetails; track item) {
+          <li>
+            <span
+              ><strong>{{ item.productName }}</strong></span
+            >
+            <span>Quantity: {{ item.quantity }}</span>
+            <span>Price: ₹{{ item.price }}</span>
+            <span>Total: ₹{{ item.totalAmount }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+}
+
+<div class="button-container">
+  <button (click)="downloadInvoicePDF()" class="download-btn">
+    Download Invoice as PDF
+  </button>
+  <button (click)="goToHomePage()" class="home-btn">Go to Home Page</button>
+</div>
+
+@if (!invoiceData) {
+  <div class="no-invoice">
+    <p>No invoice data found for the order.</p>
+  </div>
+}

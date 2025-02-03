@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="round">
+      <section class="bgimg">
+        <div class="sarcal">
+          <img id="imgSpin" src="assets/images/carcal.png" />
+        </div>
+        <div class="to20">
+          <div class="counter">
+            <p id="timer"></p>
+          </div>
+          @if (secondsRemaining <= 0) {
+            <div class="button">
+              <button
+                id="btnMint"
+                class="btn btn-info"
+                (click)="mine()"
+                style="
+                  font-size: 25px;
+                  font-weight: bold;
+                  color: Green;
+                "
+              >
+                Mine
+              </button>
+            </div>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

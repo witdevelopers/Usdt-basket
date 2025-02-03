@@ -1,0 +1,67 @@
+.mlm-node {
+  position: relative;
+  margin: 20px; /* Adjust spacing as needed */
+  padding: 15px;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align for horizontal layout */
+}
+
+.node-header {
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #e3f2fd;
+  font-weight: bold;
+  display: flex;
+  align-items: center; /* Align items vertically centered */
+}
+
+.details {
+  margin-top: 10px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.children-container {
+  display: flex; /* Change to flex for horizontal layout */
+  justify-content: center; /* Center children */
+  margin-top: 20px;
+}
+
+.children-wrapper {
+  display: flex;
+  justify-content: space-between; /* Space children evenly */
+  flex-direction: row; /* Arrange children horizontally */
+}
+
+.node-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Optional: to make it circular */
+  margin-right: 10px;
+}
+
+/* Optional: Add lines connecting nodes */
+.mlm-node::before,
+.mlm-node::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1px; /* Line width */
+  background-color: #000; /* Line color */
+}
+
+.mlm-node::before {
+  left: -20px; /* Adjust for line to the left */
+  height: 20px; /* Line length */
+}
+
+.mlm-node::after {
+  right: -20px; /* Adjust for line to the right */
+  height: 20px; /* Line length */
+}

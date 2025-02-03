@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="sidebar">
+    <h3>Account Settings</h3>
+    <ul>
+      <li><a (click)="showSection('profile-info')">Profile Information</a></li>
+      <li><a (click)="showSection('manage-addresses')">Manage Addresses</a></li>
+      <li><a (click)="showSection('payments')">Payments</a></li>
+      <li><a (click)="signOut()">Sign Out</a></li>
+      <!-- Use the signOut method -->
+    </ul>
+  </div>
+
+  <div class="content">
+    <div
+      id="profile-info"
+      class="profile-info"
+      [class.active]="activeSection === 'profile-info'"
+    >
+      <h1>Personal Information</h1>
+      <div>
+        <label for="firstName">First Name:</label>
+        <span>{{ userDetails.data[0].fullName }}</span>
+        <!-- Displaying user's first name -->
+      </div>
+      <div>
+        <label>Gender:</label>
+        <span>{{ userDetails.data[0].gender }}</span>
+        <!-- Displaying user's gender -->
+      </div>
+      <div>
+        <label for="email">Email Address:</label>
+        <span>{{ userDetails.data[0].emailId }}</span>
+        <!-- Displaying user's email -->
+      </div>
+      <br />
+      <h1>Bank Details</h1>
+      <div>
+        <label for="email">Bank Name:</label>
+        <span>{{ userDetails.data[0].bankName }}</span>
+        <!-- Displaying user's email -->
+      </div>
+
+      <div>
+        <label for="email">Branch Name:</label>
+        <span>{{ userDetails.data[0].branchName }}</span>
+        <!-- Displaying user's email -->
+      </div>
+
+      <div>
+        <label for="email">ifsCode:</label>
+        <span>{{ userDetails.data[0].ifsCode }}</span>
+        <!-- Displaying user's email -->
+      </div>
+
+      <div>
+        <label for="email">Bank Account Number:</label>
+        <span>{{ userDetails.data[0].bankAccountNo }}</span>
+        <!-- Displaying user's email -->
+      </div>
+
+      <div>
+        <label for="email">Account Holder Name:</label>
+        <span>{{ userDetails.data[0].accountHolderName }}</span>
+        <!-- Displaying user's email -->
+      </div>
+    </div>
+
+    @if (addresses && addresses.length > 0) {
+      @for (address of addresses; track address.name) {
+        <!-- <li>{{ address.fullName }}</li> -->
+        <div
+          id="manage-addresses"
+          class="manage-addresses"
+          [class.active]="activeSection === 'manage-addresses'"
+        >
+          <h1>Manage Addresses</h1>
+          <p>Name: {{ address.fullName }}</p>
+          <p>Addres: {{ address.address1 }}</p>
+          <p>{{ address.cityName }}</p>
+          <p>{{ address.stateName }}</p>
+          <p>Phone: {{ address.phone }}</p>
+          <p>Pincode: {{ address.postalCode }}</p>
+        </div>
+      } @empty {
+        <li>There are no address.</li>
+      }
+    }
+
+    <!-- <div id="manage-addresses" class="manage-addresses" [class.active]="activeSection === 'manage-addresses'">
+      <h1>Manage Addresses</h1>
+      <p>Your address management options go here.</p>
+    </div> -->
+
+    <div
+      id="payments"
+      class="payments"
+      [class.active]="activeSection === 'payments'"
+    >
+      <h1>Payment Information</h1>
+      <br />
+      <hr />
+      <div class="account-info">
+        <div class="wallet-balance">
+          <p>Wallet Balance: {{ walletBalance | currency: "INR" }}</p>
+          <!-- Display wallet balance -->
+        </div>
+        <br />
+        <hr />
+        <div class="card-details">
+          <p>Card Added: {{ cardAdded }}</p>
+          <!-- Display card information -->
+        </div>
+        <br />
+        <hr />
+        <div class="upi-id">
+          <p>UPI ID: {{ upiId }}</p>
+          <!-- Display UPI ID -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="my-stuff" class="my-stuff" [class.active]="activeSection === 'my-stuff'">
+      <h1>My Stuff</h1>
+      <p>Details about your saved items go here.</p>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.btn-warning {
+  color: #fff !important;
+  background-color: #1f76bb !important;
+  border-color: #1f76bb !important;
+}
+.form-group {
+  margin-bottom: 20px;
+  color: #000;
+}
+.ng-star-inserted h5 {
+  color: #000;
+}

@@ -1,0 +1,297 @@
+
+.footer {
+  max-height: 825px;
+}
+
+.back-to-topHidden2 {
+  margin-bottom: -1.2em;
+}
+
+.back-to-topHidden2 div {
+  color: #fff;
+}
+
+.back-to-top i {
+  position: relative;
+  left: 45px;
+  bottom: 15px;
+  color: #fff;
+}
+
+.footer > a {
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .footer-main-hidden-one,
+  div.footer-link {
+    display: none;
+  }
+
+  .footer-copy-link {
+    padding-top: 1.35em;
+  }
+
+  .footer-copy-link .link-tag a,
+  .footer-copy-link span {
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (min-width: 1025px) {
+  .footer .footer-main-hidden-two,
+  .footer .lang-singin {
+    display: none;
+  }
+}
+
+.footer-main {
+  background-color: #fff;
+}
+
+.footer-main-hidden-two {
+  background-color: #222f3d;
+  padding: 1em 2em 1em 0;
+  margin-top: 1em;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.footer-main-hidden-two div {
+  width: 50%;
+}
+
+.footer-main-hidden-two ul {
+  list-style: none;
+  padding: 0.16em;
+  margin: 0 0 0.5em 1em;
+}
+
+.already div b a,
+.country a,
+.footer-main-hidden-two a,
+tr td a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.already div b a:hover,
+.country a:hover,
+.footer-col-acc a:hover,
+.footer-main-hidden-two a:hover,
+tr td:hover {
+  text-decoration: underline;
+}
+
+.footer-col {
+  justify-content: start;
+}
+
+.footer-col-acc {
+  padding: 20px 50px;
+}
+
+.footer-col-acc span a {
+  color: #000;
+  text-decoration: none;
+  opacity: 0.8;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+hr.line {
+  opacity: 0.1;
+}
+
+.country,
+.photo-lag {
+  height: 2.75em;
+}
+
+.photo-lag img {
+  width: 4.5em;
+  margin: 0 1em -1.7em 0;
+}
+
+.photo-lag i {
+  font-size: 1em;
+  position: relative;
+  left: 60px;
+  top: 1px;
+  color: #fff;
+}
+
+.photo-lag select {
+  width: 11em;
+  height: 2.6em;
+  padding: 0 1em;
+  margin: 0 2.5em;
+  border-radius: 5px;
+}
+
+.photo-lag option {
+  background-color: gray;
+}
+
+.country {
+  width: 100%;
+  padding: 1.1em 0;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.country a {
+  padding: 0 0.35em;
+}
+
+.footer-copyright {
+  width: 100%;
+  height: 14em;
+  background-color: #010d21;
+}
+
+.lang-singin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.lang-singin .lang {
+  margin: 1.75em;
+  opacity: 0.75;
+}
+
+.already div b {
+  margin: 1em;
+}
+
+.footer-link {
+  width: 100%;
+  padding: 30px 0;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  position: relative;
+}
+
+table {
+  padding-left: 1em;
+}
+
+tr td {
+  line-height: 1;
+  width: 150px;
+  font-size: 0.85em;
+  padding: 0.25em 0.5em;
+  margin: 0 1em;
+}
+
+tr td span {
+  opacity: 0.5;
+}
+
+.footer-copy-link {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.85em;
+  line-height: 1.5em;
+  margin: -21px 0 0;
+}
+
+.footer-copy-link .link-tag a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 1em;
+}
+
+@media (max-width: 1024px) {
+  .footer-main-hidden-one,
+  .footer-main-hidden-two {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+}
+
+.footer-main {
+  width: 100%;
+  padding: 1em;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.footer-col-acc {
+  margin: 15px 0;
+  text-align: start;
+}
+
+.col-acc-head {
+  font-weight: 700;
+}
+
+.photo-lag {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0;
+}
+
+@media (max-width: 768px) {
+  .footer-main {
+    padding: 0.5em;
+  }
+
+  .footer-col {
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .footer-col-acc {
+    margin: 10px 0;
+  }
+
+  .photo-lag select {
+    width: 80%;
+    margin: 0.5em 0;
+  }
+
+  .photo-lag img {
+    width: 3em;
+  }
+}
+
+@media (min-width: 769px) {
+  .footer-col {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .footer-col-acc {
+    margin: 0 20px;
+  }
+}

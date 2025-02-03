@@ -1,0 +1,173 @@
+@if (cartItems.length > 0) {
+  <div class="basket">
+    <!-- Desktop View -->
+    <div class="basket-table desktop-view">
+      <table>
+        <thead>
+          <tr>
+            <th class="item item-heading">Item</th>
+            <th class="quantity">Product Name</th>
+            <th class="price">Quantity</th>
+            <th style="margin: 0 0 0 -23px" class="subtotal">Discount Price</th>
+            <th style="margin: 0 0 0 -149px" class="remove">Sub-total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of cartItems; track item) {
+            <tr>
+              <td class="item">
+                <div class="product-image">
+                  <img
+                    [src]="item.imageUrl"
+                    [alt]="item.productName"
+                    class="product-frame"
+                    loading="lazy"
+                    (click)="goToProductDetails(item.productDtId)"
+                  />
+                </div>
+                <div
+                  class="product-details"
+                  (click)="goToProductDetails(item.productDtId)"
+                >
+                  <p>
+                    <span class="item-quantity">{{ item.quantity }}</span> x
+                    {{
+                      item.productName.length > 20
+                        ? (item.productName | slice: 0 : 20) + "..."
+                        : item.productName
+                    }}
+                  </p>
+                  <p>{{ item.productAttributes }}</p>
+                </div>
+              </td>
+              <td class="quantity">
+                <button
+                  (click)="decrementQuantity(item)"
+                  class="quantity-button"
+                >
+                  -
+                </button>
+                <span class="quantity-value">{{ item.quantity }}</span>
+                <button
+                  (click)="incrementQuantity(item)"
+                  class="quantity-button"
+                >
+                  +
+                </button>
+              </td>
+              <td class="price">
+                <p style="color: darkblue">
+                  Save:{{ item.discountPrice - item.price | currency: "INR" }}
+                </p>
+                {{ item.discountPrice | currency: "INR" }}
+              </td>
+              <td class="remove">
+                <button
+                  (click)="removeCartItem(item.productDtId, item.sizeId)"
+                  class="remove-button"
+                >
+                  <i class="fa-solid fa-trash"></i> Remove
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <!-- <del>Rs.{{ item.price }}</del> -->
+    <!-- Mobile View -->
+    <div class="basket-mobile-items mobile-view">
+      @for (item of cartItems; track item) {
+        <div class="mobile-cart-item">
+          <div class="mobile-product-image">
+            <img
+              [src]="item.imageUrl"
+              [alt]="item.productName"
+              class="product-frame"
+              loading="lazy"
+              (click)="goToProductDetails(item.productDtId)"
+            />
+          </div>
+          <div
+            class="mobile-product-details"
+            (click)="goToProductDetails(item.productDtId)"
+          >
+            <p>
+              <span class="item-quantity">{{ item.quantity }}</span> x
+              {{
+                item.productName.length > 20
+                  ? (item.productName | slice: 0 : 20) + "..."
+                  : item.productName
+              }}
+              <b style="color: darkblue"
+                >Save:{{ item.discountPrice - item.price | currency: "INR" }}
+              </b>
+            </p>
+            <!-- <p>{{ item.productAttributes | slice: 0: 20 }}</p> -->
+          </div>
+          <div class="mobile-quantity">
+            <button (click)="decrementQuantity(item)" class="quantity-button">
+              -
+            </button>
+            <span class="quantity-value">{{ item.quantity }}</span>
+            <button (click)="incrementQuantity(item)" class="quantity-button">
+              +
+            </button>
+          </div>
+          <div class="mobile-price">
+            {{ item.discountPrice | currency: "INR" }}
+          </div>
+          <div class="mobile-remove">
+            <button
+              (click)="removeCartItem(item.productDtId, item.sizeId)"
+              class="remove-button"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="empty-cart">
+    <img
+      src="assets/Shopimg/empty-cart.png"
+      alt="Empty Cart"
+      class="empty-cart-image"
+    />
+    <h2>Your cart is empty!</h2>
+    <button class="checkout-cta empty1" routerLink="/home">Shop Now</button>
+  </div>
+}
+
+@if (cartItems.length > 0) {
+  <aside class="summary">
+    <h2 class="summary-title">Order Summary</h2>
+    <div class="summary-total">
+      <div class="total-title">Total</div>
+      <div class="total-value final-value" id="basket-total">
+        {{ summary.total | currency: "INR" }}
+      </div>
+    </div>
+    <div class="summary-total">
+      <div class="total-title">Discount</div>
+      <div class="total-value final-value" id="basket-total">
+        {{ summary.subTotal - summary.total | currency: "INR" }}
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="summary-subtotal">
+      <div class="subtotal-title">Subtotal</div>
+      <div class="subtotal-value final-value" id="basket-subtotal">
+        {{ summary.subTotal | currency: "INR" }}
+      </div>
+    </div>
+    <div class="summary-checkout">
+      <button class="checkout-cta" routerLink="/usershop/checkout">
+        Go to Secure Checkout
+      </button>
+    </div>
+  </aside>
+}

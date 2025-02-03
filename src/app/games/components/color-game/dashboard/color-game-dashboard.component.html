@@ -1,0 +1,224 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">
+        Available balance: {{ userInfo.walletBalance | currency: "INR" }}
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <button
+            mat-flat-button
+            color="primary"
+            routerLink="/user/token/buy"
+            class="mr-2"
+          >
+            Recharge
+          </button>
+          <button mat-stroked-button (click)="onRuleClick()">
+            How to Play
+          </button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+          <button mat-mini-fab (click)="refreshTimer()">
+            <ng-container *ngIf="loader.isLoading$ | async; else syncIcon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                style="width: 25px"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="xMidYMid"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="32"
+                  stroke-width="8"
+                  stroke="#ffffff"
+                  stroke-dasharray="50.26548245743669 50.26548245743669"
+                  fill="none"
+                  stroke-linecap="round"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    repeatCount="indefinite"
+                    dur="0.47846889952153115s"
+                    keyTimes="0;1"
+                    values="0 50 50;360 50 50"
+                  ></animateTransform>
+                </circle>
+              </svg>
+            </ng-container>
+            <ng-template #syncIcon>
+              <i class="fa fa-lg fa-sync" aria-hidden="true"></i>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-bet (updateEvent)="refreshDashboard()"></app-bet>
+
+  <!-- Current Orders Section -->
+  <div *ngIf="!showingAllOrders">
+    <div class="card mt-2">
+      <div class="card-head">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-between align-items-center">
+            <h6>Current Orders</h6>
+            <a style="cursor: pointer" class="pr-2" (click)="viewAllOrders()">
+              View all orders
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>Period</th>
+                <th>Amount</th>
+                <th>Bet On</th>
+                <th>On Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="userInfo.orders?.length > 0; else noRecords">
+                <tr *ngFor="let item of userInfo.orders; trackBy: trackByFn">
+                  <td>{{ item.periodNo }}</td>
+                  <td>{{ item.betAmount }}</td>
+                  <td>
+                    <span
+                      *ngIf="!isNumber(item.betOn); else betOnNumber"
+                      class="red bet-on-color"
+                      [style.background]="item.betOn"
+                    ></span>
+                    <ng-template #betOnNumber>
+                      <span>{{ item.betOn }}</span>
+                    </ng-template>
+                  </td>
+                  <td>{{ datePipe.transform(item.onDate, "dd/MM/yyyy") }}</td>
+                </tr>
+              </ng-container>
+              <ng-template #noRecords>
+                <tr>
+                  <td colspan="4" class="text-center">
+                    <h5 style="font-weight: bold">No records found</h5>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Orders Section -->
+  <div *ngIf="showingAllOrders">
+    <div class="card mt-2">
+      <div class="card-head">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-between align-items-center">
+            <h6>All Orders</h6>
+            <a
+              style="cursor: pointer"
+              class="pr-2"
+              (click)="viewCurrentOrders()"
+            >
+              <i class="fas fa-arrow-left"></i> View current orders
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th>Period</th>
+                <th>Bet On</th>
+                <th>Amount</th>
+                <!-- <th>Deduction</th> -->
+                <!-- <th>Bet Amount</th> -->
+                <th>Date</th>
+                <th>Status</th>
+                <th>Number Won</th>
+                <th>Color Won</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngIf="
+                  showingAllOrders
+                    ? allOrders.data.length > 0
+                    : userInfo.orders.length > 0
+                "
+              >
+                <tr
+                  *ngFor="
+                    let item of showingAllOrders
+                      ? allOrders.data
+                      : userInfo.orders;
+                    trackBy: trackByFn
+                  "
+                >
+                  <td>{{ item.periodNo }}</td>
+                  <td>
+                    <span
+                      *ngIf="!isNumber(item.betOn); else betOnNumberAll"
+                      class="red"
+                      [style.background]="item.betOn"
+                    ></span>
+                    <ng-template #betOnNumberAll>
+                      <span>{{ item.betOn }}</span>
+                    </ng-template>
+                  </td>
+                  <td>{{ item.amount }}</td>
+                  <!-- <td>{{ item.deduction }}</td> -->
+                  <!-- <td>{{ item.betAmount }}</td> -->
+                  <td>{{ item.onDate | date: "dd/MM/yyyy" }}</td>
+                  <td>{{ item.winnerStatus }}</td>
+                  <td>{{ item.won_Number }}</td>
+                  <td>
+                    <span
+                      *ngIf="item.won_Color1"
+                      class="mr-1 color-circle"
+                      [style.background]="item.won_Color1"
+                    ></span>
+                    <span
+                      *ngIf="item.won_Color2"
+                      class="mr-1 color-circle"
+                      [style.background]="item.won_Color2"
+                    ></span>
+                  </td>
+                </tr>
+              </ng-container>
+
+              <ng-template #noAllRecords>
+                <tr>
+                  <td colspan="9" class="text-center">
+                    <h5 style="font-weight: bold">No records found</h5>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+          <mat-paginator
+            (page)="onPageChange($event)"
+            [length]="allOrders.total"
+            [pageSize]="allOrders.pageSize"
+            [pageSizeOptions]="[10, 50, 100]"
+            aria-label="Select page"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-period-win-history #periodWinHistory></app-period-win-history>
+</div>

@@ -1,0 +1,67 @@
+<div class="row pagination-items">
+  <div class="col-md-4 col-sm-3 text-center">
+    <span>{{
+      p.pageSize * (p.pageNo - 1) +
+        1 +
+        "-" +
+        (total <= p.pageSize ? total : p.pageSize * p.pageNo)
+    }}</span>
+    of {{ total }}
+  </div>
+  <div class="col-md-1 col-sm-2 text-center page-item-size">
+    <select (change)="onPageSizeChange($event)" class="form-control input-sm">
+      @for (o of arrPageSize; track o) {
+        <option>{{ o }}</option>
+      }
+    </select>
+  </div>
+  <div
+    class="col-md-offset-3 col-md-4 col-sm-10 text-right page-item-pages"
+    (click)="onPageChange($event)"
+  >
+    <div class="page_btns" style="display: inline-block">
+      <i class="van-icon van-icon-arrow-left btn btn-sm" val="prev"></i>
+      <i [class.isActive]="p.pageNo == 1" class="btn btn-sm">1</i>
+      @if (displayPageNos.length > 0 && (dirc == "down" || dirc == "mid")) {
+        <i class="btn btn-sm van-page-d">...</i>
+      }
+      @for (i of displayPageNos; track i) {
+        <i class="btn btn-sm" [class.isActive]="p.pageNo == i">{{ i }}</i>
+      }
+      @if (displayPageNos.length > 0 && (dirc == "up" || dirc == "mid")) {
+        <i class="btn btn-sm van-page-d">...</i>
+      }
+      @if (maxPageNo > 1) {
+        <i [class.isActive]="p.pageNo == maxPageNo" class="btn btn-sm">{{
+          maxPageNo
+        }}</i>
+      }
+      <i
+        class="van-page-last van-icon van-icon-arrow btn btn-sm"
+        val="next"
+      ></i>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="pagination" style="display:flex;">
+<ul class="page_box">
+  <li class="page">
+    <span >{{(p.pageSize*(p.pageNo-1)+1)+'-'+((total<=p.pageSize)?total:p.pageSize*p.pageNo) }}</span> of {{total}}
+  </li>
+  <li class="page">
+    <select (click)="onPageSizeChange($event)" class="form-control input-sm">
+      <option *ngFor="let o of arrPageSize">{{o}}</option>
+    </select>
+  </li>
+  <li class="page_btns" (click)="onPageChange($event)">
+    <i  class="van-icon van-icon-arrow-left btn btn-sm" val="prev"></i>
+    <i [class.isActive]="p.pageNo==1" class="btn btn-sm">1</i>
+    <i class="btn btn-sm van-page-d" *ngIf="displayPageNos.length>0 && (dirc=='down' || dirc=='mid')">...</i>
+    <i class="btn btn-sm" *ngFor="let i of displayPageNos" [class.isActive]="p.pageNo==i">{{i}}</i>
+    <i class="btn btn-sm van-page-d" *ngIf="displayPageNos.length>0 &&(dirc=='up' || dirc=='mid')">...</i>
+    <i [class.isActive]="p.pageNo==maxPageNo" class="btn btn-sm" *ngIf="maxPageNo>1">{{maxPageNo}}</i>
+    <i  class="van-page-last van-icon van-icon-arrow btn btn-sm" val="next"></i>
+  </li>
+</ul>
+</div> -->

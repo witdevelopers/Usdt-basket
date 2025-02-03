@@ -1,0 +1,244 @@
+/* Button and Circle Styles */
+.bet-on-color,
+.color-circle {
+  display: inline-block;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+
+/* Font Size Adjustments */
+table th,
+table td span {
+  font-size: 18px;
+}
+
+/* Card Styles */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  margin: 20px;
+  transition: transform 0.2s;
+}
+
+/* Card Header Styles */
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+/* Table Styles */
+.table {
+  margin-bottom: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.table thead {
+  background-color: #f0f0f0;
+}
+
+.table thead th {
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.table tbody tr {
+  transition: background-color 0.3s;
+}
+
+.table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Text Colors */
+.red {
+  color: #ff4d4d;
+}
+
+.float-right {
+  color: #fff;
+}
+
+/* Other Utility Styles */
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
+/* Header Styles for No Records Found */
+.ng-star-inserted h5 {
+  color: #000;
+}
+
+.container {
+  margin: 10px 0;
+}
+
+/* Button Styles */
+button {
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+button[color="primary"] {
+  background-color: #2196f3;
+  color: white;
+}
+
+button[color="primary"]:hover {
+  background-color: #1976d2;
+}
+
+.mat-stroked-button {
+  border: 1px solid #2196f3;
+  background-color: transparent;
+  color: #2196f3;
+}
+
+.mat-stroked-button:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+mat-mini-fab {
+  background-color: #4caf50;
+  color: white;
+}
+
+mat-mini-fab:hover {
+  background-color: #388e3c;
+}
+
+/* Flex container styles */
+.d-flex {
+  display: flex;
+}
+
+/* Margin utilities */
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .card {
+    margin: 10px;
+  }
+
+  .card-header {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 18px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  .table thead th,
+  .table tbody td {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* No records found styles */
+.table tbody h5 {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Container Styles */
+.col-12 {
+  padding: 15px;
+  /* Padding around the container */
+
+  margin-bottom: 20px;
+  /* Spacing below the container */
+}
+
+/* Heading Styles */
+h6 {
+  font-size: 1.5rem;
+  /* Larger font size */
+  font-weight: bold;
+  /* Bold font */
+  color: #343a40;
+  /* Dark gray color for text */
+  margin: 0;
+  /* Remove default margin */
+}
+
+/* Link Styles */
+a {
+  color: #007bff;
+  /* Primary blue color */
+  text-decoration: none;
+  /* Remove underline */
+  font-size: 1rem;
+  /* Font size */
+}
+
+/* Link Hover Effect */
+a:hover {
+  text-decoration: underline;
+  /* Underline on hover */
+  color: #0056b3;
+  /* Darker blue on hover */
+}
+
+/* Flexbox Styles */
+.d-flex {
+  display: flex;
+  /* Enable flexbox layout */
+}
+
+.justify-content-between {
+  justify-content: space-between;
+  /* Space between items */
+}
+
+.align-items-center {
+  align-items: center;
+  /* Center items vertically */
+}
+
+/* Card Header */
+.card-header {
+  background-color: #f8f9fa; /* Light gray background for the card header */
+  padding: 15px; /* Padding around the content */
+  border-bottom: 1px solid #dee2e6; /* Border for separation */
+  border-radius: 8px 8px 0 0; /* Rounded top corners */
+}
+
+/* Card Title */
+.card-title {
+  color: #007bff; /* Blue color for the title */
+  margin: 0; /* Remove default margin */
+}

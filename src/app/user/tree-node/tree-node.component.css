@@ -1,0 +1,99 @@
+.tree-node-wrapper {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.user-details {
+  margin-bottom: 15px;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.user-info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-info-table th,
+.user-info-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.user-info-table th {
+  background-color: #f2f2f2;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.node-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4caf50; /* Green border */
+  border-radius: 5px;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.node-content:hover {
+  background-color: #e8f5e9; /* Light green background on hover */
+}
+
+.node-image {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.node-info {
+  font-weight: bold;
+}
+
+.child-wrapper {
+  text-align: center;
+}
+.dual {
+  display: flex;
+  justify-content: space-around;
+}
+
+.add-new-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #007bff; /* Bootstrap primary color */
+  margin-top: 10px;
+}
+
+.add-new-user img {
+  width: 30px; /* Size of the add user icon */
+  margin-right: 5px;
+}
+
+.no-users {
+  text-align: center;
+  color: #999; /* Grey color for no users */
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .node-content {
+    flex-direction: column; /* Stack elements on small screens */
+  }
+}

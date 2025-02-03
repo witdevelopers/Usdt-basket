@@ -1,0 +1,271 @@
+/* Product Section Styles */
+.product-section {
+  margin: 20px 0;
+}
+
+h5 {
+  font-size: 0.73em !important;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+}
+
+/* Product Grid */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Product Card Styles */
+.product-card {
+  flex: 1 1 calc(16.666% - 20px); /* 6 cards per row with gap */
+  max-width: calc(16.666% - 20px); /* Ensure correct width calculation */
+  min-height: 320px; /* Increased to accommodate button placement */
+  box-sizing: border-box;
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card Styles */
+.my-card {
+  min-width: 100%;
+  gap: 0.125rem;
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  background-color: #fff;
+  border: 0.5px solid rgb(232, 232, 232);
+  box-shadow: rgba(0, 0, 0, 0.04) 2px 2px 8px;
+  border-radius: 8px;
+  width: 100%;
+  height: 290px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* Card Image */
+.card-image {
+  width: 60%;
+  height: 130px; /* Adjust height as needed */
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  /* border-radius: 12px; */
+  margin-top: 10px;
+}
+
+/* Image zoom on hover */
+/* .my-card:hover .card-image {
+    border-radius: 4px;
+} */
+
+/* Card Content */
+.my-card-content {
+  padding: 8px; /* Adjust padding as needed */
+  flex-grow: 1; /* Ensures content takes up available space */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: center;
+  position: relative; /* Necessary for absolute positioning of button */
+}
+
+/* Product Name */
+.my-product-name {
+  font-weight: 700;
+  color: #333;
+  transition: color 0.3s ease;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Price Info */
+.price-info {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  flex-direction: row;
+
+  font-size: 15px;
+}
+
+/* Discount Price */
+.discount-price {
+  font-size: 1rem; /* Adjust font size as needed */
+  color: #000;
+  font-weight: 700;
+}
+
+/* Original Price */
+.original-price {
+  color: #ff4d4d;
+  font-size: 0.9rem; /* Adjust font size as needed */
+  text-decoration: line-through;
+}
+
+/* Cart Button Styles */
+.cart-button {
+  padding: 8px 12px;
+  width: 60%;
+  border: 0;
+  min-width: 150px;
+  min-height: 40px;
+  border-radius: 20px;
+  background-color: #4834d4;
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 10px; /* Position the button 10px from the bottom */
+  /* left: 50%; 
+    transform: translateX(-50%); Center the button horizontally */
+}
+
+/* Cart Button Hover and Active States */
+.cart-button:hover {
+  background-color: #35269b;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cart-button:active {
+  transform: scale(0.95);
+}
+
+/* Added State Styles */
+.added {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem; /* Adjust font size as needed */
+  font-weight: bold;
+  color: #28a745;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Show Added State */
+.cart-button.added-active .added {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Badge Styles */
+.badge-area-2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: #000;
+  color: #e2ff91;
+  padding: 5px 8px; /* Adjust padding as needed */
+  border-radius: 5px;
+  font-size: 10px; /* Adjust font size as needed */
+  transition: background-color 0.3s ease;
+}
+
+/* Badge Sale Styles */
+.badge-product-sale {
+  color: darkblue;
+}
+
+/* Badge Sale New and Percent */
+.badge-product-sale .new {
+  font-size: 10px; /* Adjust font size as needed */
+}
+
+.badge-product-sale .percent {
+  font-size: 10px; /* Adjust font size as needed */
+  font-weight: bold;
+  /* color: red; */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .product-card {
+    flex: 1 1 calc(33.333% - 20px); /* 3 cards per row with gap */
+    max-width: calc(33.333% - 20px); /* Ensure correct width calculation */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    flex: 1 1 calc(50% - 20px); /* 2 cards per row with gap */
+    max-width: calc(50% - 20px); /* Ensure correct width calculation */
+  }
+  .cart-button {
+    bottom: 5px !important;
+  }
+  .price-space {
+    gap: 5px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card {
+    max-width: 100%; /* Ensure full width on smaller screens */
+    min-height: 250px; /* Reduced height for smaller screens */
+  }
+  .price-info {
+    padding: 0;
+  }
+  p {
+    margin: 0;
+  }
+}
+p {
+  margin: 0;
+}
+.productimg {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.price-space {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  margin: -5px 0 0 0;
+  flex-direction: column;
+}

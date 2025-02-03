@@ -1,0 +1,178 @@
+<div class="tree-node-wrapper">
+  <div class="user-details" *ngIf="showUserDetails">
+    <h3>Rec Lmid Details</h3>
+    <br />
+    <table width="100%" class="user-info-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Self BV</th>
+          <th>Team BV</th>
+          <th>Status</th>
+          <th>Top Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of recLmidDetails">
+          <td>{{ detail.userId }}</td>
+          <td>{{ detail.userName }}</td>
+          <td>{{ detail.selfBV | number: "1.2-2" }}</td>
+          <td>{{ detail.teamBV | number: "1.2-2" }}</td>
+          <td>{{ detail.status }}</td>
+          <td>{{ detail.topDate }}</td>
+        </tr>
+        <tr *ngIf="recLmidDetails.length === 0">
+          <td colspan="6" class="no-users">No Rec Lmid Users Available</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Rec Rmid Details</h3>
+    <table width="100%" class="user-info-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Self BV</th>
+          <th>Team BV</th>
+          <th>Status</th>
+          <th>Top Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of recRmidDetails">
+          <td>{{ detail.userId }}</td>
+          <td>{{ detail.userName }}</td>
+          <td>{{ detail.selfBV | number: "1.2-2" }}</td>
+          <td>{{ detail.teamBV | number: "1.2-2" }}</td>
+          <td>{{ detail.status }}</td>
+          <td>{{ detail.topDate }}</td>
+        </tr>
+        <tr *ngIf="recRmidDetails.length === 0">
+          <td colspan="6" class="no-users">No Rec Rmid Users Available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <table width="100%" class="mrbottom">
+    <tbody>
+      <div class="dual">
+        <tr>
+          <td colspan="2" class="node">
+            <div
+              *ngIf="recRmidDetails.length > 0"
+              class="node-content"
+              (click)="toggleUserDetails()"
+            >
+              <img
+                src="assets/binary-tree/green.png"
+                alt="Node Image"
+                class="node-image"
+              />
+              <div class="node-info">
+                {{ recRmidDetails.length > 0 ? recRmidDetails[0]?.srno : "" }}
+                {{
+                  recRmidDetails.length > 0 ? recRmidDetails[0]?.userName : ""
+                }}
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="node">
+            <div
+              *ngIf="recLmidDetails.length > 0"
+              class="node-content"
+              (click)="toggleUserDetails()"
+            >
+              <img
+                src="assets/binary-tree/green.png"
+                alt="Node Image"
+                class="node-image"
+              />
+              <div class="node-info">
+                {{ recLmidDetails.length > 0 ? recLmidDetails[0]?.srno : "" }}
+                {{
+                  recLmidDetails.length > 0 ? recLmidDetails[0]?.userName : ""
+                }}
+              </div>
+            </div>
+          </td>
+        </tr>
+      </div>
+
+      <!-- Implementing the Recursive Tree Structure -->
+      <tr>
+        <td class="child-wrapper">
+          <ng-container *ngIf="node?.left; else addUserPlaceholderLeft">
+            <div class="tree-node">
+              <div class="node">
+                {{ node.left.member.srno }}
+              </div>
+              <div class="children">
+                <div *ngIf="node.left.left">
+                  <app-tree-node [node]="node.left.left"></app-tree-node>
+                </div>
+                <div *ngIf="node.left.right">
+                  <app-tree-node [node]="node.left.right"></app-tree-node>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #addUserPlaceholderLeft>
+            <div
+              *ngIf="!recLmidDetails.length"
+              class="add-new-user"
+              (click)="onAddUser('left')"
+            >
+              <img
+                style="width: 50px"
+                src="assets/binary-tree/newPerson.jpg"
+                alt="Add User"
+                class="node-image"
+              />
+              <strong>Add User</strong>
+            </div>
+          </ng-template>
+          <!-- Family Tree Line for left node -->
+          <!-- <div class="family-tree-line"></div> -->
+        </td>
+
+        <td class="child-wrapper">
+          <ng-container>
+            <div class="tree-node">
+              <div class="node">
+                {{ node.right.member.srno }}
+              </div>
+              <div class="children">
+                <div *ngIf="node.right.left">
+                  <app-tree-node [node]="node.right.left"></app-tree-node>
+                </div>
+                <div *ngIf="node.right.right">
+                  <app-tree-node [node]="node.right.right"></app-tree-node>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template>
+            <div class="add-new-user" (click)="onAddUser('right')">
+              <img
+                style="width: 50px"
+                src="assets/binary-tree/newPerson.jpg"
+                alt="Add User"
+                class="node-image"
+              />
+              <strong>Add User</strong>
+            </div>
+          </ng-template>
+          <!-- Family Tree Line for right node -->
+          <!-- <div class="family-tree-line"></div> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

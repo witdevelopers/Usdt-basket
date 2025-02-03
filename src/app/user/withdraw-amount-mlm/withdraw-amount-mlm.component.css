@@ -1,0 +1,122 @@
+/* Container styles */
+.card {
+  margin: 20px auto;
+  border: 1px solid #00008B;
+  border-radius: 5px;
+}
+
+.card-head {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.error-1 {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+form{
+  padding: 4rem;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 10px;
+}
+
+.btn-info:hover {
+  background-color: #0056b3;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+.control-label {
+  font-weight: bold;
+}
+
+/* Button alignment */
+.d-flex {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+button.primary:hover {
+  background-color: #0056b3;
+}
+
+button.primary:nth-of-type(2) {
+  background-color: #28a745;
+}
+
+button.primary:nth-of-type(2):hover {
+  background-color: #218838;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* History table */
+.table-striped {
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.table-striped th, 
+.table-striped td {
+  padding: 10px;
+  text-align: center;
+}
+
+.table-striped tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}

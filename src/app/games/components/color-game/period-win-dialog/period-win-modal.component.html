@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-head" [style.background]="data.color1">
+    <header style="color: #000000">PERIOD:{{ data.period }}</header>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <table class="table table-bordered table-striped panel">
+        <thead>
+          <tr>
+            <th>Color</th>
+            <th>Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="w-color" [class]="getClass(data.color1)"></span>
+              @if (data?.color2) {
+                <span class="w-color" [class]="getClass(data.color2)"></span>
+              }
+            </td>
+            <td>
+              <span>{{ data.number }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="row footer-btn">
+      <div class="col-md-12 text-center">
+        <button class="btn btn-warning btn-lg" mat-dialog-close>Close</button>
+      </div>
+    </div>
+  </div>
+</div>

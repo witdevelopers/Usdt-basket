@@ -1,0 +1,12 @@
+<div *ngIf="isLoading">
+  <h2>Loading tree data...</h2>
+</div>
+
+<div *ngIf="!isLoading && treeRoot; else errorTemplate">
+  <h1>Welcome to the Tree</h1>
+  <app-tree-node [node]="treeRoot"></app-tree-node>
+</div>
+
+<ng-template #errorTemplate>
+  <h2>Error loading tree data. Please try again later.</h2>
+</ng-template>

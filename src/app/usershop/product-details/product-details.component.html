@@ -1,0 +1,137 @@
+<div class="product-details-app">
+  @if (singleProduct) {
+    <section id="product-info">
+      <div class="item-image-parent">
+        <!-- Main Image with Zoom Feature -->
+        <div class="imgparent">
+          <div
+            class="item-image-main"
+            (mousemove)="onMouseMove($event)"
+            (mouseleave)="onMouseLeave()"
+          >
+            <img
+              class="zoom-image"
+              [src]="mainImageUrl"
+              alt="{{ singleProduct?.productName }}"
+            />
+          </div>
+          <div class="item-list-vertical">
+            @for (image of singleProductImages; track image) {
+              <div class="thumb-box" (click)="changeMainImage(image.imageUrl)">
+                <img [src]="getImageUrl(image.imageUrl)" alt="thumbnail" />
+              </div>
+            }
+          </div>
+        </div>
+        <!-- Zoom Result Container -->
+        @if (isZooming) {
+          <div class="zoom-result">
+            <div
+              class="zoomed-image"
+              [ngStyle]="{
+                backgroundImage: 'url(' + mainImageUrl + ')',
+                backgroundPosition: backgroundPosition,
+                backgroundSize: backgroundSize,
+              }"
+            ></div>
+          </div>
+        }
+      </div>
+      <div class="item-info-parent">
+        <div class="main-info">
+          <h4>{{ singleProduct?.productName }}</h4>
+          <br />
+          <hr />
+          <br />
+          <div class="price">
+            MRP:
+            <p id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</p>
+            <del
+              ><p id="price">₹ {{ singleProductDetails[0]?.price }}</p></del
+            >
+            @if (
+              singleProductDetails[0]?.price &&
+              singleProductDetails[0]?.discountPrice
+            ) {
+              <h5
+                style="color: darkgreen !important; font-size: 20px !important"
+              >
+                {{
+                  calculateDiscountPercentage(
+                    singleProductDetails[0]?.price,
+                    singleProductDetails[0]?.discountPrice
+                  )
+                }}% OFF
+              </h5>
+            }
+          </div>
+          (Inclusive of all taxes)
+          <p style="color: darkgreen !important; font-size: 20px !important">
+            Save ₹
+            {{
+              singleProductDetails[0]?.price -
+                singleProductDetails[0]?.discountPrice
+            }}
+          </p>
+          <div class="size-dropdown">
+            <label for="sizeSelect">Size:</label>
+            <select id="sizeSelect" [(ngModel)]="selectedSize">
+              <option *ngFor="let size of singleProductSize" [value]="size.id">
+                {{ size.sizeDescription }}
+              </option>
+            </select>
+          </div>
+          <div class="cart-button-gap">
+            @if (!isProductInCartFlag) {
+              <button class="cart-button" (click)="addToCart()">
+                <i class="ri-shopping-cart-2-line"></i> Add to Cart
+              </button>
+            }
+            @if (isProductInCartFlag) {
+              <button class="cart-button" (click)="goToCart()">
+                <i class="ri-shopping-cart-2-line"></i> Go to Cart
+              </button>
+            }
+            <button class="cart-button" (click)="buyNow()">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+  <div class="select-items">
+    <div class="description">
+      <p [innerHTML]="singleProduct?.description"></p>
+    </div>
+  </div>
+  <!-- Related Products Section -->
+  @if (relatedProducts.length > 0) {
+    <div id="card">
+      <h1 class="section-title">Related Products</h1>
+      <div class="related-products-container">
+        @for (product of relatedProducts; track product) {
+          <div
+            class="related-product-item"
+            (click)="viewProduct(product.productId)"
+          >
+            <div class="related-product-image">
+              <img
+                [src]="getImageUrl(product.imageUrl)"
+                alt="{{ product.productName }}"
+              />
+            </div>
+            <div class="card-content">
+              <h5 class="product-name">{{ product.productName }}</h5>
+              <br />
+              <div class="price-info">
+                <del>Rs.{{ product.price }}</del>
+                <P style="font-weight: 700; color: black"
+                  >Rs.{{ product.discountPrice }}</P
+                >
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

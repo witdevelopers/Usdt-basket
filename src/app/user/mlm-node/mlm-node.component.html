@@ -1,0 +1,51 @@
+<div class="mlm-node">
+  <div
+    class="node-header"
+    (mouseenter)="showDetails = true"
+    (mouseleave)="showDetails = false"
+    (click)="toggleChildren()"
+  >
+    <span>{{ node.name }} ({{ node.userId }})</span>
+    <span *ngIf="node.totalDirects > 0" class="toggle-icon">
+      {{ showChildren ? "▼" : "▶" }}
+      <!-- Toggle icon -->
+    </span>
+  </div>
+
+  <!-- Details Section -->
+  <div class="details" *ngIf="showDetails">
+    <div><strong>Color:</strong> {{ node.color }}</div>
+    <div>
+      <strong>Joining Amount:</strong> {{ node.joiningAmount | currency }}
+    </div>
+    <div><strong>Joining Date:</strong> {{ node.joiningDate }}</div>
+    <div>
+      <strong>Left Business:</strong> {{ node.leftBusiness | currency }}
+    </div>
+    <div>
+      <strong>Right Business:</strong> {{ node.rightBusiness | currency }}
+    </div>
+    <div>
+      <strong>Total Business:</strong> {{ node.totalBusiness | currency }}
+    </div>
+    <div><strong>Total Directs:</strong> {{ node.totalDirects }}</div>
+    <div>
+      <strong>Total Topup Amount:</strong>
+      {{ node.totalTopupAmount | currency }}
+    </div>
+  </div>
+
+  <!-- Child Nodes -->
+  <div
+    *ngIf="showChildren && node.children && node.children.length"
+    class="children-container"
+  >
+    <div class="children-wrapper">
+      <app-mlm-node
+        *ngFor="let child of node.children"
+        [node]="child"
+        (nodeClicked)="nodeClicked.emit(child)"
+      ></app-mlm-node>
+    </div>
+  </div>
+</div>

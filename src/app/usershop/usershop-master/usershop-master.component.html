@@ -1,0 +1,62 @@
+<header>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom shadow"
+  >
+    <div class="container-fluid">
+      <a class="navbar-brand mr-5" href="/"
+        ><img src="assets/Welsome_Logo_Mesa de trabajo 1.png" width="110"
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        id="btnToggler"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="navbar-collapse collapse d-sm-inline-flex justify-content-between"
+        id="divNavMenus"
+      >
+        <ul class="navbar-nav ml-auto" (click)="collapse()">
+          <li class="nav-item nav-menu p-1">
+            <a class="nav-link text-dark m-1" routerLink="home"
+              ><i class="fa fa-home" aria-hidden="true"></i> Home</a
+            >
+          </li>
+
+          <li class="nav-item nav-menu p-1">
+            <a class="nav-link text-dark m-1" routerLink="footer"
+              ><i class="fa fa-home" aria-hidden="true"></i> Footer</a
+            >
+          </li>
+
+          <li class="nav-item nav-menu p-1">
+            <a class="nav-link text-dark m-1" routerLink="home"
+              ><i class="fa fa-home" aria-hidden="true"></i> Home</a
+            >
+          </li>
+
+          <li class="mr-5"></li>
+          <li class="nav-item">
+            <button
+              mat-raised-button
+              color="warn"
+              class="mt-2"
+              (click)="logout()"
+            >
+              <i class="fa fa-power-off" aria-hidden="true"></i> Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <app-home></app-home>
+</header>

@@ -1,0 +1,54 @@
+<div class="main-parent-div">
+  <div class="right-side">
+    <form (ngSubmit)="onSubmit()" #signInForm="ngForm" class="login-form">
+      <div style="display: flex; justify-content: center; align-items: center">
+        <img style=" width: 150px; cursor: pointer" routerLink="/home" src="assets/images/logo.png"
+          alt="Company Logo" />
+      </div>
+      <h2>{{ isSignUp ? 'Create an Account' : 'Welcome to Login' }}</h2>
+      <p *ngIf="wrong">Remember your login Email and password</p>
+
+      <!-- Email Field -->
+      <label for="userId">User ID</label>
+
+      <input type="text" id="userId" placeholder="Enter UserId" name="userId" [(ngModel)]="userID" required
+        class="form-control" />
+      <small class="text-danger validation-message"
+        *ngIf="signInForm.submitted && !signInForm.controls['userId'].valid">
+        Please enter a valid userId.
+      </small>
+
+      <!-- Password Field -->
+      <div class="eyebutton">
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" placeholder="Enter Password"
+            name="password" [(ngModel)]="password" required class="form-control" />
+          <small class="text-danger validation-message"
+            *ngIf="signInForm.submitted && !signInForm.controls['password'].valid">
+            Password is required.
+          </small>
+
+            <span class="input-group-text" (click)="togglePasswordVisibility()">
+              <mat-icon>{{ isPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </span>
+        </div>
+        <!-- Forgot Password Link -->
+        <div class="links">
+          <a routerLink="/forgot-password" class="forgot-password-link">Forgot your password?</a>
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <button type="submit" class="login-btn">
+        {{ isSignUp ? 'Sign Up' : 'Sign In' }}
+      </button>
+
+      <!-- Toggle Sign Up/Sign In Link -->
+      <div class="links">
+        <a routerLink="/signup" (click)="toggleSignUp()">
+          {{ isSignUp ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up' }}
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

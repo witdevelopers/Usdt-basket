@@ -1,0 +1,39 @@
+<!-- <p>daily-eor works!</p> -->
+
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Daily ROI</header>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover panel">
+            <thead>
+              <tr>
+                <th>S.N</th>
+                <!-- <th>User ID</th>
+                <th>Name</th> -->
+                <th>Income</th>
+                <th>Date</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (EORInc of EORIncome; track EORInc) {
+                <tr>
+                  <td>{{ EORInc.srno }}</td>
+                  <!-- <td>{{EORInc.userId}}</td>
+                  <td>{{EORInc.name}}</td> -->
+                  <td>{{ EORInc.income }}</td>
+                  <td>{{ EORInc.ondate }}</td>
+                  <td>{{ EORInc.onAmount }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Level Income</header>
+      </div>
+      <div class="card-body">
+        <div *ngIf="isVisible">
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="filterInput">User ID:</label>
+
+            <div class="col-md-6">
+              <input id="filterInput" type="text" class="form-control" [(ngModel)]="filterUserId"
+                placeholder="Enter User ID" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="startDate" (change)="onFilterChange()" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="endDate" (change)="onFilterChange()" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group row mb-3">
+          <!-- 'mb-3' is roughly 1rem or 16px -->
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6 d-flex justify-content-center mb-3">
+            <button class="btn btn-info" (click)="getLeveldiveidend()">
+              View Details
+            </button>
+          </div>
+
+          <div class="d-flex justify-content-center" *ngIf="filteredDirects.length > 0">
+            <div class="d-flex justify-content-center mt-3" *ngIf="filteredDirects.length > 0">
+              <button mat-raised-button class="primary" (click)="OnPreviousClick(); getLeveldiveidend()">
+                Prev
+              </button>
+              <button mat-raised-button class="primary" (click)="OnNextClick(); getLeveldiveidend()">
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+          @if (filteredDirects.length > 0) {
+          <table class="table table-bordered table-striped panel">
+            <thead>
+              <tr>
+                <th >S.N</th>
+                <th >Date</th>
+                <th >User ID</th>
+                <th >Name</th>
+                <th >From ID</th>
+                <th >From User Name</th>
+                <th >Income</th>
+                <th *ngIf="isColumnVisible('tds')">TDS</th>
+                <th *ngIf="isColumnVisible('service')">Service</th>
+                <th >Level</th>
+                <th >On Amount</th>
+                <!-- <th *ngIf="isColumnVisible('netIncome')">Net Income</th> -->
+              </tr>              
+            </thead>
+            <tbody>
+              @for (income of directs; track income) {
+                <tr>
+                  <td >{{ income.srno }}</td>
+                  <td >{{ income.date }}</td>
+                  <td >{{ income.userId }}</td>
+                  <td >{{ income.name }}</td>
+                  <td >{{ income.fromUserID }}</td>
+                  <td >{{ income.fromUserName }}</td>
+                  <td >{{ income.income }}</td>
+                  <td *ngIf="isColumnVisible('tds')">{{ income.tds }}</td>
+                  <td *ngIf="isColumnVisible('service')">{{ income.service }}</td>
+                  <td >{{ income.level }}</td>
+                  <td >{{ income.amount }}</td>
+                  <!-- <td *ngIf="isColumnVisible('netIncome')">{{ income.netIncome }}</td> -->
+
+                </tr>                
+              }
+            </tbody>
+          </table>
+          }
+
+          <div class="text-center" *ngIf="apiMessages.length > 0">
+            <label>{{ apiMessages[0] }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

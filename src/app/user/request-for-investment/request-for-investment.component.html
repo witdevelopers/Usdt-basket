@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Request for Investment</header>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="investmentForm" (ngSubmit)="onSubmit()" class="payment-form">
+
+          <div class="bank-details">
+            <h2>Bank Details</h2>
+            <p><span>UPI ID:</span>mart999&#64;axisbank</p>
+            <p><span>Account Name:</span> MY E MART ONLINE</p>
+            <p><span>Bank Name:</span> AXIS BANK</p>
+            <p><span>Account Number:</span> 923020003216598</p>
+            <p><span>IFSC Code:</span> UTIB0003449</p>
+          </div>
+
+          <!-- Amount -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="amount">Amount</label>
+            <div class="col-md-6">
+              <input type="number" id="amount" class="form-control" formControlName="amount" required
+                placeholder="Enter the Amount" />
+              <!-- Error message -->
+              <div *ngIf="
+                  (investmentForm.get('amount')?.touched || isSubmitted) &&
+                  investmentForm.get('amount')?.invalid
+                " class="text-danger">
+                <div *ngIf="investmentForm.get('amount')?.errors?.['required']">
+                  Amount is required.
+                </div>
+                <div *ngIf="investmentForm.get('amount')?.errors?.['min']">
+                  Amount must be greater than 0.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mode of Payment -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="paymentMode">Mode of Payment</label>
+            <div class="col-md-6">
+              <select id="paymentMode" class="form-control" formControlName="paymentMode" required>
+                <option value="" disabled selected>Select Payment Mode</option>
+                <option *ngFor="let mode of paymentModes" [value]="mode">
+                  {{ mode }}
+                </option>
+              </select>
+              <!-- Error message -->
+              <div *ngIf="
+                  (investmentForm.get('paymentMode')?.touched || isSubmitted) &&
+                  investmentForm.get('paymentMode')?.invalid
+                " class="text-danger">
+                Payment mode is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- UTR Number -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="utrNumber">UTR Number</label>
+            <div class="col-md-6">
+              <input type="text" id="utrNumber" class="form-control" formControlName="utrNumber" required
+                placeholder="Enter the UTR Number" />
+              <!-- Error message -->
+              <div *ngIf="
+                  (investmentForm.get('utrNumber')?.touched || isSubmitted) &&
+                  investmentForm.get('utrNumber')?.invalid
+                " class="text-danger">
+                UTR number is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Remarks (optional) -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="remarks">Remarks</label>
+            <div class="col-md-6">
+              <textarea id="remarks" class="form-control" formControlName="remarks"
+                placeholder="Enter any remarks (optional)"></textarea>
+            </div>
+          </div>
+
+          <!-- Submit and View Requests Buttons -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-6">
+              <input type="submit" value="Submit" class="btn btn-info" />
+              <button type="button" (click)="getSubmitRequest()" class="btn btn-info">
+                View Previous Request
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="investmentRequests.length > 0" class="table-responsive">
+        <table class="table table-bordered table-striped panel">
+          <thead class="thead-light">
+            <tr>
+              <th>Sr. No.</th>
+              <th>Request ID</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Mode of Payment</th>
+              <th>Reference No.</th>
+              <th>Remarks</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of investmentRequests; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ request.requestId }}</td>
+              <td>{{ request.userId }}</td>
+              <td>{{ request.name }}</td>
+              <td>{{ request.amount | currency }}</td>
+              <td>{{ request.modeOfPayment }}</td>
+              <td>{{ request.referenceNo }}</td>
+              <td>{{ request.memberRemarks }}</td>
+              <td>{{ request.ondate | date: "short" }}</td>
+              <td>{{ request.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div *ngIf="investmentRequests.length <= 0" class="text-center">
+          <label>No data found yet!</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

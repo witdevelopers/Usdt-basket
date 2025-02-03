@@ -1,0 +1,105 @@
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-head {
+  background: #2196f3;
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+}
+
+.card-head header {
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.circular-number {
+  display: inline-block;
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the element circular */
+  display: flex;
+  align-items: center; /* Centers text vertically */
+  justify-content: center; /* Centers text horizontally */
+  font-weight: bold; /* Optional: Makes text bold */
+  color: white; /* Default text color */
+}
+
+.color-indicator {
+  display: inline-block;
+  width: 15px; /* Adjust size for color indicator */
+  height: 15px; /* Adjust size for color indicator */
+  border-radius: 50%; /* Makes it circular */
+  margin-right: 5px; /* Space between indicators */
+}
+
+.card-body {
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+.w-color {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.card-footer {
+  padding: 15px;
+  background: #f1f1f1;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+button[mat-dialog-close] {
+  background-color: rgb(255, 193, 7);
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+button[mat-dialog-close]:hover {
+  background-color: rgb(255, 162, 0);
+  transform: scale(1.05);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 15px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}

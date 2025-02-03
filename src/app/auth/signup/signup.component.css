@@ -1,0 +1,348 @@
+/* @import url(https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap); */
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.validation-message {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.main-parent-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding: 12px;
+  position: relative;
+  background-color: #fff !important;
+}
+
+/* 
+Responsive adjustment for smaller screens */
+@media screen and (max-width: 600px) {
+  .main-parent-div {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    padding: 8px;
+  }
+  .main-parent-div {
+    margin-top: 10px ;
+    height: auto !important;
+  }
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  place-items: center;
+  background: #000;
+  width: min(700px, 95%);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust grid layout for smaller screens */
+@media screen and (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
+
+.left-side {
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px 0 0 20px;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 32px;
+}
+
+.btn-group .btn,
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.btn-group .btn {
+  column-gap: 4px;
+  width: max-content;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border: 2px solid #6b7280;
+  border-radius: 5px;
+  background-color: #f6f6f6;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    background-color 0.5s,
+    color 0.5s;
+}
+
+.btn-group .btn:hover {
+  background-color: #007bff;
+  color: #fff;
+  transform: scale(1.02);
+}
+
+.btn-group .btn:active {
+  transform: scale(0.97);
+}
+
+.btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.logo {
+  justify-content: center;
+  background: #f6f6f6;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.or,
+input {
+  font-weight: 600;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.or {
+  position: relative;
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1rem;
+}
+
+.or::after,
+.or::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #000;
+}
+
+.or::before {
+  left: 0;
+}
+
+.or::after {
+  right: 0;
+}
+
+input {
+  outline: 0;
+  background-color: white;
+  margin: 4px 0 18px;
+  width: 100%;
+  padding: 20px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.5s ease;
+}
+input::placeholder {
+  color: #2c2c2c; /* Replace 'gray' with your desired color */
+  opacity: 1; /* Ensures the color is fully applied */
+}
+
+/* For better cross-browser support */
+input:-ms-input-placeholder { /* IE 10-11 */
+  color: #2c2c2c;
+}
+
+input::-ms-input-placeholder { /* Edge */
+  color: #2c2c2c;
+}
+label {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.login-btn {
+  margin: 12px 0 24px;
+  background-color: #537ba7;
+  color: #fff;
+  border: none;
+}
+
+.login-btn:hover {
+  background-color: #537ba7;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+h2,
+label {
+  font-weight: 600;
+}
+
+
+.login-link:hover,
+a:hover {
+  color: #0d85b9;
+}
+
+.right-side {
+  background: #f89cab !important;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  width: 88%;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #fff !important;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+input:focus {
+  border: 2px solid #537ba7;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.validation-message {
+  font-size: 0.85rem;
+  color: #e3342f;
+  margin-top: -12px;
+  margin-bottom: 12px;
+}
+
+.login-btn {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  background-color: #537ba7;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  margin-top: 16px;
+}
+
+.links {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+.login-link {
+  color: #fff !important;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.4s ease;
+}
+
+/* Smaller screen adjustments */
+@media (max-width: 320px) {
+  .main-parent-div {
+    height: 185vh;
+  }
+
+  .right-side {
+    padding: 10px;
+    height: auto;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Further responsiveness for small and large screens */
+@media screen and (max-width: 768px) {
+  .main-parent-div {
+    height: auto;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .left-side {
+    height: 200px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .right-side {
+    padding: 10px;
+  }
+}
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group-text {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+}
+.input-group-append {
+  height: 30px;
+  cursor: pointer;
+  background-color: black;
+  margin-bottom: -3px;
+  border: none;
+  padding: 0.5rem;
+}
+.mat-icon{
+  color: pink;
+  margin-top: -3px;
+}

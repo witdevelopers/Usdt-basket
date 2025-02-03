@@ -1,0 +1,24 @@
+/* Styling for the inbox title */
+.title {
+  font-size: 24px; /* Set font size */
+  font-weight: bold; /* Make the font bold */
+  color: #007bff; /* Set the text color to a blue shade */
+  margin-bottom: 20px; /* Add some space below the title */
+  text-align: center; /* Center the title */
+  text-transform: uppercase; /* Capitalize all letters */
+  letter-spacing: 1px; /* Add spacing between letters */
+}
+
+/* Optional: Add a bottom border to make it stand out */
+.title {
+  border-bottom: 2px solid #007bff; /* Add a blue bottom border */
+  padding-bottom: 10px; /* Add space below the title */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px; /* Reduce font size on smaller screens */
+    text-align: left; /* Align the text to the left */
+  }
+}

@@ -1,0 +1,97 @@
+/* General Card Styles */
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* Card Header Styles */
+.card-head {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Card Body Styles */
+.card-body {
+  padding: 20px;
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Label Styles */
+.control-label {
+  font-weight: bold;
+}
+
+/* Input and Select Styles */
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+}
+
+/* Button Styles */
+.btn {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+}
+
+/* Table Styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #dee2e6;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .col-md-10 {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .control-label {
+    margin-bottom: 5px;
+  }
+}
+.primary {
+  background-color: #17a2b8 !important;
+}
+.mb-3x {
+  margin-bottom: 10px !important; /* Use !important to override any other styles */
+}

@@ -1,0 +1,44 @@
+<div class="table-responsive">
+  <h2 class="title">Inbox Messages</h2>
+
+  <!-- Check if there are any messages -->
+  <div *ngIf="messages.length > 0">
+    <table class="table table-bordered table-striped panel">
+      <thead>
+        <tr>
+          <th>Sr No</th>
+          <th>From ID</th>
+          <th>Subject</th>
+          <th>Message</th>
+          <th>Received On</th>
+          <th>Read Status</th>
+          <th *ngIf="isVisible">Actions</th>
+          <!-- New column for actions -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of messages">
+          <td>{{ message.srno }}</td>
+          <td>{{ message.fromId }}</td>
+          <td>{{ message.subject }}</td>
+          <td>{{ message.message }}</td>
+          <td>{{ message.receivedOn | date: "medium" }}</td>
+          <td>{{ message.isRead ? "Yes" : "No" }}</td>
+          <td *ngIf="isVisible">
+            <button
+              class="btn btn-danger"
+              (click)="deleteMessage(message.messageId)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Display a message when there are no messages -->
+  <div *ngIf="messages.length <= 0">
+    <label>No data found yet!</label>
+  </div>
+</div>

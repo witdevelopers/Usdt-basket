@@ -1,0 +1,124 @@
+<!-- <p>mining-income works!</p> -->
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="card card-box">
+        <div class="card-head">
+          <header>Leadership Bonus</header>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isVisible">
+            <div class="form-group row">
+              <label class="col-md-3 control-label" for="filterInput"
+                >User ID:</label
+              >
+              <div class="col-md-6">
+                <input
+                  id="filterInput"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="filterUserId"
+                  placeholder="Enter User ID"
+                />
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group row">
+            <label class="col-md-3 control-label">From Date</label>
+            <div class="col-md-6">
+              <input
+                type="date"
+                [(ngModel)]="startDate"
+                (change)="onFilterChange()"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 control-label">To Date</label>
+            <div class="col-md-6">
+              <input
+                type="date"
+                [(ngModel)]="endDate"
+                (change)="onFilterChange()"
+                class="form-control"
+              />
+            </div>
+          </div>
+  
+          <div class="form-group row mb-3">
+            <!-- 'mb-3' is roughly 1rem or 16px -->
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-6 d-flex justify-content-center mb-3">
+              <button class="btn btn-info" (click)="getRoiIncome()">
+                View Details
+              </button>
+            </div>
+  
+            <div
+              class="d-flex justify-content-center"
+              *ngIf="filteredDirects.length > 0"
+            >
+              <div
+                class="d-flex justify-content-center mt-3"
+                *ngIf="filteredDirects.length > 0"
+              >
+                <button
+                  mat-raised-button
+                  class="primary"
+                  (click)="OnPreviousClick(); getRoiIncome()"
+                >
+                  Prev
+                </button>
+                <button
+                  mat-raised-button
+                  class="primary"
+                  (click)="OnNextClick(); getRoiIncome()"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+  
+          <div class="table-responsive mt-3">
+            @if (filteredDirects.length > 0) {
+              <table class="table table-bordered table-striped panel">
+                <thead>
+                  <tr>
+                    <th>S.N</th>
+                    
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>On Amount</th>
+                    
+                    <th>Income</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let leader of filteredDirects; let i = index">
+                    <td>{{ leader.srno }}</td>
+                   
+                    <td>{{ leader.userId }}</td>
+                    <td>{{ leader.name }}</td>
+                    <td>{{ leader.totalBusiness }}</td>                  
+                    <td>{{ leader.income }}{{paymentToken}}</td>            
+                    <td>{{ leader.onDate | date:'yyyy-MM-dd' }}</td>     
+                  </tr>
+                </tbody>
+              </table>
+            }
+            <!-- Display all messages from API -->
+            <div *ngFor="let message of apiMessages">
+              <div class="text-center" *ngIf="message">
+                <label>{{ message }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

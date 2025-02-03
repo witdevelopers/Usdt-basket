@@ -1,0 +1,171 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Transaction History</header>
+      </div>
+      <div class="card-body">
+        <!-- User ID filter visible for admin -->
+        <div *ngIf="isVisible" class="form-group row">
+          <label class="col-md-3 control-label" for="filterInput"
+            >User ID:</label
+          >
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filterUserId"
+              (change)="onUserIdChange()"
+              placeholder="Enter User ID"
+              required
+            />
+            <div *ngIf="invalidUserId" class="text-danger">
+              {{ invalidUserMessage }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Display user name for valid User ID -->
+        <div *ngIf="userName" class="form-group row">
+          <label class="col-md-3 control-label">User Name:</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              [value]="userName"
+              disabled
+            />
+          </div>
+        </div>
+
+        <!-- Date filters -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input
+              type="date"
+              [(ngModel)]="startDate"
+              (change)="onFilterChange()"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input
+              type="date"
+              [(ngModel)]="endDate"
+              (change)="onFilterChange()"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Wallet filter -->
+        <div *ngIf="wallets.length > 0" class="form-group row">
+          <label class="col-md-3 control-label">Select Wallet</label>
+          <div class="col-md-6">
+            <select
+              [(ngModel)]="walletFilter"
+              (change)="onFilterChange()"
+              class="form-control"
+              required
+            >
+              <option *ngFor="let wallet of wallets" [value]="wallet.id">
+                {{ wallet.walletName }}
+              </option>
+            </select>
+
+            <div *ngIf="!walletFilter" class="text-danger">
+              Please select a wallet.
+            </div>
+          </div>
+        </div>
+
+        <!-- View button -->
+        <div
+          class="form-group row"
+          style="text-align: center; margin-top: 20px"
+        >
+          <div class="col-md-12">
+            <button (click)="viewTransactions()" class="btn btn-primary">
+              View
+            </button>
+          </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div *ngIf="MiningIncome.length > 0" style="margin-top: 20px">
+          <!-- Pagination Controls -->
+          <div
+            class="pagination-controls"
+            style="display: flex; justify-content: center; margin-bottom: 20px"
+          >
+            <button
+              (click)="prevPage()"
+              [disabled]="PageNo <= 1"
+              class="btn btn-secondary"
+            >
+              Previous
+            </button>
+            <span style="margin: 0 15px"
+              >Page {{ PageNo }} of {{ totalPages }}</span
+            >
+            <button
+              (click)="nextPage()"
+              [disabled]="PageNo >= totalPages"
+              class="btn btn-secondary"
+            >
+              Next
+            </button>
+          </div>
+
+          <!-- Transactions Table -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Transaction Type</th>
+                  <th>Amount</th>
+                  <th>Balance</th>
+                  <th>Transaction Remarks</th>
+                  <th>Transaction Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaction of paginatedData">
+                  <td>{{ transaction.srno }}</td>
+                  <td>{{ transaction.userId }}</td>
+                  <td>{{ transaction.name }}</td>
+                  <td>{{ transaction.type }}</td>
+                  <td>{{ paymentToken }}{{ transaction.amount }}</td>
+                  <td>{{ paymentToken }}{{ transaction.balance }}</td>
+                  <td>{{ transaction.transactionRemarks }}</td>
+                  <td>{{ transaction.ondate }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- No transactions message -->
+        <!-- Show response message when no transactions are found -->
+        <div
+          *ngIf="MiningIncome.length === 0 && responseMessage"
+          style="text-align: center; margin-top: 20px"
+        >
+          <div class="text-danger">
+            {{ responseMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

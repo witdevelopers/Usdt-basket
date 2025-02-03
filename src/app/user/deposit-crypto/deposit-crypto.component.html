@@ -1,0 +1,73 @@
+<div class="deposit-container">
+  <div class="card-head">
+    <header>DEPOSIT</header>
+  </div>
+
+
+  <!-- Crypto selection -->
+  <div class="crypto-options">
+    <div
+      class="crypto-option"
+      *ngFor="let crypto of cryptoOptions"
+      (click)="selectCrypto(crypto)"
+      [class.selected]="selectedCrypto === crypto"
+    >
+      <img [src]="crypto.imagePath" alt="{{ crypto.name }} icon" />
+      <p>{{ crypto.displayName }}</p>
+    </div>
+  </div>
+
+  <!-- Conversion rate -->
+  <div class="conversion-rate" *ngIf="selectedCrypto">
+    <p>
+      1 {{ selectedCrypto.chain }} ~ {{ conversionRate | number: "1.4-4" }} USD
+    </p>
+  </div>
+
+  <!-- Input amount -->
+  <div class="input-container">
+    <label for="amountInput">Enter amount:</label>
+    <input
+      id="amountInput"
+      type="text"
+      [(ngModel)]="amount"
+      (input)="updateAddress()"
+      placeholder="Enter amount"
+      [ngClass]="{ 'is-invalid': isSubmitted }"
+    />
+    <p *ngIf="isSubmitted && !amount" class="text-danger">
+      Amount is required.
+    </p>
+    <!-- <p *ngIf="isSubmitted && amount && isNaN(amount)" class="text-danger">Amount must be a valid number.</p> -->
+
+    <p>
+      Amount to send = {{ convertedAmount | number: "1.8-8" }}
+      {{ selectedCrypto?.chain }}
+    </p>
+
+    <div *ngIf="isQrCodeVisible">
+      <qrcode
+        [qrdata]="qrCodeData"
+        [width]="256"
+        [errorCorrectionLevel]="'M'"
+      ></qrcode>
+      <div *ngIf="selectedCrypto && convertedAmount > 0">
+        <h4>Deposit Address:</h4>
+        <p id="depositAddress">
+          <strong>{{ selectedCrypto.chain }}:</strong>
+          <span *ngIf="selectedCrypto.chain === 'BSC'">{{
+            userDepositAddresses?.depositBSCAddress
+          }}</span>
+          <span *ngIf="selectedCrypto.chain === 'MATIC'">{{
+            userDepositAddresses?.depositMATICAddress
+          }}</span>
+        </p>
+        <button (click)="copyAddress()">Copy Address</button>
+      </div>
+    </div>
+
+    <button *ngIf="!isQrCodeVisible" (click)="confirmDeposit()">Confirm</button>
+  </div>
+
+  <!-- Deposit address display -->
+</div>

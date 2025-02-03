@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Generate PIN</header>
+      </div>
+
+      <div class="card-body">
+        <!-- Conditionally show UserId input for Admins -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="userId">Enter User ID:</label>
+          <div class="col-md-6">
+            <input type="text" id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID"
+              (blur)="validateUserId()" required />
+            <div *ngIf="userIdErrorMessage" class="text-danger mt-1">
+              {{ userIdErrorMessage }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="userId">Name:</label>
+          <div class="col-md-6">
+            <input type="text" id="Name" class="form-control" [(ngModel)]="fullName" placeholder="Name" readonly />
+            <div *ngIf="userIdErrorMessage" class="text-danger mt-1">
+              {{ userIdErrorMessage }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Package selection dropdown -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="packageId">Select Package:</label>
+          <div class="col-md-6">
+            <select id="packageId" class="form-control" [(ngModel)]="packageId" (change)="onPackageChange()"
+              [ngClass]="{ 'is-invalid': isSubmitted && !packageId }" required>
+              <option value="" disabled>Select a Package</option>
+              <option *ngFor="let pkg of packages" [value]="pkg.srno">
+                {{ pkg.description }}
+              </option>
+            </select>
+            <!-- Error message -->
+            <div *ngIf="isSubmitted && !packageId" class="text-danger">
+              Package selection is required.
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="Amount">Amount:</label>
+          <div class="col-md-6">
+            <input 
+              type="number" 
+              id="Amount" 
+              class="form-control" 
+              [(ngModel)]="Amount" 
+              [min]="selectedPackage?.minRange" 
+              [max]="selectedPackage?.maxRange" 
+              placeholder="Enter amount"
+              (input)="onAmountChange()"
+            />
+            <!-- Error message -->
+            <div *ngIf="Amount && selectedPackage && (Amount < selectedPackage.minRange || Amount > selectedPackage.maxRange)" class="text-danger">
+              Amount must be between {{ selectedPackage?.minRange }} and {{ selectedPackage?.maxRange }}.
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        
+
+
+        <!-- NoOfPins input -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="noOfPins">Number of Pins:</label>
+          <div class="col-md-6">
+            <input type="text" id="noOfPins" class="form-control" [(ngModel)]="noOfPins"
+              placeholder="Enter Number of Pins" [ngClass]="{ 'is-invalid': isSubmitted && !noOfPins }" required />
+            <!-- Error message -->
+            <div *ngIf="isSubmitted && !noOfPins" class="text-danger">
+              Number of Pins is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Remarks input -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label" for="remarks">Remarks:</label>
+          <div class="col-md-6">
+            <input type="text" id="remarks" class="form-control" [(ngModel)]="remarks" placeholder="Enter Remarks" />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-info" (click)="onSubmit()">
+            Generate PIN
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

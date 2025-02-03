@@ -1,0 +1,256 @@
+<header class="header" role="banner">
+  <div class="headerLeft">
+    <button
+      class="sidebarToggle"
+      (click)="toggleSidebar()"
+      aria-label="Toggle Sidebar"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div
+      class="logoContainer"
+      [routerLink]="'/home'"
+      role="link"
+      aria-label="Home"
+    >
+      <img src="assets/images/wit.png" alt="Company Logo" />
+    </div>
+  </div>
+
+  <!-- Search Box -->
+  <div id="searchInputContainer" class="searchInputContainer" role="search">
+    <div class="searchBox">
+      <i class="fa-solid fa-magnifying-glass searchIcon" aria-hidden="true"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearch($event)"
+        placeholder="Search for products, brands and more"
+        aria-label="Search products"
+      />
+      <div
+        *ngIf="searchTerm"
+        class="inputCloseSearch"
+        (click)="clearSearch()"
+        aria-label="Clear Search"
+      >
+        <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
+      </div>
+    </div>
+
+    <div
+      *ngIf="productByKeyword.length > 0"
+      class="searchRecentModal"
+      aria-live="polite"
+    >
+      <div
+        *ngFor="let pbk of productByKeyword; trackBy: trackByProductId"
+        class="listofRecent"
+      >
+        <h3 (click)="navigateToProduct(pbk.productId)">
+          {{ pbk.productName }}
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="headerRight">
+    <div
+      *ngIf="isLoggedIn"
+      class="becomeSupplierContainer"
+      style="cursor: pointer"
+    >
+      <p
+        style="font-size: 12px !important"
+        routerLink="/usershop/affiliate"
+        (click)="toggleSidebar()"
+      >
+        AFFILIATE MENU <i class="fal fa-sign-in"></i>
+      </p>
+      <!-- Add this code where you want to display the affiliate menu -->
+    </div>
+    <p
+      *ngIf="isAdmin"
+      style="font-size: 12px !important"
+      routerLink="/usershop/affiliate"
+      (click)="toggleSidebar()"
+    >
+      AFFILIATE MENU <i class="fal fa-sign-in"></i>
+    </p>
+
+    <div class="profileAndCart" style="display: flex; gap: 15px">
+      <p
+        *ngIf="isLoggedIn"
+        class="mobile-Alogin"
+        routerLink="/usershop/affiliate"
+      >
+        AFFILIATE MENU<i class="fal fa-sign-in"></i>
+      </p>
+
+      <div class="downloadContainer">
+        <div class="mobileIcon top" (click)="togglePopup()">
+          <i class="fa-regular fa-user"></i>
+        </div>
+
+        <div *ngIf="isPopupVisible" class="downloadHoverBtnContainer">
+          <ng-container *ngIf="!isLoggedIn && !isAdmin; else loggedInActions">
+            <a [routerLink]="'/signin'" (click)="closePopup()">
+              <button class="downloadBtn">Sign In</button>
+            </a>
+          </ng-container>
+          <ng-template #loggedInActions>
+            <a routerLink="/usershop/profile"
+              ><button class="downloadBtn">Profile</button></a
+            >
+            <a (click)="signOut(); closePopup()">
+              <button class="downloadBtn">Sign Out</button>
+            </a>
+            <a [routerLink]="'/usershop/order-history'" (click)="closePopup()">
+              <button class="downloadBtn">My Order</button>
+            </a>
+            <a
+              [routerLink]="'/usershop/change-password'"
+              (click)="closePopup()"
+            >
+              <button class="downloadBtn">Change Password</button>
+            </a>
+          </ng-template>
+        </div>
+      </div>
+
+      <div
+        class="CartContainer"
+        (click)="onAddToCart()"
+        style="cursor: pointer"
+      >
+        <div class="CartIcon top">
+          <i class="fa-solid fa-cart-arrow-down"></i>
+          <div *ngIf="cartQuantity > 0" class="cart-quantity">
+            {{ cartQuantity }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Search Box for Smaller Screens -->
+<div
+  id="searchInputContainerSmaller"
+  class="searchInputContainer"
+  role="search"
+>
+  <div class="searchBox">
+    <i class="fa-solid fa-magnifying-glass searchIcon" aria-hidden="true"></i>
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch($event)"
+      placeholder="Search for products, brands and more"
+      aria-label="Search products"
+    />
+    <div
+      *ngIf="searchTerm"
+      class="inputCloseSearch"
+      (click)="clearSearch()"
+      aria-label="Clear Search"
+    >
+      <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
+    </div>
+  </div>
+
+  <div
+    *ngIf="productByKeyword.length > 0"
+    class="searchRecentModal"
+    aria-live="polite"
+  >
+    <div
+      *ngFor="let pbk of productByKeyword; trackBy: trackByProductId"
+      class="listofRecent"
+    >
+      <h3 (click)="navigateToProduct(pbk.productId)">
+        {{ pbk.productName }}
+      </h3>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<aside class="sidebar" [class.active]="isSidebarOpen" role="complementary">
+  <button
+    class="closeSidebar"
+    (click)="toggleSidebar()"
+    aria-label="Close Sidebar"
+  >
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <ul class="list-group">
+    <li class="headerName">
+      <div class="menuItem">
+        <span><a [routerLink]="['/home']">Home</a></span>
+        <i class="fa-solid fa-house"></i>
+      </div>
+    </li>
+    <li
+      *ngFor="let c of mainCategory; trackBy: trackByCategoryId"
+      class="headerName"
+      (click)="toggleSubCategory(c.categoryID)"
+    >
+      <div class="menuItem">
+        <span>{{ c.categoryName }}</span>
+        <i
+          class="fa-solid fa-chevron-down"
+          [class.rotate]="isSubCategoryVisible[c.categoryID]"
+        ></i>
+      </div>
+      <div *ngIf="isSubCategoryVisible[c.categoryID]" class="subMenu">
+        <div
+          *ngFor="
+            let subcat of subCategory[c.categoryID];
+            trackBy: trackBySubCategoryId
+          "
+        >
+          <div
+            class="submenuItem"
+            (click)="
+              toggleDropdown(subcat.categoryID); $event.stopPropagation()
+            "
+          >
+            <a [routerLink]="['/subcategory', subcat.categoryID]">{{
+              subcat.categoryName
+            }}</a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</aside>
+
+<!-- Navigation -->
+<nav role="navigation">
+  <ul>
+    <li
+      *ngFor="let c of mainCategory; trackBy: trackByCategoryId"
+      class="submenustyle"
+      (mouseenter)="showSubCategory(c.categoryID)"
+      (mouseleave)="hideSubCategory(c.categoryID)"
+      (click)="toggleSubCategory(c.categoryID)"
+      [ngClass]="{ open: isSubCategoryVisible[c.categoryID] }"
+    >
+      {{ c.categoryName }} <i class="fa-solid fa-angle-down"></i>
+      <div *ngIf="isSubCategoryVisible[c.categoryID]" class="subMenunormal">
+        <div
+          *ngFor="
+            let subcat of subCategory[c.categoryID];
+            trackBy: trackBySubCategoryId
+          "
+          class="submenuListnormal"
+        >
+          <a [routerLink]="['/subcategory', subcat.categoryID]">{{
+            subcat.categoryName
+          }}</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nav>

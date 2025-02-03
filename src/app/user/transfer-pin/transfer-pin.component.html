@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Transfer Pin(s)</header>
+      </div>
+      <div class="card-body">
+        <div class="grid-7">
+          <h6>
+            <span class="error-1"></span>
+          </h6>
+        </div>
+
+        <!-- User Id -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">User Id</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              name="userIdForTopup"
+              [(ngModel)]="userIdForTopup"
+              (ngModelChange)="onUserIdChange($event)"
+              #userIdInput="ngModel"
+              required
+            />
+            <div class="error-message" *ngIf="userIdInput.errors?.['required']">
+              User Id is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- User Name -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">User Name</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              placeholder="User Name"
+              class="form-control"
+              name="userName"
+              [value]="fullName ? fullName : ''"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Package</label>
+          <div class="col-md-6">
+            <select
+              name="package"
+              class="form-control"
+              [(ngModel)]="selectedPackage"
+              (change)="onPackageChange()"
+            >
+              <option
+                *ngFor="let package of topUpPackages"
+                [value]="package.srno"
+              >
+                {{ package.description }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">No. Of Pins Available</label>
+          <div class="col-md-6">
+            <span class="form-control">{{
+              availablePinQuantity !== null ? availablePinQuantity : "0"
+            }}</span>
+          </div>
+        </div>
+
+        <!-- To User Id -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To User Id</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              name="toUserId"
+              [(ngModel)]="toUserId"
+              (ngModelChange)="onToUserIdChange($event)"
+              #toUserIdInput="ngModel"
+              required
+            />
+            <div
+              class="error-message"
+              *ngIf="toUserIdInput.errors?.['required']"
+            >
+              Please Enter UserID
+            </div>
+          </div>
+        </div>
+
+        <!-- To User Name -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To User Name</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              placeholder="To User Name"
+              class="form-control"
+              name="toUserName"
+              [value]="toUserName ? toUserName : ''"
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">No. Of Pins To Transfer</label>
+          <div class="col-md-6">
+            <input
+              name="pinCount"
+              type="number"
+              [(ngModel)]="noOfPinsToTransfer"
+              class="form-control"
+              min="1"
+              [value]="1"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6">
+            <button class="btn btn-info" (click)="onSubmit()">
+              Transfer Pin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<body>
+  @if (orderDetails) {
+    <div>
+      <h2>Order Details for Order No: {{ orderDetails?.order?.orderNo }}</h2>
+      <div class="order-summary">
+        <p>
+          <strong>Order Date:</strong>
+          {{ orderDetails?.order?.orderDate | date }}
+        </p>
+        <p><strong>Status:</strong> {{ orderDetails?.order?.orderStatus }}</p>
+        <p>
+          <strong>Total Amount:</strong>
+          {{ orderDetails?.order?.orderAmount | currency: "INR" }}
+        </p>
+      </div>
+      <h3>Products Ordered:</h3>
+      @for (item of orderDetails?.orderDetails; track item) {
+        <div class="order-item">
+          <div class="item-info">
+            <h4>{{ item.productName }}</h4>
+            <p>SKU Code: {{ item.skuCode }}</p>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>Price: {{ item.price | currency: "INR" }}</p>
+            <p>Discount Price: {{ item.discountPrice | currency: "INR" }}</p>
+            <p>Total Amount: {{ item.totalAmount | currency: "INR" }}</p>
+          </div>
+        </div>
+      }
+      <h3>Payment Details:</h3>
+      @for (payment of orderDetails?.payments; track payment) {
+        <div>
+          <p><strong>Payment Method:</strong> {{ payment.paymentMethod }}</p>
+          <p>
+            <strong>Amount Paid:</strong>
+            {{ payment.amountPaid | currency: "INR" }}
+          </p>
+        </div>
+      }
+      <h3>Shipping Address:</h3>
+      <div>
+        <p><strong>Name:</strong> {{ orderDetails?.shippingAddress?.name }}</p>
+        <p>
+          <strong>Phone:</strong> {{ orderDetails?.shippingAddress?.phone }}
+        </p>
+        <p>
+          <strong>Address:</strong>
+          {{ orderDetails?.shippingAddress?.address1 }}
+        </p>
+        @if (orderDetails?.shippingAddress?.address2) {
+          <p>
+            <strong>Address 2:</strong>
+            {{ orderDetails?.shippingAddress?.address2 }}
+          </p>
+        }
+        <p>
+          <strong>Postal Code:</strong>
+          {{ orderDetails?.shippingAddress?.postalCode }}
+        </p>
+        <p>
+          <strong>City:</strong> {{ orderDetails?.shippingAddress?.cityName }}
+        </p>
+        <p>
+          <strong>State:</strong> {{ orderDetails?.shippingAddress?.stateId }}
+        </p>
+        <p>
+          <strong>Country:</strong>
+          {{ orderDetails?.shippingAddress?.countryId }}
+        </p>
+      </div>
+    </div>
+  } @else {
+    @if (errorMessage) {
+      <p>{{ errorMessage }}</p>
+    }
+  }
+</body>

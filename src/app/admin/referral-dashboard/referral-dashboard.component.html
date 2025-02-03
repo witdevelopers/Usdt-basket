@@ -1,0 +1,398 @@
+<div id="divDashboardContainer" *ngIf="userInfo">
+  <!-- <div class="row justify-content-center">
+      Dashboard
+    </div> -->
+  <div class="row">
+    <!-- <div class="col-xl-3 col-md-4 ">
+            <div class="widget-section">
+                <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+                    <div class="infobox card-body">
+                        <div class="infobox-icon">
+                            <img src="assets/8.png" />
+                        </div>
+                        <div class="infobox-data">
+                            <h5 class="font-weight-normal">Dividend Income Flushes out in</h5>
+                            <span> <br>
+                                <span id="timer">00:00:00:00</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <!-- <div class="col-xl-3 col-md-4 ">
+            <div class="widget-section">
+                <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+                    <div class="infobox card-body">
+                        <div class="infobox-icon">
+                            <img src="assets/5.png" />
+                        </div>
+                        <div class="infobox-data">
+                            <h5 class="font-weight-normal">Deposits Details</h5>
+                            <div class="text-center">
+                                <p>My Deposit : {{userInfo?.packageValue}} </p>
+                                <p>Total Withdrawal : {{userInfo?.amountWithdrawn}} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/2.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Directs Details</h5>
+              <div class="text-center">
+                <p>Total Directs : {{ userInfo?.totalDirects }}</p>
+                <p>Directs Business : {{ userInfo?.directInvestment }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/3.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Team Details</h5>
+              <div class="text-center">
+                <p>Total Team : {{ userInfo?.totalTeam }}</p>
+                <p>Team Business : {{ userInfo?.teamBusiness }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/5.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Level Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description"
+                  >{{ userInfo?.levelIncome }}
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/2.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Cashback Income</h5>
+              <div class="text-center">
+                <span class="progress-description">
+                  {{ userInfo?.roiIncome }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-xl-3 col-md-4 ">
+            <div class="widget-section">
+                <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+                    <div class="infobox card-body">
+                        <div class="infobox-icon">
+                            <img src="assets/2.png" />
+                        </div>
+                        <div class="infobox-data">
+                            <h5 class="font-weight-normal" style="color: blue;">Left Team</h5>
+                            <div class="text-center">
+                                <p style="color: blue;">50  Pool : {{userInfo?.holdingIncome_Pool1}} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <!-- <div class="col-xl-3 col-md-4 ">
+            <div class="widget-section">
+                <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+                    <div class="infobox card-body">
+                        <div class="infobox-icon">
+                            <img src="assets/4.png" />
+                        </div>
+                        <div class="infobox-data">
+                            <h5 class="font-weight-normal">Direct Income</h5>
+                            <h2 class="mb-0">
+                                <span class="progress-description">{{userInfo?.directIncome}} </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <!-- <div class="col-xl-3 col-md-4 ">
+            <div class="widget-section">
+                <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+                    <div class="infobox card-body">
+                        <div class="infobox-icon">
+                            <img src="assets/6.png" />
+                        </div>
+                        <div class="infobox-data">
+                            <h5 class="font-weight-normal">Royalty Income</h5>
+                            <h2 class="mb-0">
+                                <span class="progress-description">{{userInfo?.royaltyIncome}} </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/2.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Total Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description"
+                  >{{ userInfo?.totalIncome }}
+                </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/F.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Wallet Balance</h5>
+              <div class="text-center">
+                <p class="progress-description">
+                  {{ userInfo?.walletBalance }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div
+          class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger"
+        >
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/F.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Package</h5>
+              <div class="text-center">
+                <!-- <p>100  : {{time_100}}</p> -->
+                <p class="progress-description">{{ userInfo?.packageValue }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -----------------------------------------card up side------------------------- -->
+<div class="w-auto">
+  <div class="row">
+    <div class="col-sm-12 col-md-6" *ngIf="userType !== 'Admin'">
+      <!-- 2 cards per row -->
+      <div class="form-group mt-3">
+        <div class="card border-radius-8 p-2 shadow">
+          <label><b>Referral Link</b></label>
+          <label
+            id="lblReferralLink"
+            class="form-control font-size-12 overflow-auto"
+            >{{ website }}/#/auth/signup?referralId={{ userAddress }}</label
+          >
+          <div class="form-group1 row">
+            <div class="col-12 text-right">
+              <button
+                onclick="CopyToClipboard('lblReferralLink'); return false;"
+                mat-raised-button
+                class="btn-custom-color"
+              >
+                <i class="fa fa-copy"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-sm-12 col-md-6"> 
+                <div class="form-group mt-3">
+                    <div class="card border-radius-8 p-2 shadow">
+                        <label><b>Wallet Address</b></label>
+                        <label id="lblWalletAddress" class="form-control font-size-12 overflow-auto">{{ userAddress }}</label>
+                        <div class="form-group1 row">
+                            <div class="col-12 text-right">
+                                <button onclick="CopyToClipboard('lblWalletAddress'); return false;" mat-raised-button class="btn-custom-color">
+                                    <i class="fa fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6"> 
+                <div class="form-group mt-3">
+                    <div class="card p-2 shadow border-radius-8">
+                        <label><b>Smart Contract Address</b></label>
+                        <label id="lblSmartContractAddress" class="form-control font-size-12 overflow-auto">{{ contractAddress }}</label>
+                        <div class="form-group1 row">
+                            <div class="col-12 text-right">
+                                <button onclick="CopyToClipboard('lblSmartContractAddress'); return false;" mat-raised-button class="btn-custom-color">
+                                    <i class="fa fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     -->
+    <!-- </div> -->
+
+    <div *ngIf="AdminInfo">
+      <h1>Admin Info</h1>
+      <table
+        border="1"
+        cellpadding="10"
+        cellspacing="0"
+        style="border-collapse: collapse; width: 400px"
+      >
+        <tbody>
+          <tr>
+            <th class="table-border">Total Joining</th>
+            <td class="table-border">{{ AdminInfo.totalJoining }}</td>
+          </tr>
+          <tr>
+            <th class="table-border">Today's Joining</th>
+            <td class="table-border">{{ AdminInfo.todayTotalJoining }}</td>
+          </tr>
+          <tr>
+            <th class="table-border">Today's Income</th>
+            <td class="table-border">
+              {{ AdminInfo.todayIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Total Income</th>
+            <td class="table-border">
+              {{ AdminInfo.totalIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Today's ROI Income</th>
+            <td class="table-border">
+              {{ AdminInfo.todayROIIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Total ROI Income</th>
+            <td class="table-border">
+              {{ AdminInfo.totalROIIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Today's Level ROI Income</th>
+            <td class="table-border">
+              {{ AdminInfo.todayLevelROIIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Total Level ROI Income</th>
+            <td class="table-border">
+              {{ AdminInfo.totalLevelROIIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Today's Direct Income</th>
+            <td class="table-border">
+              {{ AdminInfo.todayDirectIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Total Direct Income</th>
+            <td class="table-border">
+              {{ AdminInfo.totalDirectIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Today's Level Income</th>
+            <td class="table-border">
+              {{ AdminInfo.todayLevelIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Total Level Income</th>
+            <td class="table-border">
+              {{ AdminInfo.totalLevelIncome | currency: "INR" }}
+            </td>
+          </tr>
+          <tr>
+            <th class="table-border">Total Investment</th>
+            <td class="table-border">
+              {{ AdminInfo.totalInvestment | currency: "INR" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

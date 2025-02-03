@@ -1,0 +1,100 @@
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-head {
+  background: rgb(135, 159, 16);
+  padding: 16px;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card-head header {
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-body {
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+ol.list {
+  list-style-type: upper-roman;
+  font-weight: 900;
+}
+
+.list-group {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-group-item {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  position: relative;
+}
+
+.list-group-item:hover {
+  background-color: #e2e6ea;
+  transform: translateY(-2px);
+}
+
+.list-group-item::marker {
+  content: none;
+}
+
+.card-footer {
+  padding: 15px;
+  background: #f1f1f1;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+button[mat-flat-button] {
+  background-color: rgb(255, 0, 0);
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+button[mat-flat-button]:hover {
+  background-color: rgb(255, 162, 0);
+  transform: scale(1.05);
+}
+
+.cdk-overlay-pane {
+  backdrop-filter: blur(5px);
+}
+
+.mat-mdc-dialog-container {
+  max-width: 600px;
+  margin: 30px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 15px;
+  }
+
+  .list-group-item {
+    padding: 10px;
+  }
+}

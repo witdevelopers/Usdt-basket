@@ -1,0 +1,283 @@
+<div class="container mt-4">
+  <div class="card card-box">
+    <div class="card-head">
+      <header>Edit Profile</header>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <!-- User ID (visible only for Admin) -->
+        <div class="form-group row" *ngIf="isAdmin">
+          <label class="col-md-3 control-label">User ID</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtUserId"
+              placeholder="Enter User ID"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtUserId').invalid &&
+                  (profileForm.get('txtUserId').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtUserId').invalid &&
+                (profileForm.get('txtUserId').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">User ID is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">First Name</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtFirstName"
+              placeholder="Enter First Name"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtFirstName').invalid &&
+                  (profileForm.get('txtFirstName').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtFirstName').invalid &&
+                (profileForm.get('txtFirstName').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">First Name is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Address</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtAddress"
+              placeholder="Enter Address"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtAddress').invalid &&
+                  (profileForm.get('txtAddress').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtAddress').invalid &&
+                (profileForm.get('txtAddress').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">Address is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- District -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">District</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtDistrict"
+              placeholder="Enter District"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtDistrict').invalid &&
+                  (profileForm.get('txtDistrict').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtDistrict').invalid &&
+                (profileForm.get('txtDistrict').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">District is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Country -->
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Country</label>
+          <div class="col-md-6">
+            <select
+              class="form-control"
+              formControlName="ddlCountry"
+              [(ngModel)]="countryId"
+              (change)="onCountryChange(countryId)"
+              required
+            >
+              <option value="" selected>Select Country</option>
+              <!-- Placeholder -->
+              <option *ngFor="let country of countries" [value]="country.id">
+                {{ country.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                profileForm.get('ddlCountry').invalid &&
+                (profileForm.get('ddlCountry').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">Country is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- State -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">State</label>
+          <div class="col-md-6">
+            <select
+              class="form-control"
+              formControlName="ddlState"
+              [(ngModel)]="stateId"
+              required
+            >
+              <option value="" selected>Select State</option>
+              <!-- Placeholder -->
+              <option *ngFor="let state of states" [value]="state.id">
+                {{ state.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                profileForm.get('ddlState').invalid &&
+                (profileForm.get('ddlState').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">State is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pin Code -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Pin Code</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtPinCode"
+              placeholder="Enter Pin Code"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtPinCode').invalid &&
+                  (profileForm.get('txtPinCode').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtPinCode').invalid &&
+                (profileForm.get('txtPinCode').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">Pin Code is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Mobile</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtMobile"
+              placeholder="Enter Mobile Number"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtMobile').invalid &&
+                  (profileForm.get('txtMobile').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtMobile').invalid &&
+                (profileForm.get('txtMobile').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger"
+                >Mobile number is required and must be 10 digits.</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Email</label>
+          <div class="col-md-6">
+            <input
+              type="email"
+              class="form-control"
+              formControlName="txtEmail"
+              placeholder="Enter Email"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtEmail').invalid &&
+                  (profileForm.get('txtEmail').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtEmail').invalid &&
+                (profileForm.get('txtEmail').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">Valid Email is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAN Number -->
+        <div class="form-group row">
+          <label class="col-md-3 control-label">PAN Number</label>
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="txtPanNo"
+              placeholder="Enter PAN Number"
+              [ngClass]="{
+                'is-invalid':
+                  profileForm.get('txtPanNo').invalid &&
+                  (profileForm.get('txtPanNo').touched || isSubmitted),
+              }"
+            />
+            <div
+              *ngIf="
+                profileForm.get('txtPanNo').invalid &&
+                (profileForm.get('txtPanNo').touched || isSubmitted)
+              "
+            >
+              <small class="text-danger">PAN Number is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group row">
+          <div class="col-md-6 offset-md-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

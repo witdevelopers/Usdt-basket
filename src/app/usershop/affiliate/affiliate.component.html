@@ -1,0 +1,199 @@
+<mat-toolbar class="navbar">
+  <span class="app-title">
+    <a href="auth/login"><img src="assets/images/logo.png" /></a>
+  </span>
+  
+  <div class="space-buttton">
+    <a style="font-size: 15px; color: white !important;" type="button" mat-button (click)="toggleSidenav(sidenav)"
+      class="top-corner-icon">
+      <i class="fa-solid fa-bars"></i>
+    </a>
+  </div>
+
+  <span class="spacer"></span>
+  <div class="lang"> <mat-icon>language</mat-icon><div id="google_translate_element"></div></div>
+ 
+  <a mat-icon-button class="menu-button" (click)="toggleSidenav(sidenav)">
+    <mat-icon>menu</mat-icon>
+  </a>
+
+ 
+  
+  <mat-icon class="exit-icon" (click)="signOut()">exit_to_app</mat-icon>
+  
+</mat-toolbar>
+
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav [mode]="isSmallScreen ? 'over' : 'side'" [(opened)]="isSidenavOpen" class="sidenav">
+    <!-- Close button for small screens only -->
+    <button class="closetop" mat-icon-button (click)="sidenav.close()" style="margin: 0 0 0 80%" *ngIf="isSmallScreen">
+      <mat-icon style="color: #fff">close</mat-icon>
+    </button>
+
+    <mat-accordion [multi]="false">
+      <mat-expansion-panel style="margin-top: 10%;" disabled>
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">dashboard</mat-icon>
+          <mat-panel-title routerLink="/usershop/affiliate" (click)="onNavItemClick(sidenav)">
+            <span>Dashboard</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+     
+      <mat-expansion-panel *ngIf="isAdmin" disabled  routerLink="/user/user-search">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">trending_up</mat-icon>
+          <mat-panel-title >
+            <span>User Search</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="isAdmin" disabled  routerLink="/user/topup">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">trending_up</mat-icon>
+          <mat-panel-title >
+            <span>Topup</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngif disabled  routerLink="/user/token">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">trending_up</mat-icon>
+          <mat-panel-title >
+            <span>Re-invest</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled  routerLink="/user/deposit-crypto-deatils">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">arrow_downward</mat-icon>
+          <mat-panel-title >
+            <span>Deposit Details</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled  routerLink="/user/team">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">group</mat-icon>
+          <mat-panel-title >
+            <span>Team</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled  routerLink="/user/directs">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">group_add</mat-icon>
+          <mat-panel-title >
+            <span>Referral Details</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled  routerLink="/user/business-count-details">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">business</mat-icon>
+          <mat-panel-title >
+            <span>Business Details</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled  routerLink="/user/direct-income">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">attach_money</mat-icon>
+          <mat-panel-title >
+            <span>Direct Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled routerLink="/user/matrix-income">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">leaderboard</mat-icon>
+          <mat-panel-title routerLink="/user/matrix-income">
+            <span routerLink="/user/matrix-income">Level Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled routerLink="/user/community-income">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">groups</mat-icon>
+          <mat-panel-title routerLink="/user/community-income">
+            <span routerLink="/user/community-income">Community Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+
+      <mat-expansion-panel *ngIf="isAdmin"  disabled routerLink="/user/LeaderShip-Income-Details">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">military_tech</mat-icon>
+          <mat-panel-title routerLink="/user/LeaderShip-Income-Details">
+            <span routerLink="/user/LeaderShip-Income-Details">LeaderShip Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel  *ngIf="isAdmin" disabled routerLink="/user/Credit-Debit">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">account_balance_wallet</mat-icon>
+          <mat-panel-title routerLink="/user/Credit-Debit">
+            <span routerLink="/user/Credit-Debit">Credit/Debit</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel  *ngIf="!isAdmin" disabled routerLink="/user/withdraw-dividend">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">account_balance_wallet</mat-icon>
+          <mat-panel-title routerLink="/user/withdraw-dividend">
+            <span routerLink="/user/withdraw-dividend">Withdrawal</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled (click)="ContrectAddress()">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">description</mat-icon> 
+          <mat-panel-title (click)="ContrectAddress()">
+            <span (click)="ContrectAddress()">Contrect Address</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel disabled (click)="signOut()">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">logout</mat-icon>
+          <mat-panel-title (click)="signOut()">
+            <span (click)="signOut()">Log out</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <!-- <canvas id="bubble-canvas"></canvas> -->
+    <div class="container">
+      <router-outlet (activate)="showComponents = false" (deactivate)="showComponents = true"></router-outlet>
+      <app-dashboard *ngIf="showComponents"></app-dashboard>
+      <app-admin-dashboard *ngIf="isAdmin && showComponents"></app-admin-dashboard>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-toolbar class="custom-footer">
+  <div class="footer-text">
+    © 2024 <a href="https://monetaworld.co/" target="_blank" rel="noopener noreferrer">Monetaworld.co</a>. All rights
+    reserved.
+  </div>
+  <span class="spacer"></span>
+</mat-toolbar>

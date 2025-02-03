@@ -1,0 +1,224 @@
+@if (!isCartEmpty) {
+  <div class="container">
+    <div class="payment_details">
+      <h1>Payment Information</h1>
+      <div class="details_card">
+        <div class="name_address">
+          <div class="first_lastName">
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="newAddress.name"
+              placeholder="Name"
+              required
+              #name="ngModel"
+              [ngClass]="{ 'input-error': name.invalid && name.touched }"
+            />
+            <input
+              type="text"
+              name="phone"
+              [(ngModel)]="newAddress.phone"
+              placeholder="Phone Number"
+              required
+              #phone="ngModel"
+              [ngClass]="{ 'input-error': phone.invalid && phone.touched }"
+            />
+          </div>
+
+          <div class="address">
+            <input
+              type="text"
+              name="address1"
+              [(ngModel)]="newAddress.address1"
+              placeholder="Address"
+              required
+              #address1="ngModel"
+              [ngClass]="{
+                'input-error': address1.invalid && address1.touched,
+              }"
+            />
+            <input
+              type="number"
+              name="postalCode"
+              [(ngModel)]="newAddress.postalCode"
+              placeholder="Postal Code"
+              required
+              #postalCode="ngModel"
+              [ngClass]="{
+                'input-error': postalCode.invalid && postalCode.touched,
+              }"
+            />
+            <input
+              type="text"
+              name="cityName"
+              [(ngModel)]="newAddress.cityName"
+              placeholder="City"
+              required
+              #cityName="ngModel"
+              [ngClass]="{
+                'input-error': cityName.invalid && cityName.touched,
+              }"
+            />
+          </div>
+
+          <div class="address_type">
+            <select
+              class="slct"
+              name="countryId"
+              [(ngModel)]="newAddress.countryId"
+              required
+              (change)="onCountryChange(newAddress.countryId)"
+              #countryId="ngModel"
+              [ngClass]="{
+                'input-error': countryId.invalid && countryId.touched,
+              }"
+            >
+              <option value="" disabled>Select Country</option>
+              <option *ngFor="let country of countries" [value]="country.id">
+                {{ country.name }}
+              </option>
+            </select>
+
+            <select
+              class="slct"
+              name="stateId"
+              [(ngModel)]="newAddress.stateId"
+              required
+              *ngIf="states.length > 0"
+              #stateId="ngModel"
+              [ngClass]="{ 'input-error': stateId.invalid && stateId.touched }"
+            >
+              <option value="" disabled>Select State</option>
+              <option *ngFor="let state of states" [value]="state.id">
+                {{ state.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="address_type_select">
+            <label for="addressType">Address Type</label>
+            <select
+              class="slct"
+              name="addressType"
+              [(ngModel)]="newAddress.addressType"
+              required
+              #addressType="ngModel"
+              [ngClass]="{
+                'input-error': addressType.invalid && addressType.touched,
+              }"
+            >
+              <option value="" disabled>Select Address Type</option>
+              <option value="1">Home</option>
+              <option value="2">Office</option>
+              <option value="3">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="address-actions">
+          @if (!isEditMode) {
+            <button
+              class="edit1"
+              (click)="createAddress()"
+              [disabled]="isFormInvalid()"
+            >
+              Add Address
+            </button>
+          }
+          @if (isEditMode) {
+            <button class="edit" (click)="updateAddress()">
+              Update Address
+            </button>
+          }
+        </div>
+        <br />
+        <hr />
+        <br />
+        <h1>Shipping Details</h1>
+        @if (addresses.length > 0) {
+          <div class="address_cards">
+            @for (address of addresses; track address) {
+              <div
+                class="address-card"
+                [class.selected]="selectedAddress === address"
+              >
+                <div class="address-details">
+                  <input
+                    class="margin1"
+                    type="radio"
+                    name="address"
+                    [checked]="selectedAddress === address"
+                    (change)="selectAddress(address.addressId)"
+                  />
+                  <h5 class="addr">Saved Addresses</h5>
+                  <p class="addr">Name: {{ address.fullName }}</p>
+                  <p class="addr">
+                    Address: {{ address.addressType }}, {{ address.address1 }},
+                    {{ address.cityName }}, {{ address.postalCode }}
+                  </p>
+                  <p class="addr">Phone No.: {{ address.phone }}</p>
+                </div>
+                <div class="card-actions">
+                  <button class="edit" (click)="editAddress(address)">
+                    Edit
+                  </button>
+                  <button
+                    class="delete"
+                    (click)="deleteAddress(address.addressId)"
+                  >
+                    Delete
+                  </button>
+                  @if (selectedAddress !== address) {
+                    <button
+                      class="select"
+                      name="address"
+                      (change)="selectAddress(address.addressId)"
+                    >
+                      Select
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+        <div class="proced_payment">
+          <button
+            class="proceed-payment"
+            (click)="checkout()"
+            [disabled]="!isAddressSelected"
+          >
+            Proceed to Payment
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="order_summary">
+      <div class="summary_card">
+        <h1>Order Summary</h1>
+        <div class="cart_totals">
+          <div class="sumrytotal">
+            <p>Items:</p>
+            <p>{{ totalQuantity }}</p>
+          </div>
+          <div class="sumrytotal">
+            <p>Total:</p>
+            <p>Rs. {{ totalCartPrice | number: "1.2-2" }}</p>
+          </div>
+          <div class="sumrytotal">
+            <p>Discount:</p>
+            <p>
+              Rs. {{ totalCartPrice - totalDiscountPrice | number: "1.2-2" }}
+            </p>
+          </div>
+          <br />
+          <hr />
+          <div class="sumrytotal">
+            <p>Order Total:</p>
+            <p>Rs. {{ totalDiscountPrice | number: "1.2-2" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

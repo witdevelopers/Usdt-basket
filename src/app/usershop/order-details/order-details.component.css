@@ -1,0 +1,90 @@
+/* Base Styles */
+body {
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Order Summary Section */
+.order-summary {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Headings */
+h2,
+h3,
+h4 {
+  color: #333;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+}
+
+h4 {
+  font-size: 16px;
+  margin: 10px 0 5px;
+}
+
+/* Paragraphs */
+p {
+  margin: 5px 0;
+}
+
+/* Order Items */
+.order-item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+/* Item Info */
+.item-info {
+  border-left: 5px solid #007bff;
+  padding-left: 10px;
+}
+
+/* Payment and Shipping Details */
+h3 + div {
+  margin-top: 10px;
+}
+
+/* No Data Section */
+ng-template {
+  color: #ff0000;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .order-summary,
+  .order-item {
+    padding: 15px;
+  }
+}

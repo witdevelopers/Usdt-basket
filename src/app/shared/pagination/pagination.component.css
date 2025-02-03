@@ -1,0 +1,38 @@
+.page_btns {
+  border: 1px solid #009688;
+  border-radius: 7px;
+  width: auto;
+  line-height: 30px;
+  /* display: flex;
+    justify-content: space-between;; */
+}
+
+.page_btns i:not(:last-child) {
+  border-right: 1px solid #009688;
+  border-radius: 0px;
+}
+
+.page_btns i.isActive {
+  background-color: #009688;
+  color: #fff;
+}
+.van-page-d {
+  cursor: text;
+}
+
+.page_box {
+  width: 90%;
+}
+
+@media screen and (max-width: 768px) {
+  .pagination-items .page-item-size {
+    margin: 5px 0px 5px 0px;
+  }
+  .pagination-items .page-item-pages {
+    text-align: center;
+  }
+}
+
+.pagination-items {
+  padding: 10px 0px 10px 0px;
+}

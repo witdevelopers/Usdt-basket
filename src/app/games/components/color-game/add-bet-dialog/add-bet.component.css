@@ -1,0 +1,174 @@
+/* Card Styles */
+.card {
+  background: #ffffff; /* White background for contrast */
+  border-radius: 0.5rem; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: transform 0.2s; /* Smooth hover transition */
+  margin: 20px; /* Spacing around the card */
+}
+
+/* Card Head Styles */
+.card-head {
+  padding: 15px; /* Padding inside the card head */
+  color: white; /* Text color */
+  border-radius: 0.5rem 0.5rem 0 0; /* Rounded corners on the top */
+}
+
+/* Card Body Styles */
+.card-body {
+  padding: 20px; /* Consistent padding for the card body */
+  background-color: #ffffff; /* White background for contrast */
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 1.5rem; /* Space between form groups */
+}
+
+/* Label Styles */
+.pl-2 {
+  padding-left: 0.5rem; /* Left padding for labels */
+}
+
+.font20 {
+  font-size: 1.25rem; /* Increased font size for better readability */
+  font-weight: bold; /* Bold text for labels */
+}
+
+/* List Group Styles */
+.list-group-horizontal {
+  display: flex; /* Flex layout for horizontal list */
+  list-style: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.list-group-horizontal li {
+  margin-right: 10px; /* Space between items */
+  padding: 10px 15px; /* Padding for list items */
+  border: 1px solid #ddd; /* Light border for separation */
+  border-radius: 5px; /* Rounded corners for list items */
+  transition:
+    background-color 0.3s,
+    transform 0.2s; /* Smooth transition */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 1rem; /* Font size for list items */
+}
+
+.list-group-horizontal li:hover {
+  background-color: #007bff; /* Highlight on hover */
+  color: white; /* Change text color on hover */
+}
+
+/* Active List Item Style */
+.list-group-horizontal li.active {
+  background-color: #4caf50; /* Active item color */
+  color: white; /* Active text color */
+}
+
+/* Input Styles */
+input[type="number"] {
+  text-align: center; /* Center text in input */
+  font-size: 1.5rem; /* Increased font size for readability */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding inside input */
+  margin: 0 5px; /* Space around input */
+}
+
+/* Total Amount Style */
+.total-amount {
+  font-weight: bold; /* Bold text for total amount */
+  font-size: 1.25rem; /* Increased font size for visibility */
+}
+
+/* Footer Styles */
+.card-footer {
+  padding: 20px; /* Padding inside the footer */
+  background-color: #f8f9fa; /* Light background for footer */
+  border-top: 1px solid #e0e0e0; /* Light border for separation */
+  border-radius: 0 0 0.5rem 0.5rem; /* Rounded bottom corners */
+}
+
+/* Agree Box Styles */
+.agree_box {
+  margin-bottom: 20px; /* Space below checkbox */
+  display: flex;
+  align-items: center;
+}
+
+/* Checkbox Styles */
+.agree_box .mat-mdc-checkbox {
+  margin-right: 10px; /* Space between checkbox and label */
+}
+
+.van-checkbox__label {
+  font-size: 1rem; /* Slightly larger font for readability */
+  color: #333; /* Darker color for label */
+}
+
+.greencolor {
+  color: #4caf50; /* Green color for 'PRESALE RULE' text */
+  font-weight: bold; /* Emphasize important text */
+}
+
+/* Button Styles */
+.footer-btn button {
+  margin: 0 10px; /* Space between buttons */
+  padding: 10px 20px; /* Padding for buttons */
+  border-radius: 5px; /* Slightly rounded corners */
+  font-size: 1rem; /* Standard font size */
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease; /* Smooth transition on hover */
+}
+
+/* Cancel Button (Warning) */
+button[color="warn"] {
+  background-color: #f44336; /* Red background for cancel button */
+  color: #fff; /* White text */
+}
+
+button[color="warn"]:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Confirm Button (Primary) */
+button[color="primary"] {
+  background-color: #2196f3; /* Blue background for confirm button */
+  color: #fff; /* White text */
+}
+
+button[color="primary"]:hover {
+  background-color: #1976d2; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Button (FAB) Styles */
+button[mat-fab] {
+  background-color: #4caf50; /* Primary button color */
+  color: white; /* White text for buttons */
+  border-radius: 50%; /* Circular buttons */
+  width: 56px; /* Width for fab buttons */
+  height: 56px; /* Height for fab buttons */
+  transition:
+    background-color 0.3s,
+    transform 0.2s; /* Smooth transition */
+}
+
+button[mat-fab]:hover {
+  background-color: #388e3c; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .card {
+    margin: 10px; /* Reduced margin on smaller screens */
+  }
+
+  .list-group-horizontal {
+    flex-direction: column; /* Stack items vertically on small screens */
+  }
+}

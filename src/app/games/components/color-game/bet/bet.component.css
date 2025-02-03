@@ -1,0 +1,193 @@
+/* Global styles */
+body {
+  background-color: #f4f4f4;
+}
+
+/* Card styles */
+.card {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  background-color: #f7f7f7;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 15px;
+  border-radius: 12px 12px 0 0;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+/* Button styles */
+button {
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.disable-bet {
+  background: #dcdcdc !important;
+  color: #333 !important;
+  cursor: not-allowed;
+}
+
+.bet-color .mat-primary {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.bet-color .mat-accent {
+  background-color: #9c27b0;
+  color: #fff;
+}
+
+.bet-color .mat-warning {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.bet-numbers button {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.btn-continue button {
+  float: right;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead tr th,
+table tbody tr td {
+  font-size: 18px;
+  padding: 10px;
+  text-align: left;
+}
+
+.ng-star-inserted h5 {
+  color: #fff;
+  font-size: 18px;
+}
+
+/* Direct card styles */
+.direct-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 1rem;
+  transition: transform 0.2s;
+}
+
+.direct-card:hover {
+  transform: translateY(-5px);
+}
+
+.direct-card img {
+  border-radius: 50%;
+  border: 2px solid #5246c0;
+}
+
+/* Badge styles */
+.badge {
+  margin: 0.2rem;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .card {
+    padding: 10px;
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+
+  table thead tr th,
+  table tbody tr td {
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+/* Row Styling */
+.row.bet-color {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Button Styling */
+button[mat-flat-button] {
+  padding: 10px 15px !important;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+/* Button Colors */
+button[color="primary"] {
+  background-color: #00a048;
+  color: white;
+}
+
+button[color="accent"] {
+  background-color: #9c27b0;
+  color: white;
+}
+
+button[color="warning"] {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Button Hover Effects */
+button[color="primary"]:hover {
+  background-color: #1976d2;
+  transform: translateY(-2px);
+}
+
+button[color="accent"]:hover {
+  background-color: #7b1fa2;
+  transform: translateY(-2px);
+}
+
+button[color="warning"]:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+}
+
+/* Width and Margin */
+.w-100 {
+  width: 100%;
+}
+
+.m-1 {
+  margin: 0.25rem;
+}
+
+.p-0 {
+  padding: 0;
+}

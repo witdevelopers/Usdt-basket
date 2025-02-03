@@ -1,0 +1,86 @@
+<form #registerForm="ngForm">
+    <h3 class="h3">Sign Up</h3>
+    <!-- <div class="form-group text-center">
+      <b>Buy Price: 1 Matic ~ {{maticToToken}} {{tokenSymbol}}</b>
+  </div> -->
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Sponsor Id or Address (optional)</mat-label>
+            <input matInput name="sponsorId" [(ngModel)]=sponsorId #txtSponsorIdOrAddress=ngModel
+                onkeyup="this.value = this.value.replace(/[^0-9a-z]/i, '')" />
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Your Address</mat-label>
+            <input matInput name="account" [(ngModel)]=account required #txtIdOrAddress=ngModel disabled=true
+                onkeyup="this.value = this.value.replace(/[^0-9a-z]/i, '')" />
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Select Package</mat-label>
+            <mat-select [(ngModel)]="selectedPackage" [ngModelOptions]="{standalone: true}" required
+                #packageControl="ngModel" (selectionChange)="onPackageChange()">
+                <mat-option *ngFor="let package of packages" [value]="package">
+                    {{ package.description }} ({{ package.minRange }} To {{ package.maxRange }})
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <app-validation-message [control]="packageControl"></app-validation-message>
+    </div>
+
+
+    <div class="form-group">
+        <mat-form-field appearance="fill">
+            <mat-label>USDT Amount</mat-label>
+            <input matInput [(ngModel)]="amount" [ngModelOptions]="{standalone: true}" required #txtAmount="ngModel"
+                type="number" [min]="selectedPackage?.minRange" [max]="selectedPackage?.maxRange" id="txtAmount" />
+        </mat-form-field>
+        <app-validation-message [control]="txtAmount"></app-validation-message>
+    </div>
+
+    <!-- <div class="form-group">
+        <div class="form-group row">
+            <div class="col-md-4 col-sm-4 col-4" *ngFor="let pack of packages">
+                <button class="btn btn-warning m-2" (click)=register(pack)>Join with {{pack.description}}</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4 col-sm-4 col-4">
+                <button class="btn btn-warning" (click)=addAmount(10)>+10 Matic</button>
+            </div>
+            <div class="col-md-4 col-sm-4 col-4">
+                <button class="btn btn-warning" (click)=addAmount(50)>+50 Matic</button>
+            </div>
+            <div class="col-md-4 col-sm-4 col-4">
+                <button class="btn btn-warning" (click)=addAmount(100)>+100 Matic</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4 col-sm-4 col-4">
+                <button class="btn btn-warning" (click)=addAmount(500)>+500 Matic</button>
+            </div>
+            <div class="col-md-4 col-sm-4 col-4">
+                <button class="btn btn-warning" (click)=addAmount(1000)>+1000 Matic</button>
+            </div>
+            <div class="col-md-4 col-sm-4 col-4">
+                <button class="btn btn-warning" (click)=addAmount(2000)>+2000 Matic</button>
+            </div>
+        </div>
+    </div> -->
+    <div class="form-group" [ngStyle]="{'display': (account!=''?'block':'none')}">
+        <button mat-raised-button type="button" class="btn-theme btn-md" id="btnRegister"
+            [disabled]=registerForm.invalid (click)=register()>Join</button>
+    </div>
+    <div class="form-group" [ngStyle]="{'display': (account==''?'block':'none')}">
+        <button mat-raised-button type="button" class="btn-theme btn-md" id="btnRegister"
+            [disabled]=registerForm.invalid (click)=connect()>Connect Wallet</button>
+    </div>
+</form>
+<div class="form-group mt-5">
+    <h4><b>Already joined?</b></h4><button mat-raised-button class="btn-md btn-theme btn-register"
+        (click)=loginClick()>Sign In </button>
+</div>

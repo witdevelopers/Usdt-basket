@@ -1,0 +1,156 @@
+.deposit-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+.card-head {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.crypto-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.crypto-option {
+  cursor: pointer;
+  text-align: center;
+  height: 115px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 24px;
+  transition:
+    transform 0.2s,
+    background-color 0.3s ease;
+  width: 210px;
+  background-color: #f9f9f9;
+}
+
+.crypto-option:hover {
+  transform: scale(1.05);
+  background-color: #f1f1f1;
+}
+
+.crypto-option.selected {
+  border-color: #007bff;
+  background-color: #e6f7ff;
+}
+
+.crypto-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 5px;
+}
+
+.input-container {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Change to responsive width */
+  max-width: 400px;
+  margin: 0 auto; /* Center the input */
+  display: block;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.conversion-rate p {
+  margin-top: 30px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .crypto-options {
+    /* flex-direction: column; */
+    gap: 20px;
+    flex-wrap: nowrap;
+  }
+
+  .crypto-option {
+    width: 100%;
+    max-width: 250px; /* Better size on smaller screens */
+    margin: 0 auto;
+  }
+
+  input[type="text"] {
+    max-width: 100%;
+  }
+
+  .input-container {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 10px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .crypto-option {
+    width: 100%;
+    height: auto;
+  }
+
+  input[type="text"] {
+    width: 50%;
+  }
+
+  .input-container {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 10px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+  }
+}

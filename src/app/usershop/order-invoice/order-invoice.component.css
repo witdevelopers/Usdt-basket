@@ -1,0 +1,140 @@
+/* Invoice Container */
+.invoice-container {
+  width: 700px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 30px;
+  color: #333;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.invoice-header h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.invoice-header .invoice-id {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #007bff;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+/* Order Info & Shipping Info */
+.order-info p,
+.shipping-info p,
+.order-items p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.order-info,
+.shipping-info,
+.order-items {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Table for Order Items */
+.order-items table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.order-items th,
+.order-items td {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-items th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+/* Total Section */
+.total-amount {
+  text-align: right;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 20px;
+}
+
+/* Buttons */
+.button-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.download-btn,
+.home-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.download-btn:hover,
+.home-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Footer */
+.invoice-footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .invoice-container,
+  .invoice-container * {
+    visibility: visible;
+  }
+  .invoice-container {
+    margin: 0;
+    width: 100%;
+  }
+  .button-container {
+    display: none;
+  }
+}

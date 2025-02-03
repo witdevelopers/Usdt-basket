@@ -1,0 +1,49 @@
+.w-color {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+  margin: 0 2px;
+}
+
+.w-red {
+  background-color: red;
+}
+.w-green {
+  background-color: green;
+}
+.w-violet {
+  background-color: violet;
+}
+
+.w-title {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+table thead tr th,
+table tbody tr td span {
+  font-size: 25px;
+}
+table thead tr th,
+table tbody tr td {
+  text-align: center;
+}
+
+.card {
+  border: none;
+}
+table[_ngcontent-gff-c229]
+  thead[_ngcontent-gff-c229]
+  tr[_ngcontent-gff-c229]
+  th[_ngcontent-gff-c229],
+table[_ngcontent-gff-c229]
+  tbody[_ngcontent-gff-c229]
+  tr[_ngcontent-gff-c229]
+  td[_ngcontent-gff-c229]
+  span[_ngcontent-gff-c229] {
+  font-size: 16px;
+}

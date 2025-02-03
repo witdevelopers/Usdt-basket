@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+      <div class="card card-box">
+          <div class="card-head">
+              <header>Withdrawal History</header>
+          </div>
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-bordered table-striped panel">
+                      <thead>
+                          <tr>
+                              <th>S.N</th>
+                              <th>Date</th>
+                              <th>UserId</th>
+                              <th>Amount</th>
+                              <th>Deduction</th> 
+                              <th>Received Amount</th> 
+                              <th>Status</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let income of directs">
+                              <td>{{income.srno}}</td>
+                              <td>{{income.ondate | date:'dd/MM/yyyy h:mm' }}</td>
+                              <td>{{income.userId}}</td>
+                              <td>{{income.amount}}</td>
+                              <td>{{income.deduction}}</td> 
+                              <td>{{income.amountWithdrawn}}</td> 
+                              <td>{{income.status}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

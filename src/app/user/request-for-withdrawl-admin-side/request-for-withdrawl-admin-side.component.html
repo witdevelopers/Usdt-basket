@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>View Withdrawal Requests</header>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()" class="filter-form">
+          <!-- User ID -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="userId">User ID</label>
+            <div class="col-md-6">
+              <input type="text" id="userId" class="form-control" formControlName="userId"
+                placeholder="Enter User ID" />
+            </div>
+          </div>
+
+          <!-- From Date -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="fromDate">From Date</label>
+            <div class="col-md-6">
+              <input type="date" id="fromDate" class="form-control" formControlName="fromDate" />
+            </div>
+          </div>
+
+          <!-- To Date -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="toDate">To Date</label>
+            <div class="col-md-6">
+              <input type="date" id="toDate" class="form-control" formControlName="toDate" />
+            </div>
+          </div>
+
+          <!-- Status Dropdown -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="status">Status</label>
+            <div class="col-md-6">
+              <select id="status" class="form-control" formControlName="status">
+                <option value="" disabled selected>Select Status</option>
+                <!-- Placeholder -->
+                <option value="-1">All</option>
+                <option value="0">Pending</option>
+                <option value="1">Approved</option>
+                <option value="2">Rejected</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-6">
+              <button type="submit" class="btn btn-primary">
+                Filter Requests
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Table for displaying filtered investment requests -->
+      <div *ngIf="investmentRequests.length > 0" class="table-responsive mt-3">
+        <table class="table table-bordered table-striped panel">
+          <thead class="thead-light">
+            <tr>
+              <th>Sr. No.</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th *ngIf="!isCryptoSystem">Bank Details</th>
+              <th *ngIf="isCryptoSystem">Withdrawal BSC Address</th>
+              <th>Amount</th>
+              <th>Deduction</th>
+              <th>Amount Withdrawn</th>
+              <!-- <th>Mode of Payment</th>
+                <th>Reference No.</th> -->
+              <th>Remarks</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of investmentRequests; let i = index">
+              <td>{{ request.srno }}</td>
+
+              <td>{{ request.userId }}</td>
+              <td>{{ request.name }}</td>
+              <td *ngIf="!isCryptoSystem" [innerHTML]="request.bankDetails"></td>
+              <td *ngIf="isCryptoSystem" [innerHTML]="request.withdrawalBSCAddress"></td>
+              <td>{{ request.amount | currency }}</td>
+              <td>{{ request.deduction }}</td>
+              <td>{{ request.amountWithdrawn }}</td>
+              <!-- <td>{{ request.modeOfPayment }}</td>
+                <td>{{ request.referenceNo }}</td> -->
+              <td>{{ request.adminRemarks }}</td>
+              <td>{{ request.ondate | date: "short" }}</td>
+              <td>{{ request.status }}</td>
+              <td>
+                <button class="btn btn-success btn-sm" (click)="approveRequest(request)" *ngIf="
+                    request.status !== 'Approved' &&
+                    request.status !== 'Rejected'
+                  ">
+                  Approve
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="rejectRequest(request)" *ngIf="
+                    request.status !== 'Approved' &&
+                    request.status !== 'Rejected'
+                  ">
+                  Reject
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="investmentRequests.length === 0" style="background-color: #9ab3e7" class="text-center mt-3">
+        <label>{{ noDataMessage }}</label>
+      </div>
+    </div>
+  </div>
+</div>

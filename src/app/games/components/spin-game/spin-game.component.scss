@@ -1,0 +1,184 @@
+.color-circle {
+  display: inline-block;
+  border-radius: 20px;
+  width: 15px;
+  height: 15px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.card-header-manual {
+  background-color: red;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 0;
+  margin-top: 0;
+}
+.ng-star-inserted h5 {
+  color: #fff;
+  margin-bottom: 0;
+}
+.card-header {
+  padding: 0.75rem 0;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-head header {
+  display: inline-block;
+  padding: 11px 20px;
+  vertical-align: middle;
+  line-height: 17px;
+  font-size: 16px;
+  color: #000000;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  text-align: center;
+  line-height: 26px;
+  margin-top: 35px;
+}
+.number h1 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.selected-color {
+  display: flex;
+  justify-content: center;
+}
+.card-body[_ngcontent-jek-c228] {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 0;
+  margin-top: 26px;
+  padding: 0 10px 0 18px;
+}
+.form-group {
+  margin-bottom: 20px;
+  color: #fff;
+  margin-left: 20px;
+}
+
+.list-group-horizontal > .list-group-item + .list-group-item {
+  border-top-width: 1px;
+  border-left-width: 0;
+  color: #000;
+}
+.button-up::after,
+.button-down::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  z-index: 11;
+  display: block;
+  width: 25px;
+  height: 25px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+}
+.button-up::after {
+  top: 20px;
+  transform: rotate(45deg);
+}
+.row .card {
+  margin: 0 15px;
+}
+.spinearrow img {
+  width: 70px;
+  // position: absolute;
+}
+.w-100 {
+  color: white !important;
+}
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #343a40;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+}
+.card-head {
+  background-color: #f8f9fa; /* Light background color */
+  padding: 15px; /* Padding around the header */
+  border-bottom: 2px solid #007bff; /* Bottom border color */
+}
+
+.card-head header {
+  font-size: 1.25rem; /* Larger font size */
+  font-weight: bold; /* Bold font weight */
+  color: #333; /* Text color */
+  text-align: center; /* Centered text */
+  margin: 0; /* Remove default margin */
+}
+.row {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center the content */
+}
+
+.number h1 {
+  font-size: 1.5rem; /* Font size for selected number */
+  color: #333; /* Dark text color */
+  text-align: center; /* Centered text */
+  margin: 0; /* Remove default margin */
+}
+
+button {
+  border-radius: 5px; /* Rounded button corners */
+  font-size: 1rem; /* Button font size */
+  color: #fff; /* White text color */
+  transition: background 0.3s ease; /* Smooth background transition */
+}
+
+button:hover {
+  background-color: #4a3d9f; /* Darker shade on hover */
+}
+.row.text-center {
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center horizontally */
+  margin-top: 30px; /* Add margin above the row */
+}
+
+.spinearrow {
+  margin-bottom: 20px; /* Space between the arrow and the canvas */
+}
+
+#img_arrow {
+  width: 50px; /* Set a fixed width for the arrow */
+  height: auto; /* Maintain aspect ratio */
+}
+
+canvas p {
+  color: white; /* White text color */
+  margin: 0; /* Remove default margin */
+  font-weight: bold; /* Make text bold */
+}

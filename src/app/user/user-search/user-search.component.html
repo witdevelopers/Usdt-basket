@@ -1,0 +1,154 @@
+<!-- Search Form -->
+<form #userForm="ngForm" class="user-form">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="card card-box">
+        <div class="card-head">
+          <header>User Search</header>
+        </div>
+
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="userId">User ID</label>
+            <div class="col-md-6">
+              <input type="text" id="userId" class="form-control" [(ngModel)]="userId" name="userId"
+                placeholder="Enter User ID" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="name">Name</label>
+            <div class="col-md-6">
+              <input type="text" id="name" [(ngModel)]="name" name="name" class="form-control"
+                placeholder="Enter Name" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="mobileNo">Mobile No</label>
+            <div class="col-md-6">
+              <input type="text" id="mobileNo" [(ngModel)]="mobileNo" name="mobileNo" class="form-control"
+                placeholder="Enter Mobile No" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="topupStatus">Topup Status</label>
+            <div class="col-md-6">
+              <select id="topupStatus" [(ngModel)]="topupStatus" name="topupStatus" class="form-control">
+                <option value="">Select Status</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="blockedStatus">Blocked Status</label>
+            <div class="col-md-6">
+              <select id="blockedStatus" [(ngModel)]="blockedStatus" name="blockedStatus" class="form-control">
+                <option value="">Select Status</option>
+                <option value="1">Blocked</option>
+                <option value="0">Not Blocked</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="fromDate">From Date</label>
+            <div class="col-md-6">
+              <input type="date" id="fromDate" [(ngModel)]="fromDate" name="fromDate" class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="toDate">To Date</label>
+            <div class="col-md-6">
+              <input type="date" id="toDate" [(ngModel)]="toDate" name="toDate" class="form-control" />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary" (click)="search()">
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="isLoading" class="text-center">Loading...</div>
+
+        <div *ngIf="userData.length > 0" class="table-responsive mt-3">
+          <table class="table table-striped mt-3">
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>Joining Date</th>
+                
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Sponsor Id</th>
+                <th>Sponsor Name</th>
+                <th>Upline Id</th>
+              
+                <th>Upline Name</th>
+                
+                <th>Mobile No</th>
+                <th>Email ID</th>
+                <th>Address</th>
+                <th>District</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Pincode</th>
+                <th>Topup Date</th>
+                <th>Topup Status</th>
+                <th>Block Status</th>
+                <th>Action</th>
+
+                <!-- New Action column -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of userData">
+                <td>{{ user.srno }}</td>
+                <td>{{ user.joiningDate }}</td>
+                <td>{{ user.userId }}</td>
+                <td>{{ user.fullName }}</td>
+                <td>{{ user.sponsorUserId }}</td>
+                <td>{{ user.sponsorUserName }}</td>
+                <td>{{ user.uplineUserId }}</td>
+                
+                <td>{{ user.uplineUserName }}</td>
+               
+                <td>{{ user.userId }}</td>
+                <td>{{ user.emailId }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.district }}</td>
+                <td>{{ user.stateName }}</td>
+                <td>{{ user.countryName }}</td>
+                <td>{{ user.pincode }}</td>
+                <td>{{ user.topupDate }}</td>
+                <td>{{ user.topupStatus }}</td>
+                <td>{{ user.blockStatus }}</td>
+                <td>
+                  <button
+                  class="btn"
+                  [ngClass]="user.blockStatus === 'Inactive' ? 'btn-success' : 'btn-danger'"
+                  (click)="toggleBlockStatus(user.memberId)"
+                >
+                  {{ user.blockStatus === 'Inactive' ? 'Unblock' : 'Block' }}
+                </button>                
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="userData.length < 0 && !isLoading" class="text-center">
+          <p>No data found!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Display Search Results -->

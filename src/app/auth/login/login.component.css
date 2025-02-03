@@ -1,0 +1,81 @@
+
+.h3 {
+  margin: 0 0 25px;
+  font-size: 26px;
+  padding-top: 14px;
+  text-transform: capitalize;
+  padding-bottom: 14px;
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  color: #000;
+}
+
+.btn-theme {
+  background: #ffffff !important;
+  border: none;
+  color: #000000 !important;
+}
+
+.btn-md {
+  cursor: pointer;
+  padding: 10px 50px 8px 50px !important;
+  letter-spacing: 1px !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  height: 45px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  border-radius: 3px;
+  text-transform: uppercase !important;
+  line-height: 0px !important;
+  border-radius: 32px !important;
+}
+
+.btn-register{
+  background: #1c56c8;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-theme:hover{
+  background: #bdc6d8;
+}
+
+.mat-input-element{
+  color: black !important;
+}
+
+mat-form-field{
+  width:100%;
+  background-color: aliceblue;
+}
+
+mat-label{
+  color:black;
+}
+
+.mat-form-field-wrapper{
+  margin-bottom: -1.26em;
+}
+
+.text-danger{
+  color:white !important;
+}
+.ng-star-inserted h5 {
+  color: #0b0e14;
+}
+.form-group {
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.login-box-6{
+  margin: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 35px rgb(0 0 0 / 10%);
+  background: #522ff7 !important;
+}

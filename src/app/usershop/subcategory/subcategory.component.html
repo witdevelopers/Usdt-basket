@@ -1,0 +1,120 @@
+<div class="containr1">
+  <!-- Sidebar (Aside) -->
+  <aside class="sidebar" [class.open]="isFiltersOpen">
+    <h3>Filters</h3>
+
+    <!-- Price Range Filter -->
+    <div class="filter-group">
+      <label for="min-price">Min Price:</label>
+      <input
+        type="number"
+        id="min-price"
+        [(ngModel)]="minPrice"
+        (change)="filterByPrice()"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label for="max-price">Max Price:</label>
+      <input
+        type="number"
+        id="max-price"
+        [(ngModel)]="maxPrice"
+        (change)="filterByPrice()"
+      />
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-group">
+      <label for="category">Category:</label>
+      <select
+        id="category"
+        [(ngModel)]="selectedCategory"
+        (change)="filterByCategory()"
+      >
+        @for (category of categories; track category) {
+          <option [value]="category">{{ category }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Apply and Clear Filters Buttons -->
+    <div class="button-group">
+      <button class="apply-btn" (click)="applyFilters()">Apply Filters</button>
+      <button class="clear-btn" (click)="clearFilters()">Clear Filters</button>
+    </div>
+  </aside>
+
+  <!-- Mobile Filter Button -->
+
+  <button class="mobile-filter-btn mobile-only" (click)="toggleFilters()">
+    {{ isFiltersOpen ? "✖" : "Filter" }}
+    <!-- Change text based on state -->
+  </button>
+  <!-- Product List -->
+  <div class="product-grid">
+    @if (filteredSubcategoryDetails && filteredSubcategoryDetails.length > 0) {
+      <div class="cards-container container">
+        @for (product of filteredSubcategoryDetails; track product) {
+          <div class="card">
+            <div class="card-headr productimg">
+              <img
+                [src]="
+                  product.imageUrl
+                    ? product.imageUrl
+                    : 'https://www.mbp18k.com/Shop//'
+                "
+                alt="{{ product.productName }}"
+                class="card-image"
+                loading="lazy"
+                [routerLink]="['/product', product.productId]"
+              />
+            </div>
+            <div class="card-content">
+              <h5 class="product-name">
+                {{
+                  product.productName.length > 20
+                    ? (product.productName | slice: 0 : 20) + "..."
+                    : product.productName
+                }}
+              </h5>
+              <div class="price-space">
+                <div class="badge-product-sale">
+                  <span class="percent"
+                    >(Save Rs.
+                    {{ product.price - product.discountPrice }} )</span
+                  >
+                </div>
+                <div class="price-info">
+                  <del style="font-size: 10px">Rs. {{ product.price }}</del>
+                  <p style="font-weight: 700; color: black">
+                    Rs: {{ product.discountPrice }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              class="cart-button"
+              (click)="
+                productsInCart.has(product.productId)
+                  ? goToCart()
+                  : addToCart(product.productId, 1, 1)
+              "
+            >
+              <span>{{ getButtonText(product.productId) }}</span>
+              <i
+                class="fas"
+                [ngClass]="
+                  productsInCart.has(product.productId)
+                    ? 'fa-box'
+                    : 'fa-shopping-cart'
+                "
+              ></i>
+            </button>
+            <br />
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

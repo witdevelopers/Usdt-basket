@@ -1,0 +1,136 @@
+<div class="card">
+  <div class="card-head">
+    <header>Withdraw Amount</header>
+  </div>
+
+  <form #withdrawForm="ngForm" (ngSubmit)="onSubmit(withdrawForm)">
+    <!-- User ID Field (Visible only for Admin) -->
+    <div *ngIf="isVisible" class="form-group">
+      <label for="userAddress">User ID</label>
+      <input type="text" id="userAddress" name="userAddress" [(ngModel)]="withdrawalData.address" #userAddress="ngModel"
+        required class="form-control" />
+      <div *ngIf="userAddress.invalid && userAddress.touched" class="error-1">
+        User ID is required.
+      </div>
+    </div>
+
+    <div  class="form-group row">
+      <label class="col-md-3 control-label" for="wallet">Select Wallet</label>
+      <div class="col-md-6">
+        <select class="form-control" name="wallet" [(ngModel)]="selectedWallet" (change)="onWalletChange()"
+          [disabled]="wallets.length === 1">
+          <option *ngFor="let w of wallets" [value]="w.srno">
+            {{ w.walletName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Available Balance -->
+    <div class="form-group row">
+      <label class="col-md-3 control-label" for="balance">Available Balance</label>
+      <div class="col-md-6">
+        <input type="text" id="balance" class="form-control" name="balance" [value]="mainWalletBal" readonly />
+      </div>
+    </div>
+
+    <!-- Amount Field -->
+    <div class="form-group row">
+      <label class="col-md-3 control-label" for="amount">Amount</label>
+      <div class="col-md-6">
+        <input type="number" name="amount" [(ngModel)]="withdrawalData.amount" #amount="ngModel" class="form-control"
+          [max]="mainWalletBal" min="1" required />
+        <!-- Bind Response Message -->
+        <div *ngIf="responseMessage" class="text-danger">
+          {{ responseMessage }}
+        </div>
+
+        <!-- Static Validation Messages (only visible if no responseMessage) -->
+        <div *ngIf="isSubmitted && !responseMessage && withdrawalData.amount < 1" class="text-danger">
+          Please enter an Amount.
+        </div>
+
+        <div *ngIf="isSubmitted && !responseMessage && withdrawalData.amount > mainWalletBal" class="text-danger">
+          Amount exceeds wallet balance.
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Remark Field -->
+    <!-- <div class="form-group row">
+      <label class="col-md-3 control-label" for="remarks">Remark</label>
+      <div class="col-md-6">
+        <input type="text" id="remarks" name="remarks" [(ngModel)]="withdrawalData.remarks" required
+          class="form-control" />
+      </div>
+    </div> -->
+
+    <!-- Submit and Clear Buttons -->
+    <div class="d-flex">
+      <button type="submit" class="btn btn-primary btn-sm primary">
+        Submit
+      </button>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="clearData()">
+        Clear
+      </button>
+    </div>
+  </form>
+
+  <!-- Withdrawal History Button -->
+  <div class="d-flex justify-content-center">
+    <button class="btn-info mt-3" (click)="showWithdrawalHistory()">
+      Show Withdrawal History
+    </button>
+  </div>
+  <!-- Withdrawal History Table -->
+  <div class="table-responsive">
+    <table *ngIf="withdrawalHistory.length > 0" class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>SR No</th>
+          <th>Request ID</th>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Deduction</th>
+          <th>Amount Withdrawn</th>
+          <th>Date</th>
+          <th>Member Remarks</th>
+          <th>Status</th>
+          <th>Withdrawal BSC Address</th>
+          <th>Admin Remarks</th>
+          <th>Accept/Reject Date</th>
+          <th>Link</th>
+          <th>UPI ID</th>
+          <th>GPay</th>
+          <th>PhonePe</th>
+          <th>Bank Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of withdrawalHistory">
+          <td>{{ entry.srno }}</td>
+          <td>{{ entry.requestId }}</td>
+          <td>{{ entry.userId }}</td>
+          <td>{{ entry.name }}</td>
+          <td>{{ entry.amount }}</td>
+          <td>{{ entry.deduction }}</td>
+          <td>{{ entry.amountWithdrawn }}</td>
+          <td>{{ entry.ondate | date: 'short' }}</td>
+          <td>{{ entry.memberRemarks || 'N/A' }}</td>
+          <td>{{ entry.status }}</td>
+          <td>{{ entry.withdrawalBSCAddress || 'N/A' }}</td>
+          <td>{{ entry.adminRemarks || 'N/A' }}</td>
+          <td>{{ entry.acceptRejectDate | date: 'short'  }}</td>
+          <td><a [href]="entry.link" target="_blank">View</a></td>
+          <td>{{ entry.upiId || 'N/A' }}</td>
+          <td>{{ entry.gpay || 'N/A' }}</td>
+          <td>{{ entry.phonePe || 'N/A' }}</td>
+          <td [innerHTML]="entry.bankDetails"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

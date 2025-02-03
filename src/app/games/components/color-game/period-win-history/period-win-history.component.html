@@ -1,0 +1,77 @@
+<div class="card mt-2">
+  <div class="card-head">
+    <header>Win History</header>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped panel">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Price</th>
+            <th>Number</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+
+        @if (periodHistory.data) {
+          <tbody>
+            @for (item of periodHistory.data; track item) {
+              <tr>
+                <td>{{ item.period }}</td>
+                <td>{{ item.price }}</td>
+                <td>
+                  <span [style.color]="getColor(item.color1)">{{
+                    item.number
+                  }}</span>
+                </td>
+                <td>
+                  @if (item.color1) {
+                    <span
+                      class="color-indicator"
+                      [style.background]="getColor(item.color1)"
+                    ></span>
+                  }
+                  @if (item.color2) {
+                    <span
+                      class="color-indicator"
+                      [style.background]="getColor(item.color2)"
+                    ></span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        }
+        @if (periodHistory.data && periodHistory.data.length == 0) {
+          <tbody>
+            <tr>
+              <td colspan="100%">
+                <h3 style="font-weight: bold">No records found</h3>
+              </td>
+            </tr>
+          </tbody>
+        }
+        @if (!periodHistory.data) {
+          <tbody>
+            <tr>
+              <td colspan="100%">
+                <h5 style="font-weight: bold">Fetching data...</h5>
+              </td>
+            </tr>
+          </tbody>
+        }
+      </table>
+      <div class="row mb-3 pl-2">
+        <mat-paginator
+          (page)="onPageChange($event)"
+          [length]="periodHistory.total"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 50, 100]"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

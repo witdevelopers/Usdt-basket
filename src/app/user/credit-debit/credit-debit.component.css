@@ -1,0 +1,126 @@
+/* Card Styling */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.card-header {
+  
+  color: white;
+ 
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Button Styling */
+button {
+  border-radius: 5px;
+  padding: 10px;
+
+  margin: 0 0 0 0 !important;
+}
+
+.btn-success {
+  background-color: #17a2b8;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #17a2b8;
+}
+
+.btn-outline-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Transaction Table */
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  padding: 10px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.thead-dark th {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Error Message Styling */
+.text-danger {
+  font-size: 12px;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.text-center {
+  display: flex;
+  gap: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+  .card {
+    margin: 0 15px;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+}
+
+h4,
+h5 {
+  color: #fff !important;
+}

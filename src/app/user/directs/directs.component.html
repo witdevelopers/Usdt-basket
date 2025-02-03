@@ -1,0 +1,146 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Referral Bonus</header>
+      </div>
+      <div class="card-body">
+        @if (isVisible) {
+          <div class="form-group row">
+            <label class="col-md-3 control-label" for="filterInput"
+              >User ID:</label
+            >
+            <div class="col-md-6">
+              <input
+                id="filterInput"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filterUserId"
+                placeholder="Enter User ID"
+                [ngClass]="{ 'is-invalid': isSubmitted && !filterUserId }"
+              />
+              <!-- Error message -->
+              <div *ngIf="isSubmitted && !filterUserId" class="text-danger">
+                User ID is required.
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">From Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="startDate" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 control-label">To Date</label>
+          <div class="col-md-6">
+            <input type="date" [(ngModel)]="endDate" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 control-label">Status</label>
+          <div class="col-md-6">
+            <select [(ngModel)]="statusFilter" class="form-control">
+              <option value="-1">All</option>
+              <option value="0">Inactive</option>
+              <option value="1">Active</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row" *ngIf="isBinary">
+          <label class="col-md-3 control-label">Side</label>
+          <div class="col-md-6">
+            <select [(ngModel)]="sideFilter" class="form-control">
+              <option value="0">All</option>
+              <option value="1">Left</option>
+              <option value="2">Right</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row mb-3">
+          <!-- 'mb-3' is roughly 1rem or 16px -->
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-6 d-flex justify-content-center mb-3">
+            <button class="btn btn-info" (click)="getDirects()">View</button>
+          </div>
+          <div
+            class="d-flex justify-content-center"
+            *ngIf="filteredDirects.length > 0"
+          >
+            <div
+              class="d-flex justify-content-center mt-3"
+              *ngIf="filteredDirects.length > 0"
+            >
+              <button
+                mat-raised-button
+                class="primary"
+                (click)="OnPreviousClick(); getDirects()"
+              >
+                Prev
+              </button>
+              <button
+                mat-raised-button
+                class="primary"
+                (click)="OnNextClick(); getDirects()"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          @if (filteredDirects.length > 0) {
+            <table class="table table-bordered table-striped panel">
+              <thead>
+                <tr>
+                  <th>S.N.</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Sponsor UserId</th>
+                  <th>Sponsor Name</th>
+                  <th>Joining Date</th>
+                  <th>Mobile No.</th>
+                  <th>Email Id</th>
+                  <th>Deposit Date</th>
+                  <th>Deposit Amount</th>
+                  <th>Total Team</th>
+                  <th>Active Team</th>
+                  <th>Team Business</th>
+                  <th>Level</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of filteredDirects; let i = index">
+                  <td>{{ user.srno }}</td>
+                  <td>{{ user.userId }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.sponsorUserID }}</td>
+                  <td>{{ user.sponsorName }}</td>
+                  <td>{{ user.joiningDate }}</td>
+                  <td>{{ user.mobileNo }}</td>
+                  <td>{{ user.emailId }}</td>
+                  <td>{{ user.depositDate }}</td>
+                  <td>{{ user.depositAmount }}</td>
+                  <td>{{ user.totalDirects }}</td>
+                  <td>{{ user.activeDirects }}</td>
+                  <td>{{ user.teamBusiness }}</td>
+                  <td>{{ user.level }}</td>
+                </tr>
+              </tbody>
+            </table>
+          }
+
+          <div *ngIf="filteredDirects.length < 0">
+            <label>No data found yet!</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

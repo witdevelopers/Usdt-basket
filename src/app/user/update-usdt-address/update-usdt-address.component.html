@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1">
+    <div class="card card-box">
+      <div class="card-head">
+        <header>Update Addresses</header>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="updateAddresses()" #addressForm="ngForm">
+          <!-- User ID Section -->
+          <div class="form-group row" *ngIf="isVisible">
+            <label class="col-md-3 control-label">User ID</label>
+            <div class="col-md-6">
+              <input type="text" id="userId" [(ngModel)]="userId" name="userId" required class="form-control"
+                placeholder="Enter User ID" />
+            </div>
+          </div>
+
+          <!-- BSC Address Section -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label">USDT Address(BEP 20)</label>
+            <div class="col-md-6">
+              <input type="text" id="bscAddress" [(ngModel)]="bscAddress" name="bscAddress" required
+                class="form-control" placeholder="Enter USDT Address(BEP 20)" [readonly]="isBSCAddressPresent"
+                #bscAddr="ngModel" />
+              <!-- <div *ngIf="userIdErrorMessage" class="text-danger mt-1">
+                  {{ userIdErrorMessage }}
+               
+                  USDT Address (BEP 20) is required.
+                </div> -->
+            </div>
+          </div>
+
+          <!-- TRX Address Section -->
+          <!-- <div class="form-group row">
+            <label class="col-md-3 control-label">USDT Address(TRX 20)</label>
+            <div class="col-md-6">
+              <input type="text" id="trxAddress" [(ngModel)]="trxAddress" name="trxAddress"
+                [readonly]="isTrcddressPresent" required class="form-control" placeholder="Enter TRX Address"
+                #trxAddr="ngModel" />
+              <div *ngIf="trxAddr.invalid && trxAddr.touched" class="text-danger">
+                USDT Address (TRX 20) is required.
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Submit Button -->
+          <div class="form-group row">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-6">
+              <button *ngIf="!isBSCAddressPresent" type="button" class="btn btn-primary" (click)="onSubmit()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
