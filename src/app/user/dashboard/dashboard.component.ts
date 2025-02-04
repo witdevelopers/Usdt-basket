@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
 
   async fetchDashboardData() {
     let response = (await this.api.userDashBoardDetails()) as any;
-    this.userInfo = response.data.table1[0];
+    this.userInfo = response.data.table[0];
     this.userInfoT2 = response.data.table2;
     this.userInfoT3 = response.data.table3[0];
     this.userInfoT4 = response.data.table4;

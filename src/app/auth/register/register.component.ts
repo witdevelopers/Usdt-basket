@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit {
       this.sponsorId = Settings.DefaultSponsor;
     }
 
-    if (this.amount < (await this.contractService.fetchXPRBalance())) {
+    if (this.amount < (await this.contractService.fetchUSDTBalance())) {
       if (this.amount > 0) {
         this.spinnerService.show();
 

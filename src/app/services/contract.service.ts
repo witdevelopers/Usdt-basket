@@ -30,7 +30,7 @@ export class ContractService {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
     } else {
-      const rpcUrls = "https://bsc-dataseed1.binance.org/";
+      const rpcUrls = "https://Polygon-dataseed1.binance.org/";
       this.provider = new ethers.providers.JsonRpcProvider(rpcUrls);
     }
 
@@ -88,22 +88,22 @@ export class ContractService {
       this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
     } else {
       if (!Settings.IsTestNetworkSupported) {
-        this.addBSCMainNetwork();  // Add BSC Mainnet
+        this.addPolygonMainNetwork();  // Add Polygon Mainnet
       } else {
-        this.addBSCTestNetwork();  // Add BSC Testnet
+        this.addPolygonTestnetNetwork();  // Add Polygon Testnet
       }
       this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
-      //Swal.fire("Change to BSC network!");
+      //Swal.fire("Change to Polygon network!");
       //this.web3 = undefined;
     }
     //console.log(this.web3)
   }
 
-  async addBSCMainNetwork() {
+  async addPolygonTestnetNetwork() {
     try {
       await this.window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x38' }], // Hexadecimal version of 80001, prefixed with 0x
+        params: [{ chainId: '0x13881' }], // Hexadecimal version of 80001, prefixed with 0x
       });
     } catch (error: any) {
       if (error.code === 4902) {
@@ -111,15 +111,15 @@ export class ContractService {
           await this.window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x38', // Hexadecimal version of 80001, prefixed with 0x
-              chainName: "Smart Chain",
+              chainId: '0x13881', // Hexadecimal version of 80001, prefixed with 0x
+              chainName: "POLYGON Mumbai",
               nativeCurrency: {
-                name: "BNB",
-                symbol: "BNB",
+                name: "MATIC",
+                symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ["https://bsc-dataseed1.binance.org/"],//"https://rpc-mainnet.maticvigil.com/", 
-              blockExplorerUrls: ["https://bscscan.com/"],
+              rpcUrls: ["https://speedy-nodes-nyc.moralis.io/cebf590f4bcd4f12d78ee1d4/polygon/mumbai"],
+              blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com/"],
               iconUrls: [""],
 
             }],
@@ -131,11 +131,11 @@ export class ContractService {
     }
   }
 
-  async addBSCTestNetwork() {
+  async addPolygonMainNetwork() {
     try {
       await this.window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x61' }], // Hexadecimal version of 80001, prefixed with 0x
+        params: [{ chainId: '0x89' }], // Hexadecimal version of 80001, prefixed with 0x
       });
     } catch (error: any) {
       if (error.code === 4902) {
@@ -143,15 +143,15 @@ export class ContractService {
           await this.window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x61', // Hexadecimal version of 80001, prefixed with 0x
-              chainName: "Smart Chain - Testnet",
+              chainId: '0x89', // Hexadecimal version of 80001, prefixed with 0x
+              chainName: "Polygon",
               nativeCurrency: {
-                name: "BNB",
-                symbol: "BNB",
+                name: "MATIC",
+                symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],//"https://rpc-mainnet.maticvigil.com/", 
-              blockExplorerUrls: ["https://bscscan.com/"],
+              rpcUrls: ["https://rpc-mainnet.matic.quiknode.pro/"],//"https://rpc-mainnet.maticvigil.com/", 
+              blockExplorerUrls: ["https://polygonscan.com/"],
               iconUrls: [""],
 
             }],
@@ -245,35 +245,34 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
-
     try {
       await this.getGasPrice();
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, 'gwei');
-      let XRPValue = ethers.utils.parseUnits(amount.toString(), 18);
+      let USDTValue = ethers.utils.parseUnits(amount.toString(), 18);
       let estimatedGas = await this.contract.estimateGas.Deposit(sponsorId, {
         from: this.account,
         gasPrice,
       });
       let manualGasLimit = estimatedGas.mul(2);
 
-      let gasFeeInBNB = estimatedGas.mul(gasPrice);
-      let bnbBalance = await this.provider.getBalance(this.account);
-      if (bnbBalance.lt(gasFeeInBNB)) {
-        return { success: false, message: 'Insufficient BNB balance for gas fees' };
+      let gasFeeInMATIC = estimatedGas.mul(gasPrice);
+      let maticBalance = await this.provider.getBalance(this.account);
+      if (maticBalance.lt(gasFeeInMATIC)) {
+        return { success: false, message: 'Insufficient MATIC balance for gas fees' };
       }
 
-      let approveResponse = await this.approveToken(XRPValue);
+      let approveResponse = await this.approveToken(USDTValue);
       if (!approveResponse.success) {
-        return { success: false, message: 'XPR approval failed: ' + approveResponse.message };
+        return { success: false, message: 'USDT approval failed: ' + approveResponse.message };
       }
 
-      let XPRTransferReceipt = await this.sendXPRToBNBContract(XRPValue);
-      if (!XPRTransferReceipt.success) {
-        return { success: false, message: 'XPR transfer failed: ' + XPRTransferReceipt.message };
+      let USDTTransferReceipt = await this.sendUSDTToPolygonContract(USDTValue);
+      if (!USDTTransferReceipt.success) {
+        return { success: false, message: 'USDT transfer failed: ' + USDTTransferReceipt.message };
       }
 
       let tx = await this.contract.Deposit(sponsorId, {
-        value: gasFeeInBNB.toString(),
+        value: gasFeeInMATIC.toString(),
         gasPrice: gasPrice.toString(),
         gasLimit: manualGasLimit.toString(),
       });
@@ -286,7 +285,7 @@ export class ContractService {
     }
   }
 
-  public async sendXPRToBNBContract(amount: BigNumber) {
+  public async sendUSDTToPolygonContract(amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContract();
 
@@ -303,11 +302,12 @@ export class ContractService {
 
       var receipt = await this.sendTransaction(this.account, Settings.tokenContractAddress, "0", _gasPrice, estimatedGas, data);
       console.log(receipt);
-      return { success: receipt.success, data: receipt.data, message: receipt.success ? "XPR sent successfully!" : receipt.message };
+      return { success: receipt.success, data: receipt.data, message: receipt.success ? "USDT sent successfully on Polygon!" : receipt.message };
     } catch (err: any) {
-      return { success: false, data: err, message: 'Unable to send XPR to BNB contract!' };
+      return { success: false, data: err, message: 'Unable to send USDT to Polygon contract!' };
     }
   }
+
 
   private async sendTransaction(fromAddress: string, toAddress: string, value: string, gasPrice: string, gas: string, data: any) {
     try {
@@ -456,30 +456,30 @@ export class ContractService {
     });
     return res;
   }
-  
+
   public async buyToken(amount: number) {
     try {
       await this.getGasPrice();
-  
+
       const value = this.web3.utils.toWei(amount.toString(), "ether");
       const _gasPrice = this.web3.utils.toWei(this.gasPrice, "Gwei");
-  
-      const sendXPRReceipt = await this.sendXPRToBNBContract(value);
+
+      const sendXPRReceipt = await this.sendUSDTToPolygonContract(value);
       if (!sendXPRReceipt.success) {
         return { success: false, data: '' };
       }
-  
+
       const estimatedGas = await this.contract.estimateGas.Reinvest({ from: this.account, value: '0', gasPrice: _gasPrice });
       const data = this.contract.interface.encodeFunctionData('Reinvest', []);
-  
+
       const receipt = await this.sendTransaction(this.account, this.contractAddress, '0', _gasPrice, estimatedGas, data);
-  
+
       return { success: receipt.success, data: receipt.data, message: receipt.success ? "Ok!" : receipt.message };
     } catch (ex: any) {
       return { success: false, data: '', message: 'Some error occurred!' };
     }
   }
-  
+
 
   private async getGasPrice() {
     try {
@@ -577,19 +577,19 @@ export class ContractService {
 
   }
 
-  public async fetchXPRBalance() {
+  public async fetchUSDTBalance() {
     try {
       const walletAddress = await this.getAddress();
-      const contract = new (await this.getWeb3()).eth.Contract(Settings.XPRAbi, Settings.tokenContractAddress);
+      const web3 = await this.getWeb3();
+      const contract = new web3.eth.Contract(Settings.USDTAbi, Settings.tokenContractAddress);
       const balance = await contract.methods.balanceOf(walletAddress).call();
-      const balanceInXPR = this.web3.utils.fromWei(balance, "ether");
-      console.log(`XPR Balance for : ${balanceInXPR}`);
-      return balanceInXPR;
-    } catch (error) {
-      console.error("Error fetching XPR balance:", error);
-      throw error;
-    }
+      const balanceInUSDT = web3.utils.fromWei(balance, "mwei"); 
+      console.log(`USDT Balance for ${walletAddress}: ${balanceInUSDT}`);
+      return balanceInUSDT;
+    } catch (error) {}
   }
+  
+
 
   public async getMemberBalanceDividend(memberId: number) {
     let res = { success: false, message: '', data: '' };
@@ -734,7 +734,7 @@ export class ContractService {
   }
 
   public async getPaymentTokenContract() {
-    let contract = await new (await this.getWeb3()).eth.Contract(Settings.XPRAbi, Settings.tokenContractAddress);
+    let contract = await new (await this.getWeb3()).eth.Contract(Settings.USDTAbi, Settings.tokenContractAddress);
     return contract;
   }
 

@@ -12,7 +12,7 @@ export class Settings {
     : x.MainNetContractAddress;
   static DefaultSponsor: string = x.DefaultSponsor;
   static abi: any = x.Abi;
-  static XPRAbi: any = x.XPRAbi;
+  static USDTAbi: any = x.USDTAbi;
 
   static tokenContractAddress: string = x.TokenContractAddress;
 

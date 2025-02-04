@@ -1,34 +1,27 @@
-import {
-  enableProdMode,
-  APP_INITIALIZER,
-  importProvidersFrom,
-} from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
+import { enableProdMode, APP_INITIALIZER, importProvidersFrom } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AppComponent } from './app/app.component';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { EncryptionService } from './app/usershop/encryption.service';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
 import { HttpInterceptorService } from './app/services/http-interceptor.service';
 import { CompanyService } from './app/services/company.service';
-import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { routes } from './app/app-routes';
-import { provideRouter, RouterModule } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { Settings } from 'src/app/app-setting';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CountdownModule } from 'ngx-countdown';
-import { AppComponent } from './app/app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CommonModule } from '@angular/common';
 
-if (environment.production) {
-  enableProdMode();
-}
+if (environment.production) enableProdMode();
+document.title = Settings.AppName;
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -40,23 +33,15 @@ bootstrapApplication(AppComponent, {
       CommonModule,
       CountdownModule,
       ReactiveFormsModule,
+      AppModule
     ),
     EncryptionService,
     { provide: 'Window', useValue: window },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
-      multi: true,
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (config: CompanyService) => () => config.getCompanyDetails(),
-      deps: [CompanyService],
-      multi: true,
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    { provide: APP_INITIALIZER, useFactory: (config: CompanyService) => () => config.getCompanyDetails(), deps: [CompanyService], multi: true },
     provideHttpClient(withInterceptorsFromDi()),
     provideRouter(routes),
     provideAnimations(),
     provideAnimationsAsync(),
   ],
-}).catch((err) => console.error(err));
+});

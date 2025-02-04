@@ -103,7 +103,7 @@ export class BuyComponent implements OnInit {
       return;
     }
 
-    if (this.Amount < (await this.contractService.fetchXPRBalance())) {
+    if (this.Amount < (await this.contractService.fetchUSDTBalance())) {
       if (this.Amount > 0) {
         this.spinnerService.show();
 
