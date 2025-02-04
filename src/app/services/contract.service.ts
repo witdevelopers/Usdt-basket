@@ -30,7 +30,7 @@ export class ContractService {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
     } else {
-      const rpcUrls = "https://Polygon-dataseed1.binance.org/";
+      const rpcUrls = "https://polygon-rpc.com";
       this.provider = new ethers.providers.JsonRpcProvider(rpcUrls);
     }
 
@@ -83,16 +83,23 @@ export class ContractService {
   }
 
   public async initializeWeb3() {
-    if ((this.window.ethereum.networkVersion == 56 && !Settings.IsTestNetworkSupported)
-      || (this.window.ethereum.networkVersion == 97 && Settings.IsTestNetworkSupported)) {
-      this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
-    } else {
+    if ((this.window.ethereum.networkVersion == 137 && !Settings.IsTestNetworkSupported)
+      ||
+      (this.window.ethereum.networkVersion == 80001 && Settings.IsTestNetworkSupported)) {
+      //this.web3 = await new Web3(this.window.ethereum);
+      this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));//'https://polygon-rpc.com'
+      //alert(this.web3);
+    }
+    else {
       if (!Settings.IsTestNetworkSupported) {
-        this.addPolygonMainNetwork();  // Add Polygon Mainnet
-      } else {
-        this.addPolygonTestnetNetwork();  // Add Polygon Testnet
+        this.addPolygonMainNetwork();
       }
+      else {
+        this.addPolygonTestnetNetwork();
+      }
+      //this.web3 = await new Web3(this.window.ethereum);
       this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
+
       //Swal.fire("Change to Polygon network!");
       //this.web3 = undefined;
     }
@@ -103,7 +110,7 @@ export class ContractService {
     try {
       await this.window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x13881' }], // Hexadecimal version of 80001, prefixed with 0x
+        params: [{ chainId: '0x13881' }],
       });
     } catch (error: any) {
       if (error.code === 4902) {
@@ -111,7 +118,7 @@ export class ContractService {
           await this.window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x13881', // Hexadecimal version of 80001, prefixed with 0x
+              chainId: '0x13881',
               chainName: "POLYGON Mumbai",
               nativeCurrency: {
                 name: "MATIC",
@@ -135,7 +142,7 @@ export class ContractService {
     try {
       await this.window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x89' }], // Hexadecimal version of 80001, prefixed with 0x
+        params: [{ chainId: '0x89' }],
       });
     } catch (error: any) {
       if (error.code === 4902) {
@@ -143,14 +150,14 @@ export class ContractService {
           await this.window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [{
-              chainId: '0x89', // Hexadecimal version of 80001, prefixed with 0x
+              chainId: '0x89',
               chainName: "Polygon",
               nativeCurrency: {
                 name: "MATIC",
                 symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ["https://rpc-mainnet.matic.quiknode.pro/"],//"https://rpc-mainnet.maticvigil.com/", 
+              rpcUrls: ["https://rpc-mainnet.matic.quiknode.pro/"],
               blockExplorerUrls: ["https://polygonscan.com/"],
               iconUrls: [""],
 
@@ -162,7 +169,6 @@ export class ContractService {
       }
     }
   }
-
 
   public async getContract() {
     if (this.contract == undefined || this.contract == null) {
@@ -245,11 +251,12 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
+    debugger
     try {
       await this.getGasPrice();
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, 'gwei');
       let USDTValue = ethers.utils.parseUnits(amount.toString(), 18);
-      let estimatedGas = await this.contract.estimateGas.Deposit(sponsorId, {
+      let estimatedGas = await this.contract.estimateGas.MultiSendTokens(sponsorId, {
         from: this.account,
         gasPrice,
       });
@@ -263,12 +270,12 @@ export class ContractService {
 
       let approveResponse = await this.approveToken(USDTValue);
       if (!approveResponse.success) {
-        return { success: false, message: 'USDT approval failed: ' + approveResponse.message };
+        return { success: false, message: 'USDT approval' + approveResponse.message };
       }
 
       let USDTTransferReceipt = await this.sendUSDTToPolygonContract(USDTValue);
       if (!USDTTransferReceipt.success) {
-        return { success: false, message: 'USDT transfer failed: ' + USDTTransferReceipt.message };
+        return { success: false, message: 'USDT transfer' + USDTTransferReceipt.message };
       }
 
       let tx = await this.contract.Deposit(sponsorId, {
@@ -284,7 +291,7 @@ export class ContractService {
       return { success: false, data: '', message: ex.message || 'Some error occurred!' };
     }
   }
-
+  
   public async sendUSDTToPolygonContract(amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContract();
@@ -307,7 +314,6 @@ export class ContractService {
       return { success: false, data: err, message: 'Unable to send USDT to Polygon contract!' };
     }
   }
-
 
   private async sendTransaction(fromAddress: string, toAddress: string, value: string, gasPrice: string, gas: string, data: any) {
     try {
@@ -480,7 +486,6 @@ export class ContractService {
     }
   }
 
-
   private async getGasPrice() {
     try {
       await (await this.getWeb3()).eth.getGasPrice()
@@ -583,13 +588,11 @@ export class ContractService {
       const web3 = await this.getWeb3();
       const contract = new web3.eth.Contract(Settings.USDTAbi, Settings.tokenContractAddress);
       const balance = await contract.methods.balanceOf(walletAddress).call();
-      const balanceInUSDT = web3.utils.fromWei(balance, "mwei"); 
+      const balanceInUSDT = web3.utils.fromWei(balance, "mwei");
       console.log(`USDT Balance for ${walletAddress}: ${balanceInUSDT}`);
       return balanceInUSDT;
-    } catch (error) {}
+    } catch (error) { }
   }
-  
-
 
   public async getMemberBalanceDividend(memberId: number) {
     let res = { success: false, message: '', data: '' };
@@ -739,7 +742,6 @@ export class ContractService {
   }
 
   async approveToken(amount: BigNumber) {
-
     try {
       let contract = await this.getPaymentTokenContract();
 

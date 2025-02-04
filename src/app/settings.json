@@ -19,65 +19,65 @@
   "ImageUrl": "https://hiicall.com/mlm/website/",
   "Abi": [
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "_token",
+          "type": "address"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
     {
-      "stateMutability": "payable",
-      "type": "fallback"
-    },
-    {
+      "anonymous": false,
       "inputs": [
         {
+          "indexed": true,
           "internalType": "address",
-          "name": "sponsorAddress",
+          "name": "_userAddress",
           "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
         }
       ],
-      "name": "Deposit",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "Reinvest",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
+      "name": "MultiSendTokens",
+      "type": "event"
     },
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "token",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "from",
-          "type": "address"
-        },
-        {
           "internalType": "address[]",
-          "name": "to",
+          "name": "_recipients",
           "type": "address[]"
         },
         {
           "internalType": "uint256[]",
-          "name": "amount",
+          "name": "_amounts",
           "type": "uint256[]"
         }
       ],
-      "name": "Withdraw",
+      "name": "multiSendTokens",
       "outputs": [],
-      "stateMutability": "payable",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
-      "stateMutability": "payable",
-      "type": "receive"
+      "inputs": [],
+      "name": "tokenAddress",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
   "USDTAbi": [
@@ -223,9 +223,19 @@
     },
     {
       "constant": true,
-      "inputs": [{"name": "owner", "type": "address"}],
+      "inputs": [
+        {
+          "name": "owner",
+          "type": "address"
+        }
+      ],
       "name": "balanceOf",
-      "outputs": [{"name": "balance", "type": "uint256"}],
+      "outputs": [
+        {
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
       "payable": false,
       "stateMutability": "view",
       "type": "function"
@@ -234,11 +244,15 @@
       "constant": true,
       "inputs": [],
       "name": "decimals",
-      "outputs": [{"name": "", "type": "uint8"}],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
       "payable": false,
       "stateMutability": "view",
       "type": "function"
     }
-    
   ]
 }
