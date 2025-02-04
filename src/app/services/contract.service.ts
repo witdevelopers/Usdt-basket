@@ -251,7 +251,6 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
-    debugger
     try {
       await this.getGasPrice();
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, 'gwei');
