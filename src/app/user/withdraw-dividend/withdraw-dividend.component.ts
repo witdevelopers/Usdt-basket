@@ -71,7 +71,7 @@ export class WithdrawDividendComponent implements OnInit {
 
   async withdraw() {
     this.spinnerService.show();
-    debugger
+    //debugger
     let result: any = await this.fund.withdrawIncome(this.withdrawalAmount, this.selectedWallet);
 
     this.spinnerService.hide();

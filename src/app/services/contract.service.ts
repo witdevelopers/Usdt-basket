@@ -616,7 +616,7 @@ export class ContractService {
   }
 
   public async withdrawDividend(amount: number) {
-
+    debugger
     try {
       var isRegistered = await this.login((await this.getAddress()));
 
