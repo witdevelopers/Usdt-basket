@@ -251,46 +251,53 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
+    debugger;
     try {
       await this.getGasPrice();
-      let gasPrice = ethers.utils.parseUnits(this.gasPrice, 'gwei');
-      let USDTValue = ethers.utils.parseUnits(amount.toString(), 18);
-      let estimatedGas = await this.contract.estimateGas.MultiSendTokens(sponsorId, {
-        from: this.account,
-        gasPrice,
-      });
-      let manualGasLimit = estimatedGas.mul(2);
 
-      let gasFeeInMATIC = estimatedGas.mul(gasPrice);
-      let maticBalance = await this.provider.getBalance(this.account);
-      if (maticBalance.lt(gasFeeInMATIC)) {
-        return { success: false, message: 'Insufficient MATIC balance for gas fees' };
+      let value = ethers.utils.parseEther(amount.toString()).toString();
+      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
+
+      if (!ethers.utils.isAddress(sponsorId)) {
+        return { success: false, message: "Invalid sponsorId. Must be a valid Ethereum/Polygon address." };
       }
 
-      let approveResponse = await this.approveToken(USDTValue);
+      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
+
+      const [approveResponse, usdtTransferReceipt] = await Promise.all([
+        this.approveToken(USDTValue),
+        this.sendUSDTToPolygonContract(USDTValue)
+      ]);
+
       if (!approveResponse.success) {
-        return { success: false, message: 'USDT approval' + approveResponse.message };
+        return { success: false, message: "USDT approval failed: " + approveResponse.message };
+      }
+      if (!usdtTransferReceipt.success) {
+        return { success: false, message: "USDT transfer failed: " + usdtTransferReceipt.message };
       }
 
-      let USDTTransferReceipt = await this.sendUSDTToPolygonContract(USDTValue);
-      if (!USDTTransferReceipt.success) {
-        return { success: false, message: 'USDT transfer' + USDTTransferReceipt.message };
+      const estimatedGas = await this.contract.estimateGas.multiSendTokens([sponsorId], [USDTValue]);
+      const manualGasLimit = estimatedGas.mul(1.2);
+
+      const gasFeeInMATIC = estimatedGas.mul(gasPrice);
+      const maticBalance = await this.provider.getBalance(this.account);
+      if (maticBalance.lt(gasFeeInMATIC)) {
+        return { success: false, message: "Insufficient MATIC balance for gas fees." };
       }
 
-      let tx = await this.contract.Deposit(sponsorId, {
-        value: gasFeeInMATIC.toString(),
-        gasPrice: gasPrice.toString(),
+      const tx = await this.contract.multiSendTokens([sponsorId], [USDTValue.toString()], {
+        value: "0",
+        gasPrice,
         gasLimit: manualGasLimit.toString(),
       });
 
-      let receipt = await tx.wait();
-      return { success: receipt.status, data: receipt, message: 'Transaction successful' };
-    } catch (ex: any) {
-      console.error(ex);
-      return { success: false, data: '', message: ex.message || 'Some error occurred!' };
+      const receipt = await tx.wait();
+      return { success: receipt.status === 1, data: receipt, message: "Transaction successful" };
+    } catch (error: any) {
+      return { success: false, data: "", message: error.message || "Transaction failed!" };
     }
   }
-  
+
   public async sendUSDTToPolygonContract(amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContract();
@@ -302,7 +309,7 @@ export class ContractService {
         gasPrice: _gasPrice,
       });
 
-      estimatedGas = Math.ceil(Number(estimatedGas) * 0.1);  // 10% buffer
+      estimatedGas = Math.ceil(Number(estimatedGas) * 0.1); // 10% buffer
 
       let data = contract.methods.transfer(Settings.contractAddress, amount.toString()).encodeABI();
 
@@ -314,7 +321,8 @@ export class ContractService {
     }
   }
 
-  private async sendTransaction(fromAddress: string, toAddress: string, value: string, gasPrice: string, gas: string, data: any) {
+
+  public async sendTransaction(fromAddress: string, toAddress: string, value: string, gasPrice: string, gas: string, data: any) {
     try {
       var _gas = Math.ceil(Number(gas) + (Number(gas) * 0.1));
       gas = _gas.toString();

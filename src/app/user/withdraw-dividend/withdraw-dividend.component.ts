@@ -13,7 +13,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { IncomeWithdrawalHistoryComponent } from '../income-withdrawal-history/income-withdrawal-history.component';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Settings } from 'src/app/app-setting';
 
 @Component({
   selector: 'app-withdraw-dividend',
@@ -35,16 +34,14 @@ import { Settings } from 'src/app/app-setting';
 })
 export class WithdrawDividendComponent implements OnInit {
 
-  withdrawalAmount: number = 1;
+  withdrawalAmount: number = 0.1;
   balanceDividend: number = 10;
-  amountReceived: number;
-  // deductionPercentage: number = 10;
+  amountReceived: number = 0;
+  deductionPercentage: number = 10;
   selectedWallet: any;
   address: any;
   wallets: any[] = [];
-  mainWalletBal: any;
-  paymentToken: string = Settings.paymentToken;
-  info: any;
+  mainWalletBal:any;
 
   constructor(private spinnerService: NgxSpinnerService, private wallet: WalletService, private fund: FundService, private userInfoService: UserService) {
   }
@@ -55,10 +52,10 @@ export class WithdrawDividendComponent implements OnInit {
   }
 
   async initialize() {
-    this.info = ((await this.userInfoService.userDashBoardDetails()) as any).data.table1[0];
-    //this.balanceDividend = Number(this.info.totalIncome - this.info.amountWithdrawn);
+    // let info = ((await this.userInfoService.userDashBoardDetails()) as any).data.table[0];
+    // this.balanceDividend = Number(info.totalIncome - info.amountWithdrawn);
     this.wallets = (await this.wallet.getWallets('Withdrawal'))?.data?.table;
-    this.selectedWallet = this.wallets.length ? this.wallets[0].srno : '';
+    this.selectedWallet = this.wallets.length ? this.wallets[0].srno : '';    
     this.onWalletChange();
   }
 
@@ -95,6 +92,6 @@ export class WithdrawDividendComponent implements OnInit {
   }
 
   async calculateAmountReceived() {
-    this.amountReceived = this.withdrawalAmount - (this.withdrawalAmount * this.info.withdrawalPercentage / 100)
+    this.amountReceived = this.withdrawalAmount - (this.withdrawalAmount * this.deductionPercentage / 100)
   }
 }
