@@ -4,7 +4,7 @@ import Web3 from "web3";
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { BigNumber, ethers } from 'ethers';
+import {BigNumber, ethers } from 'ethers';
 
 
 @Injectable({
@@ -251,7 +251,6 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
-    debugger;
     try {
       await this.getGasPrice();
 
@@ -285,7 +284,7 @@ export class ContractService {
         return { success: false, message: "Insufficient MATIC balance for gas fees." };
       }
 
-      const tx = await this.contract.multiSendTokens([sponsorId], [USDTValue.toString()], {
+      const tx = await this.contract.multiSendTokens([sponsorId], {
         value: "0",
         gasPrice,
         gasLimit: manualGasLimit.toString(),
