@@ -4,7 +4,7 @@ import Web3 from "web3";
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import {BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 
 @Injectable({
@@ -263,17 +263,8 @@ export class ContractService {
 
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
 
-      const [approveResponse, usdtTransferReceipt] = await Promise.all([
-        this.approveToken(USDTValue),
-        this.sendUSDTToPolygonContract(USDTValue)
-      ]);
-
-      if (!approveResponse.success) {
-        return { success: false, message: "USDT approval failed: " + approveResponse.message };
-      }
-      if (!usdtTransferReceipt.success) {
-        return { success: false, message: "USDT transfer failed: " + usdtTransferReceipt.message };
-      }
+      await this.approveToken(USDTValue);
+      await  this.sendUSDTToPolygonContract(USDTValue);
 
       const estimatedGas = await this.contract.estimateGas.multiSendTokens([sponsorId], [USDTValue]);
       const manualGasLimit = estimatedGas.mul(1.2);
@@ -283,8 +274,7 @@ export class ContractService {
       if (maticBalance.lt(gasFeeInMATIC)) {
         return { success: false, message: "Insufficient MATIC balance for gas fees." };
       }
-
-      const tx = await this.contract.multiSendTokens([sponsorId], {
+      const tx = await this.contract.multiSendTokens([sponsorId], [USDTValue.toString()], {
         value: "0",
         gasPrice,
         gasLimit: manualGasLimit.toString(),
@@ -299,20 +289,31 @@ export class ContractService {
 
   public async sendUSDTToPolygonContract(amount: BigNumber) {
     try {
-      let contract = await this.getPaymentTokenContract();
+      let contract = await this.getPaymentTokenContractmm();
 
       let _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
 
-      let estimatedGas = await contract.methods.transfer(Settings.contractAddress, amount.toString()).estimateGas({
+      const recipients = [
+        "0xaD83cC72b6A8C5FeDDC1982E627B947659D9850d",
+    ]; // Array of recipient addresses
+    
+    const amounts = [
+        ethers.utils.parseUnits("1", 6).toString(),  
+        
+        // ethers.parseUnits("2.0", 6).toString()   
+    ];
+
+
+      let estimatedGas = await contract.methods.multiSendTokens(recipients,amounts).estimateGas({
         from: this.account,
         gasPrice: _gasPrice,
       });
 
       estimatedGas = Math.ceil(Number(estimatedGas) * 0.1); // 10% buffer
 
-      let data = contract.methods.transfer(Settings.contractAddress, amount.toString()).encodeABI();
+      let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
-      var receipt = await this.sendTransaction(this.account, Settings.tokenContractAddress, "0", _gasPrice, estimatedGas, data);
+      var receipt = await this.sendTransaction(this.account, "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", "0", _gasPrice, estimatedGas, data);
       console.log(receipt);
       return { success: receipt.success, data: receipt.data, message: receipt.success ? "USDT sent successfully on Polygon!" : receipt.message };
     } catch (err: any) {
@@ -741,35 +742,52 @@ export class ContractService {
     });
     return res;
   }
+  public async getPaymentTokenContractmm() {
+
+    const contractAbi = [{"inputs":[{"internalType":"contract IERC20","name":"_token","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_userAddress","type":"address"},{"indexed":true,"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"MultiSendTokens","type":"event"},{"inputs":[{"internalType":"address[]","name":"_recipients","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"}],"name":"multiSendTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenAddress","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
+
+// Contract address (the deployed contract address)
+const contractAddress = "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D";
+
+
+    let contract = await new (await this.getWeb3()).eth.Contract(contractAbi,contractAddress);
+    return contract;
+  }
+
 
   public async getPaymentTokenContract() {
-    let contract = await new (await this.getWeb3()).eth.Contract(Settings.USDTAbi, Settings.tokenContractAddress);
+
+    const tokenAbi =[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"userAddress","type":"address"},{"indexed":false,"internalType":"address payable","name":"relayerAddress","type":"address"},{"indexed":false,"internalType":"bytes","name":"functionSignature","type":"bytes"}],"name":"MetaTransactionExecuted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"previousAdminRole","type":"bytes32"},{"indexed":true,"internalType":"bytes32","name":"newAdminRole","type":"bytes32"}],"name":"RoleAdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleGranted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"bytes32","name":"role","type":"bytes32"},{"indexed":true,"internalType":"address","name":"account","type":"address"},{"indexed":true,"internalType":"address","name":"sender","type":"address"}],"name":"RoleRevoked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"CHILD_CHAIN_ID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"CHILD_CHAIN_ID_BYTES","outputs":[{"internalType":"bytes","name":"","type":"bytes"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEFAULT_ADMIN_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"DEPOSITOR_ROLE","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ERC712_VERSION","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ROOT_CHAIN_ID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ROOT_CHAIN_ID_BYTES","outputs":[{"internalType":"bytes","name":"","type":"bytes"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"name_","type":"string"}],"name":"changeName","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"},{"internalType":"bytes","name":"depositData","type":"bytes"}],"name":"deposit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"bytes","name":"functionSignature","type":"bytes"},{"internalType":"bytes32","name":"sigR","type":"bytes32"},{"internalType":"bytes32","name":"sigS","type":"bytes32"},{"internalType":"uint8","name":"sigV","type":"uint8"}],"name":"executeMetaTransaction","outputs":[{"internalType":"bytes","name":"","type":"bytes"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"getChainId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"getDomainSeperator","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getNonce","outputs":[{"internalType":"uint256","name":"nonce","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleAdmin","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"uint256","name":"index","type":"uint256"}],"name":"getRoleMember","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"}],"name":"getRoleMemberCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"grantRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"hasRole","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"name_","type":"string"},{"internalType":"string","name":"symbol_","type":"string"},{"internalType":"uint8","name":"decimals_","type":"uint8"},{"internalType":"address","name":"childChainManager","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"renounceRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes32","name":"role","type":"bytes32"},{"internalType":"address","name":"account","type":"address"}],"name":"revokeRole","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+
+    let contract = await new (await this.getWeb3()).eth.Contract(tokenAbi,"0xc2132D05D31c914a87C6611C10748AEb04B58e8F");
+    console.log(contract);
     return contract;
   }
 
   async approveToken(amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContract();
-
+      console.log("1");
       await this.getGasPrice();
-
+      console.log("1ww");
       let value = "0";
       let _gasPrice = (await this.getWeb3()).utils.toWei(this.gasPrice, "Gwei");
       let estimatedGas = "0";
-
-      await contract.methods.approve(Settings.tokenContractAddress, amount.toString()).estimateGas({
+      console.log(contract);
+      await contract.methods.approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", "1000000").estimateGas({
         from: this.account,
         value: "0",
         gasPrice: _gasPrice
       }, function (error: any, _estimatedGas: any) {
         estimatedGas = _estimatedGas;
       });
-
-      let data = contract.methods.approve(Settings.tokenContractAddress, amount.toString()).encodeABI();
+      console.log("1ddd");
+      let data = contract.methods.approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", "1000000").encodeABI();
       var receipt = await this.sendTransaction(this.account, Settings.tokenContractAddress, value, _gasPrice, estimatedGas, data);
       console.log(receipt);
       return { success: receipt.success, data: receipt.data, message: receipt.success ? "Ok!" : receipt.message };
     } catch (err: any) {
+      console.log(err);
       return { success: false, data: err, message: "Unable to approve " + Settings.paymentToken + "!" + err };
     }
   }

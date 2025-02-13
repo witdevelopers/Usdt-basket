@@ -132,8 +132,6 @@ export class RegisterComponent implements OnInit {
             Swal.fire({
               icon: "success",
               title: 'Deposit Successful',
-
-
             }).then(async () => {
               this.loginClick();
             });
