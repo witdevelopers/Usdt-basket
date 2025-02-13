@@ -264,7 +264,7 @@ export class ContractService {
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
 
       await this.approveToken(USDTValue);
-      await  this.sendUSDTToPolygonContract(USDTValue);
+      await  this.sendUSDT(USDTValue);
 
       const estimatedGas = await this.contract.estimateGas.multiSendTokens([sponsorId], [USDTValue]);
       const manualGasLimit = estimatedGas.mul(1.2);
@@ -274,6 +274,7 @@ export class ContractService {
       if (maticBalance.lt(gasFeeInMATIC)) {
         return { success: false, message: "Insufficient MATIC balance for gas fees." };
       }
+      
       const tx = await this.contract.multiSendTokens([sponsorId], [USDTValue.toString()], {
         value: "0",
         gasPrice,
@@ -287,7 +288,7 @@ export class ContractService {
     }
   }
 
-  public async sendUSDTToPolygonContract(amount: BigNumber) {
+  public async sendUSDT(amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContractmm();
 
@@ -477,7 +478,7 @@ export class ContractService {
       const value = this.web3.utils.toWei(amount.toString(), "ether");
       const _gasPrice = this.web3.utils.toWei(this.gasPrice, "Gwei");
 
-      const sendXPRReceipt = await this.sendUSDTToPolygonContract(value);
+      const sendXPRReceipt = await this.sendUSDT(value);
       if (!sendXPRReceipt.success) {
         return { success: false, data: '' };
       }
