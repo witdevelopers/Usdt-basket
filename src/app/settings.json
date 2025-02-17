@@ -13,7 +13,7 @@
   "Logo": "assets/logo.png",
   "MainNetExplorer": "https://polygonscan.com",
   "TestNetExplorer": "https://mumbai.polygonscan.com",
-  "MainNetHttpProvider": "https://polygon-rpc.com",
+  "MainNetHttpProvider": "https://polygon-rpc.com/",
   "ApiUrl": "https://localhost:44320/",
   "ApiUrlLive": "https://api.usdtbasket.co/",
   "ImageUrl": "https://hiicall.com/mlm/website/",

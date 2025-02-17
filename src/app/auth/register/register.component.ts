@@ -90,82 +90,81 @@ export class RegisterComponent implements OnInit {
     await this.getAddress();
 
     if (!this.sponsorId) {
-      this.sponsorId = Settings.DefaultSponsor;
+        this.sponsorId = Settings.DefaultSponsor;
     }
 
-    if (this.amount < (await this.contractService.fetchUSDTBalance())) {
-      if (this.amount > 0) {
-        this.spinnerService.show();
+    const usdtBalance = await this.contractService.fetchUSDTBalance();
+    
+    if (this.amount < usdtBalance) {
+        if (this.amount > 0) {
+            this.spinnerService.show();
 
-        let sponsorRes: any = await this.api.isSponsorValid(this.sponsorId);
-        if (!sponsorRes.status) {
-          this.spinnerService.hide();
-          Swal.fire({
-            icon: "error",
-            title: sponsorRes.message
-          })
-          return;
-        }
+            let sponsorRes: any = await this.api.isSponsorValid(this.sponsorId);
+            if (!sponsorRes.status) {
+                this.spinnerService.hide();
+                Swal.fire({
+                    icon: "error",
+                    title: sponsorRes.message
+                });
+                return;
+            }
 
-        let userRes: any = await this.api.isSponsorValid(this.account);
-        if (userRes.status) {
-          this.spinnerService.hide();
-          Swal.fire({
-            icon: "error",
-            title: "You are already registered!"
-          })
-          return;
-        }
+            let userRes: any = await this.api.isSponsorValid(this.account);
+            if (userRes.status) {
+                this.spinnerService.hide();
+                Swal.fire({
+                    icon: "error",
+                    title: "You are already registered!"
+                });
+                return;
+            }
 
+            // ✅ Send USDT and Get Receipt
+            let receipt = await this.contractService.register(this.sponsorId, this.amount);
 
-        let receipt = await this.contractService.register(this.sponsorId, this.amount);
+            if (receipt.success) {
+                // ✅ Extract Transaction Hash
+                let transactionHash = receipt.data?.transactionHash || receipt.data?.hash;
 
-        //console.log(receipt);
+                // ✅ Send transaction details to API
+                let result: any = await this.api.register(this.sponsorId, this.amount, transactionHash);
 
-        if (receipt.success) {
-          let result: any = await this.api.register(this.sponsorId,this.amount, receipt.data.transactionHash);
+                this.spinnerService.hide();
 
-
-          this.spinnerService.hide();
-          // console.log(x);
-          if (result.status) {
+                if (result.status) {
+                    Swal.fire({
+                        icon: "success",
+                        title: '✅ Deposit Successful!',
+                    }).then(async () => {
+                        this.loginClick();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: result.message
+                    });
+                }
+            } else {
+                this.spinnerService.hide();
+                Swal.fire({
+                    icon: "error",
+                    title: '❌ Transaction failed!'
+                });
+            }
+        } else {
             Swal.fire({
-              icon: "success",
-              title: 'Deposit Successful',
-            }).then(async () => {
-              this.loginClick();
+                icon: "warning",
+                title: '⚠ Enter a valid amount!'
             });
-          }
-          else {
-            Swal.fire({
-              icon: "error",
-              title: result.message
-            });
-          }
         }
-        else {
-          Swal.fire({
-            icon: "error",
-            title: 'Transaction failed!'
-          });
-        }
-
-      }
-      else {
+    } else {
         Swal.fire({
-          icon: "warning",
-          title: 'Enter a valid amount!'
+            icon: "error",
+            title: '❌ Insufficient balance!'
         });
-      }
     }
-    else {
-      Swal.fire({
-        icon: "error",
-        title: 'Insufficient balance!'
-      });
-    }
+}
 
-  }
 
   loginClick() {
     this.router.navigate(['auth/login']);
