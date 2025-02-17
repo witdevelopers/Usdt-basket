@@ -17,6 +17,8 @@
 }
 
 .btn-md {
+  background: linear-gradient(to right, #64A6F8 20%, #5f6ab9 70%) !important ;
+  color: #fff !important;
   cursor: pointer;
   padding: 10px 50px 8px 50px !important;
   letter-spacing: 1px !important;
@@ -27,7 +29,7 @@
   border-radius: 3px;
   text-transform: uppercase !important;
   line-height: 0px !important;
-  border-radius: 32px !important;
+  /* border-radius: 32px !important; */
 }
 
 .btn-register{

@@ -39,7 +39,7 @@ body {
   font-family: "Montserrat", sans-serif !important;
   font-size: 13px;
   line-height: 1.42857143;
-  background-color: #E5D9F2 !important;
+  background-color: #161C2C !important;
 }
 
 .mdc-list-item__primary-text {
@@ -135,7 +135,6 @@ mat-form-field {
 button,
 .mat-mdc-raised-button,
 .mat-primary {
-  background: linear-gradient(to right, #64a6f8 20%, #00cdaa 70%) !important;
   color: #fff !important;
 }
 

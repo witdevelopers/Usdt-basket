@@ -9,7 +9,6 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 // Services
 import { ContractService } from './services/contract.service';
@@ -37,7 +36,6 @@ import { CountdownModule } from 'ngx-countdown';
     ContractService,
     EncryptionService,
     { provide: 'Window', useValue: window },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

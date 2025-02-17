@@ -5,7 +5,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppComponent } from './app/app.component';
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { EncryptionService } from './app/usershop/encryption.service';
 import { HttpInterceptorService } from './app/services/http-interceptor.service';
@@ -33,7 +32,7 @@ bootstrapApplication(AppComponent, {
       CommonModule,
       CountdownModule,
       ReactiveFormsModule,
-      AppModule
+      
     ),
     EncryptionService,
     { provide: 'Window', useValue: window },
