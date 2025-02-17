@@ -8,7 +8,7 @@
   "TokenContractAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
   "CoinName": "Meta",
   "CoinSymbol": "MTN",
-  "PaymentToken": "XRP",
+  "PaymentToken": "$",
   "Website": "https://usdtbasket.co/",
   "Logo": "assets/logo.png",
   "MainNetExplorer": "https://polygonscan.com",

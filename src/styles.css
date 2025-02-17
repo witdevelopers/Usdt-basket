@@ -39,7 +39,7 @@ body {
   font-family: "Montserrat", sans-serif !important;
   font-size: 13px;
   line-height: 1.42857143;
-  background-color: #000 !important;
+  background-color: #E5D9F2 !important;
 }
 
 .mdc-list-item__primary-text {
@@ -378,7 +378,7 @@ button {
 
 .card,
 .deposit-container {
-  background-color: transparent !important;
+  background: linear-gradient(90deg, #b0dfff 15%, #9d5cb7 50%, #6364bc 100%) !important;
   border: 1px solid #007bff !important;
 }
 
@@ -643,4 +643,6 @@ button {
   .goog-te-gadget img {
     display: none !important;
   }
-  
+  .goog-te-gadget{
+    font-size: 0px !important;
+  }

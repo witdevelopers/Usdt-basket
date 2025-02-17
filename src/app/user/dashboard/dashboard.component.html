@@ -1,5 +1,5 @@
 <marquee *ngIf="!isAdmin" behavior="scroll" direction="left" class="news-marquee">
-  Moneta World Moneta World Moneta World Moneta World Moneta World Moneta World Moneta World Moneta World
+  USDTBASKET A Platform to Give A Luxurious Life to Everyone.
 </marquee>
 
 
@@ -135,7 +135,7 @@
               <h5 class="font-weight-normal">Level Income</h5>
               <div class="text-center">
                 <span class="progress-description">{{
-                  userInfo?.matrixIncome }} {{paymentToken}}</span>
+                  userInfo?.levelIncome }} {{paymentToken}}</span>
               </div>
             </div>
           </div>
@@ -274,7 +274,7 @@
               <h5 class="font-weight-normal">Total withdrawal</h5>
               <h2 class="mb-0">
                 <span class="progress-description">{{
-                  userInfo?.userWithdrawnAmount }} {{paymentToken}}</span>
+                  userInfo?.amountWithdrawn }} {{paymentToken}}</span>
               </h2>
             </div>
           </div>
@@ -349,7 +349,7 @@
 <!-- -----------------------------------------card up side------------------------- -->
 <div *ngIf="!isAdmin" class="w-auto">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
       <div class="card border-radius-8 p-2 shadow">
         <label><b>Referral Link</b></label>
         <label id="lblReferralLink" class="form-control font-size-12 overflow-auto">
@@ -366,7 +366,7 @@
     </div>
 
     <!-- Card for Wallet Address -->
-    <div class="col-sm-6 ">
+    <!-- <div class="col-sm-6 ">
       <div class="card border-radius-8 p-2 shadow">
         <label><b>Sponsor Address</b></label>
         <label id="sponsorUserId" class="form-control font-size-12 overflow-auto">
@@ -375,12 +375,12 @@
         <div class="form-group1 row">
 
           <div class="col-md-6 col-6 text-right">
-            <!-- <button style="color: black !important;" onclick="CopyToClipboard('sponsorUserId'); return false;"
-              mat-raised-button class="btn-custom-color left">Copy</button> -->
+            <button style="color: black !important;" onclick="CopyToClipboard('sponsorUserId'); return false;"
+              mat-raised-button class="btn-custom-color left">Copy</button>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Card for Smart Contract Address -->
     <div class="col-sm-12" style="display: none;">
@@ -403,7 +403,7 @@
     </div>
 
 
-    <div class="col-sm-6 " style="margin-top: 15px;">
+    <!-- <div class="col-sm-6 " style="margin-top: 15px;">
       <div class="card p-2 shadow border-radius-8">
         <label><b>Level 2*2</b></label>
         <div class="form-group1 row">
@@ -427,10 +427,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
-    <div class="col-sm-6 " style="margin-top: 15px;">
+    <!-- <div class="col-sm-6 " style="margin-top: 15px;">
       <div class="card p-2 shadow border-radius-8">
         <label><b>Community Member</b></label>
         <div class="form-group1 row">
@@ -457,6 +457,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

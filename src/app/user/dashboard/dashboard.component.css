@@ -8,7 +8,7 @@
 }
 
 .bg-gradient-danger {
-  background: transparent !important;
+  background: linear-gradient(90deg, #26a07c 15%, #6364bc)  !important;
   color: #fff  !important;
   height: 100px;
   display: flex;
@@ -252,6 +252,7 @@ span {
 
 /* Card styles */
 .card {
+  background: linear-gradient(90deg, #26a07c 15%, #6364bc)  !important;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -532,7 +533,7 @@ label {
 
 /* Styling the marquee */
 .news-marquee {
-  background: transparent;
+  background: linear-gradient(90deg, #26a07c 15%, #6364bc)  !important;
   color: #fff;
   font-weight: bold;
   padding: 10px;
@@ -676,9 +677,6 @@ label {
   }
 }
 
-@media (max-width: 420px) {}
-
-@media (max-width: 376px) {}
 
 @media (min-width: 1200px) {
   .container {
