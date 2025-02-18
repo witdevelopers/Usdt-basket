@@ -151,6 +151,33 @@
         </mat-expansion-panel-header>
       </mat-expansion-panel>
 
+      <mat-expansion-panel  *ngIf="!isAdmin" disabled routerLink="/user/royalty-income">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">emoji_events</mat-icon>
+          <mat-panel-title routerLink="/user/royalty-income">
+            <span routerLink="/user/royalty-income">Royalty Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel  *ngIf="!isAdmin" disabled routerLink="/user/club-income">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">group</mat-icon>
+          <mat-panel-title routerLink="/user/club-income">
+            <span routerLink="/user/club-income">Club Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel  *ngIf="!isAdmin" disabled routerLink="/user/pool-income">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">monetization_on</mat-icon>
+          <mat-panel-title routerLink="/user/pool-income">
+            <span routerLink="/user/pool-income">Pool Income</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
       <mat-expansion-panel  *ngIf="!isAdmin" disabled routerLink="/user/withdraw-dividend">
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">account_balance_wallet</mat-icon>
@@ -159,6 +186,8 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
+
+
 
       <!-- <mat-expansion-panel disabled (click)="ContrectAddress()">
         <mat-expansion-panel-header>

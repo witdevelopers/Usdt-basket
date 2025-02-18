@@ -105,24 +105,6 @@
 
 
 
-    <div class="col-xl-3 col-md-4">
-      <div class="widget-section">
-        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
-          <div class="infobox card-body">
-            <!-- <div class="infobox-icon">
-              <img src="assets/05.png" />
-            </div> -->
-            <div class="infobox-data">
-              <h5 class="font-weight-normal">Direct Income</h5>
-              <h2 class="mb-0">
-                <span class="progress-description">{{
-                  userInfo?.directIncome }} {{paymentToken}}</span>
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="col-xl-3 col-md-4">
       <div class="widget-section">
@@ -142,6 +124,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
@@ -150,34 +133,33 @@
               <img src="assets/08.png" />
             </div> -->
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Community Income</h5>
+              <h5 class="font-weight-normal">Club Income</h5>
               <div class="text-center">
-                <span class="progress-description">{{userInfo?.singleLegIncome }} {{paymentToken}}</span>
+                <span class="progress-description">{{userInfo?.totalclub }} {{paymentToken}}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="col-xl-3 col-md-4">
+    <div class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
-            <div class="infobox-icon">
+            <!-- <div class="infobox-icon">
               <img src="assets/07.png" />
-            </div>
+            </div> -->
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Profit Level Bonus</h5>
+              <h5 class="font-weight-normal">Pool Income </h5>
               <div class="text-center">
-                <span class="progress-description"
-                  [ngClass]="{'text-success': userInfo?.levelROIIncome > 0, 'text-danger': userInfo?.levelROIIncome < 0, 'text-muted': userInfo?.levelROIIncome === 0}">{{paymentToken}}{{
-                  userInfo?.levelROIIncome }}</span>
+                <span class="progress-description">
+                 {{ userInfo?.totalPoolIncome }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">
@@ -187,10 +169,10 @@
               <img src="assets/008.png" />
             </div> -->
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Leader Support Income</h5>
+              <h5 class="font-weight-normal">Royalty Income</h5>
               <h2 class="mb-0">
                 <span class="progress-description">{{
-                  userInfo?.leadershipIncome }} {{paymentToken}}</span>
+                  userInfo?.totalroyalty }} {{paymentToken}}</span>
               </h2>
             </div>
           </div>
@@ -198,7 +180,27 @@
       </div>
     </div>
 
-    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/05.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Referal  Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.totalReferal }} {{paymentToken}}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
@@ -223,7 +225,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">
@@ -349,7 +351,7 @@
 <!-- -----------------------------------------card up side------------------------- -->
 <div *ngIf="!isAdmin" class="w-auto">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
       <div class="card border-radius-8 p-2 shadow">
         <label><b>Referral Link</b></label>
         <label id="lblReferralLink" class="form-control font-size-12 overflow-auto">
@@ -366,7 +368,7 @@
     </div>
 
     <!-- Card for Wallet Address -->
-    <!-- <div class="col-sm-6 ">
+    <div class="col-sm-6 ">
       <div class="card border-radius-8 p-2 shadow">
         <label><b>Sponsor Address</b></label>
         <label id="sponsorUserId" class="form-control font-size-12 overflow-auto">
@@ -380,7 +382,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Card for Smart Contract Address -->
     <div class="col-sm-12" style="display: none;">

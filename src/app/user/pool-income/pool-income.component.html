@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="card card-box">
+        <div class="card-head">
+          <header>Pool Income</header>
+        </div>
+        <div class="card-body">
+          <div *ngIf="isAdmin">
+            <div class="form-group row">
+              <label class="col-md-3 control-label" for="filterInput">User ID:</label>
+              <div class="col-md-6">
+                <input id="filterInput" type="text" class="form-control" [(ngModel)]="filterUserId"
+                  placeholder="Enter User ID" [ngClass]="{ 'is-invalid': isSubmitted && !filterUserId }" />
+                <div *ngIf="isSubmitted && !filterUserId" class="text-danger">
+                  User ID is required.
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="table-responsive mt-3">
+            <table *ngIf="filteredpool.length > 0" class="table table-bordered table-striped panel">
+              <thead>
+                <tr>
+                  <th>S.N.</th>
+                  <th>Pool Number</th>
+                  <th>Required Team</th>
+                  <th>Actual Team</th>
+                  <th>Income</th>
+                  <th>Upgrade</th>
+                  <th>Actual Income</th>
+                  <th>Pool Upgrade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pool of filteredpool; let i = index">
+                  <td>{{ pool.srno }}</td>
+                  <td>{{ pool.poonNumber }}</td>  
+                  <td>{{ pool["require Team"] }}</td> <!-- Corrected -->
+                  <td>{{ pool["actual Team"] }}</td>  <!-- Corrected -->
+                  <td>{{ pool.income }}</td>
+                  <td>{{ pool.upgrade }}</td>
+                  <td>{{ pool["actual Income"] }}</td> <!-- Corrected -->
+                  <td>{{ pool.isPoolIUpgrage }}</td> <!-- Corrected -->
+                </tr>
+              </tbody>
+            </table>
+          
+            <!-- No Data Found Message -->
+            <div *ngIf="filteredpool.length === 0" class="text-center mt-3">
+              <label>No data found yet!</label>
+            </div>
+          </div>                    
+        </div>
+      </div>
+    </div>
+  </div>
+  

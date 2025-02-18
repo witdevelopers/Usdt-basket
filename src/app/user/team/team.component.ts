@@ -21,15 +21,17 @@ export class TeamComponent implements OnInit {
   pageNo: number = 1;
   pageItem: number = 100;
   pageCount: number = 0;
-  isVisible: boolean = false;
+  isAdmin: boolean = false;
   isSubmitted: boolean = false;
   message: string = '';
   showMessage: boolean = false;
 
   constructor(private api: UserService) {
-    this.isVisible = sessionStorage.getItem('usertype') === 'Admin';
-    if (this.isVisible === false) {
-      this.filterUserId = sessionStorage.getItem('userId') || '';
+
+    this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+
+    if (!this.isAdmin) {
+      this.filterUserId = sessionStorage.getItem('address');
     }
   }
 

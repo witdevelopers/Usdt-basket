@@ -90,6 +90,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { Routes } from '@angular/router';
 import { LeaderShipIncomeDetailsComponent } from './user/leader-ship-income-details/leader-ship-income-details.component';
 import { CommunityIncomeComponent } from './user/community-income/community-income.component';
+import { RoyaltyIncomeComponent } from './user/royalty-income/royalty-income.component';
+import { ClubIncomeComponent } from './user/club-income/club-income.component';
+import { PoolIncomeComponent } from './user/pool-income/pool-income.component';
 
 export const routes: Routes = [
   {
@@ -475,6 +478,21 @@ export const routes: Routes = [
         path: 'Credit-Debit',
         component: CreditDebitComponent,
         title: 'Amount-Wallet',
+      },
+      {
+        path: 'royalty-income',
+        component: RoyaltyIncomeComponent,
+        title: 'royalty-income',
+      },
+      {
+        path: 'club-income',
+        component: ClubIncomeComponent,
+        title: 'club-income',
+      },
+      {
+        path: 'pool-income',
+        component: PoolIncomeComponent,
+        title: 'pool-income',
       },
     ],
   },

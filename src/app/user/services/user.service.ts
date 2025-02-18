@@ -174,6 +174,30 @@ export class UserService {
     return this.http.get<any>(url);
   }
 
+  getroyaltyincome(
+    userID: string,
+
+  ): Observable<any> {
+    let url = `${this.apiBaseUrl}UserHome/Getroyaltyincome?userID=${userID}`;
+    return this.http.get<any>(url);
+  }
+
+  GetClubincome(
+    userID: string,
+
+  ): Observable<any> {
+    let url = `${this.apiBaseUrl}UserHome/GetClubincome?userID=${userID}`;
+    return this.http.get<any>(url);
+  }
+
+  GetAllIncomepool(
+    userID: string,
+
+  ): Observable<any> {
+    let url = `${this.apiBaseUrl}UserHome/GetAllIncomepool?userID=${userID}`;
+    return this.http.get<any>(url);
+  }
+
   getSupportedCrypto(): Observable<any> {
     const endpoint = 'Account/GetSupportedCrypto?UniqueChainsOnly=false';
     return this.http.get<any>(`${this.apiBaseUrl}${endpoint}`);

@@ -22,22 +22,21 @@ export class DirectsComponent implements OnInit {
   pageSize: number = 100;
   pageCount: number = 0;
   hasNextPage: boolean = false;
-  isVisible: boolean = false;
+  isAdmin: boolean = false;
   hasData: boolean = false;
   isSubmitted: boolean = false;
   isBinary: boolean = false;
 
   constructor(private api: UserService) {
-    const userType = sessionStorage.getItem('usertype');
-    this.isVisible = userType === 'Admin';
-    this.isBinary = sessionStorage.getItem('isBinary') === 'true';
-    if (userType === 'User') {
-      this.filterUserId = sessionStorage.getItem('userId');
+    this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+
+    if (!this.isAdmin) {
+      this.filterUserId = sessionStorage.getItem('address');
       this.getDirects();
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onFilterChange() {
     // Update filteredDirects based on the filter criteria
@@ -63,7 +62,6 @@ export class DirectsComponent implements OnInit {
   getDirects() {
     this.isSubmitted = true;
     if (!this.filterUserId) {
-      // Add any additional logic if needed
       return;
     }
     this.api
