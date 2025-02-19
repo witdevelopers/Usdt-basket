@@ -251,25 +251,20 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
-
     try {
       await this.getGasPrice();
 
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
 
       if (!ethers.utils.isAddress(sponsorId)) {
-        return { success: false, message: " Invalid sponsorId. Must be a valid Ethereum/Polygon address." };
+        return { success: false, message: " Invalid sponsorId. Must be a valid  address." };
       }
 
-      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6); 
-
-    
+      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
       await this.approveToken(USDTValue);
+      let receipt = await this.sendUSDT(USDTValue);
 
-
-      let receipt = await this.sendUSDT( USDTValue);
-
-      return receipt; 
+      return receipt;
 
     } catch (error: any) {
       return { success: false, data: "", message: error.message || "Transaction failed!" };
@@ -277,7 +272,6 @@ export class ContractService {
   }
 
   public async sendUSDT(amount: BigNumber) {
-
     try {
       let contract = await this.getPaymentTokenContractmm();
       let _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
@@ -291,7 +285,7 @@ export class ContractService {
         gasPrice: _gasPrice,
       });
 
-      estimatedGas = Math.ceil(Number(estimatedGas) * 1.2); 
+      estimatedGas = Math.ceil(Number(estimatedGas) * 1.2);
 
       let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
@@ -304,19 +298,17 @@ export class ContractService {
         data
       );
 
-      console.log("Transaction Receipt:", receipt);
-
       return {
         success: receipt.success,
         data: receipt.data,
-        message: receipt.success ? " USDT sent successfully on Polygon!" : receipt.message
+        message: receipt.success ? " USDT sent successfully" : receipt.message
       };
 
     } catch (err: any) {
       return {
         success: false,
         data: err,
-        message: ' Unable to send USDT to Polygon contract!'
+        message: ' Unable to send USDT'
       };
     }
   }
@@ -484,24 +476,26 @@ export class ContractService {
   }
 
   public async buyToken(amount: number) {
-    debugger
     try {
-        await this.getGasPrice();
+      await this.getGasPrice();
+      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
 
-        let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
+      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
 
-        const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
-        await this.approveToken(USDTValue);
+      console.log("🔹 Approving USDT:", amount, "USDTValue in wei:", USDTValue.toString());
 
-        let receipt = await this.sendUSDT(USDTValue);
+      await this.approveToken(USDTValue);
 
-        return receipt;
+      console.log("✅ Approval successful. Sending USDT:", amount);
+
+      let receipt = await this.sendUSDT(USDTValue);
+
+      return receipt;
 
     } catch (error: any) {
-        return { success: false, data: "", message: error.message || "Transaction failed!" };
+      return { success: false, data: "", message: error.message || "Transaction failed!" };
     }
-}
-
+  }
 
   private async getGasPrice() {
     try {
@@ -626,7 +620,6 @@ export class ContractService {
   }
 
   public async withdrawDividend(amount: number) {
-
     try {
       var isRegistered = await this.login((await this.getAddress()));
 
@@ -764,41 +757,42 @@ export class ContractService {
     return contract;
   }
 
-
   public async getPaymentTokenContract() {
 
     const tokenAbi = [{ "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "userAddress", "type": "address" }, { "indexed": false, "internalType": "address payable", "name": "relayerAddress", "type": "address" }, { "indexed": false, "internalType": "bytes", "name": "functionSignature", "type": "bytes" }], "name": "MetaTransactionExecuted", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": true, "internalType": "bytes32", "name": "previousAdminRole", "type": "bytes32" }, { "indexed": true, "internalType": "bytes32", "name": "newAdminRole", "type": "bytes32" }], "name": "RoleAdminChanged", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": true, "internalType": "address", "name": "account", "type": "address" }, { "indexed": true, "internalType": "address", "name": "sender", "type": "address" }], "name": "RoleGranted", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": true, "internalType": "address", "name": "account", "type": "address" }, { "indexed": true, "internalType": "address", "name": "sender", "type": "address" }], "name": "RoleRevoked", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "inputs": [], "name": "CHILD_CHAIN_ID", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "CHILD_CHAIN_ID_BYTES", "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "DEFAULT_ADMIN_ROLE", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "DEPOSITOR_ROLE", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "ERC712_VERSION", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "ROOT_CHAIN_ID", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "ROOT_CHAIN_ID_BYTES", "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "spender", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "name_", "type": "string" }], "name": "changeName", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "subtractedValue", "type": "uint256" }], "name": "decreaseAllowance", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "user", "type": "address" }, { "internalType": "bytes", "name": "depositData", "type": "bytes" }], "name": "deposit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "userAddress", "type": "address" }, { "internalType": "bytes", "name": "functionSignature", "type": "bytes" }, { "internalType": "bytes32", "name": "sigR", "type": "bytes32" }, { "internalType": "bytes32", "name": "sigS", "type": "bytes32" }, { "internalType": "uint8", "name": "sigV", "type": "uint8" }], "name": "executeMetaTransaction", "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }], "stateMutability": "payable", "type": "function" }, { "inputs": [], "name": "getChainId", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "pure", "type": "function" }, { "inputs": [], "name": "getDomainSeperator", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "user", "type": "address" }], "name": "getNonce", "outputs": [{ "internalType": "uint256", "name": "nonce", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }], "name": "getRoleAdmin", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "uint256", "name": "index", "type": "uint256" }], "name": "getRoleMember", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }], "name": "getRoleMemberCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "grantRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "hasRole", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "addedValue", "type": "uint256" }], "name": "increaseAllowance", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "name_", "type": "string" }, { "internalType": "string", "name": "symbol_", "type": "string" }, { "internalType": "uint8", "name": "decimals_", "type": "uint8" }, { "internalType": "address", "name": "childChainManager", "type": "address" }], "name": "initialize", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "renounceRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "revokeRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
 
     let contract = await new (await this.getWeb3()).eth.Contract(tokenAbi, "0xc2132D05D31c914a87C6611C10748AEb04B58e8F");
-    console.log(contract);
     return contract;
   }
 
   async approveToken(amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContract();
-      console.log("1");
       await this.getGasPrice();
-      console.log("1ww");
       let value = "0";
       let _gasPrice = (await this.getWeb3()).utils.toWei(this.gasPrice, "Gwei");
-      let estimatedGas = "0";
-      console.log(contract);
-      await contract.methods.approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", "1000000").estimateGas({
-        from: this.account,
-        value: "0",
-        gasPrice: _gasPrice
-      }, function (error: any, _estimatedGas: any) {
-        estimatedGas = _estimatedGas;
-      });
-      console.log("1ddd");
-      let data = contract.methods.approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", "1000000").encodeABI();
-      var receipt = await this.sendTransaction(this.account, Settings.tokenContractAddress, value, _gasPrice, estimatedGas, data);
-      console.log(receipt);
-      return { success: receipt.success, data: receipt.data, message: receipt.success ? "Ok!" : receipt.message };
+      let estimatedGas = await contract.methods
+        .approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", amount.toString())
+        .estimateGas({
+          from: this.account,
+          value: "0",
+          gasPrice: _gasPrice
+        });
+      let data = contract.methods
+        .approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", amount.toString())
+        .encodeABI();
+
+      var receipt = await this.sendTransaction(
+        this.account,
+        Settings.tokenContractAddress,
+        value,
+        _gasPrice,
+        estimatedGas.toString(),
+        data
+      );
+      return { success: receipt.success, data: receipt.data, message: receipt.success ? "Approval Successful!" : receipt.message };
     } catch (err: any) {
-      console.log(err);
-      return { success: false, data: err, message: "Unable to approve " + Settings.paymentToken + "!" + err };
+      return { success: false, data: err, message: `Unable to approve ${Settings.paymentToken}! ${err.message || err}` };
     }
   }
 }

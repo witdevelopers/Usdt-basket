@@ -3,16 +3,15 @@ import { Settings } from 'src/app/app-setting';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ContractService } from 'src/app/services/contract.service';
 import Swal from 'sweetalert2';
-import { UserService } from '../../services/user.service';
 import { CompanyService } from 'src/app/services/company.service';
-import { FundService } from '../../services/fund.service';
 import { FormsModule } from '@angular/forms';
-
 import { ValidationMessageComponent } from '../../../validation-message/validation-message.component';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FundService } from '../../services/fund.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-buy',
@@ -39,23 +38,46 @@ export class BuyComponent implements OnInit {
   packageId: number | null = null;
   ToToken: number = 0;
   selectedPackage: any;
+  userId: string = "0xad83cc72b6a8c5feddc1982e627b947659d9850d"; 
+
   constructor(
     private spinnerService: NgxSpinnerService,
     private fund: FundService,
     private company: CompanyService,
-    private contractService: ContractService
-  ) {
-    this.packages = this.company.packages;
-    this.initialize();
-  }
+    private contractService: ContractService,
+    private userService: UserService
+  ) {}
 
-  ngOnInit(): void { }
+  async ngOnInit() {
+    await this.initialize();
+  }
 
   async initialize() {
     this.ToToken = 1 / this.company.companyDetails.tokenRate;
     this.Balance = await this.contractService.fetchAddressBalance();
-    this.selectPackage();
+    await this.fetchPackages();
     this.calculateTokens();
+  }
+
+  async fetchPackages() {
+    this.spinnerService.show();
+    const response = await this.userService.nextPool(this.userId).toPromise();
+    this.spinnerService.hide();
+
+    if (response && response.status) {
+      this.packages = response.data?.table?.map((item: any) => ({
+        poolName: item.poolName,  
+        nextPool: item.nextPool,  
+        amount: item.amount,
+        packageId: item.nextPool
+      })) || [];
+
+      if (this.packages.length > 0) {
+        this.selectPackage(response.data.table[0].nextPool);
+      }
+    } else {
+      Swal.fire({ icon: "error", title: "Failed to load packages", text: response?.message || "Unknown error" });
+    }
   }
 
   calculateTokens() {
@@ -64,98 +86,63 @@ export class BuyComponent implements OnInit {
     this.tokenAmount_WithoutDeduction = this.Amount * this.ToToken;
   }
 
-  selectPackage() {
-    this.selectedPackage = this.packages.find((pkg: any) => {
-      const withinMinRange = this.Amount >= pkg.minRange;
-      const withinMaxRange = pkg.maxRange === -1 || this.Amount <= pkg.maxRange;
-      return withinMinRange && withinMaxRange;
-    });
+  selectPackage(nextPoolValue: number) {
+    this.selectedPackage = this.packages.find((pkg: any) => pkg.nextPool === nextPoolValue);
 
-    if (!this.selectedPackage) {
-      console.warn("No package matches the current Amount.");
-    }
-  }
-
-  async onPackageChange(): Promise<void> {
     if (this.selectedPackage) {
-      this.Amount = this.selectedPackage.minRange; // Set amount to minRange of selected package
-      this.packageId = this.selectedPackage.srno; // Update packageId
-      this.updateMaxAmount();
-    } else {
-      this.packageId = null; // Clear packageId if no package is selected
+      this.Amount = this.selectedPackage.amount;
+      this.packageId = this.selectedPackage.packageId;
+      this.calculateTokens();
     }
   }
 
-  async updateMaxAmount(): Promise<void> {
-    const amountInput = document.getElementById('txtAmount') as HTMLInputElement;
-    amountInput?.setAttribute('max', `${this.selectedPackage?.maxRange ?? 0}`);
+  async onPackageChange() {
+    if (this.selectedPackage) {
+      this.Amount = this.selectedPackage.amount;
+      this.packageId = this.selectedPackage.packageId;
+      this.calculateTokens();
+    }
   }
-  
-  async buy() {
-    this.selectPackage();
 
+  async buy() {
     if (!this.packageId) {
-      Swal.fire({
-        icon: "error",
-        title: "No package selected!",
-        text: "Please ensure the amount is within a valid range."
-      });
+      Swal.fire({ icon: "error", title: "No package selected!", text: "Please ensure the amount is within a valid range." });
       return;
     }
 
-    if (this.Amount < (await this.contractService.fetchUSDTBalance())) {
-      if (this.Amount > 0) {
-        this.spinnerService.show();
+    const userBalance = await this.contractService.fetchUSDTBalance();
+    if (this.Amount >= userBalance) {
+      Swal.fire({ icon: "error", title: "Insufficient balance!" });
+      return;
+    }
 
-        try {
-          const receipt = await this.contractService.buyToken(this.Amount);
+    if (this.Amount <= 0) {
+      Swal.fire({ icon: "error", title: "Enter a valid amount" });
+      return;
+    }
 
-          if (receipt.success) {
-            const result: any = await this.fund.invest(receipt.data.transactionHash,this.Amount, this.packageId );
+    this.spinnerService.show();
+    const receipt = await this.contractService.buyToken(this.Amount);
 
-            if (result.status) {
-              Swal.fire({
-                icon: "success",
-                title: "Deposit successful!"
-              }).then(async () => {
-                await this.company.getCompanyDetails();
-                this.initialize();
-              });
-            } else {
-              Swal.fire({ title: result.message });
-            }
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Transaction failed!",
-              text: receipt.message
-            });
-          }
-        } catch (error: any) {
-          console.error("Buy Error:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Transaction failed!",
-            text: error.message
-          });
-        } finally {
-          this.spinnerService.hide();
-        }
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Enter a valid amount"
+    if (receipt.success) {
+      const result: any = await this.fund.invest(receipt.data.transactionHash, this.Amount, this.packageId);
+
+      if (result.status) {
+        Swal.fire({ icon: "success", title: "Deposit successful!" }).then(async () => {
+          await this.company.getCompanyDetails();
+          await this.initialize();
         });
+      } else {
+        Swal.fire({ title: result.message });
       }
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Insufficient balance!"
-      });
+      Swal.fire({ icon: "error", title: "Transaction failed!", text: receipt.message });
     }
+    
+    this.spinnerService.hide();
   }
 
-  setAmount(percentage: number) {
+  async setAmount(percentage: number) {
     this.Amount = (this.Balance * percentage) / 100;
     this.calculateTokens();
   }

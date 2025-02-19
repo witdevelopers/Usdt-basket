@@ -1124,6 +1124,11 @@ export class UserService {
     return this.http.post(`${this.apiBaseUrl}/cancelOrder/${orderId}`, {}); // Adjust if body is needed
   }
 
+  nextPool(userId: string): Observable<any> {
+    return this.http.post(`${this.apiBaseUrl}UserHome/NextPool?UserId=${userId}`, {}); 
+}
+
+
   updateCustomer(TempUserId: number, customerId: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json-patch+json',
