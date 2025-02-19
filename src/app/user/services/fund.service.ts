@@ -11,13 +11,14 @@ export class FundService {
 
   constructor(private http: HttpClient) {}
 
-  invest(txnHash: string,packageId: number,amount: number) {
+  invest(txnHash: string,amount: number,packageId: number) {
     return new Promise((resolve, reject) => {
       this.http
         .post(this.apiBaseUrl + 'Invest', {
           transactionHash: txnHash,
-          packageId: packageId,
-          amount: amount
+          amount: amount,
+          packageId: packageId
+          
         })
         .subscribe((res: any) => {
           resolve(res);

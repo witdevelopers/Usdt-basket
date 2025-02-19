@@ -251,38 +251,39 @@ export class ContractService {
   }
 
   public async register(sponsorId: string, amount: number): Promise<any> {
+
     try {
       await this.getGasPrice();
 
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
 
       if (!ethers.utils.isAddress(sponsorId)) {
-        return { success: false, message: "❌ Invalid sponsorId. Must be a valid Ethereum/Polygon address." };
+        return { success: false, message: " Invalid sponsorId. Must be a valid Ethereum/Polygon address." };
       }
 
-      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6); // Convert to USDT 6 decimals
+      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6); 
 
-      // ✅ Approve USDT Spending
+    
       await this.approveToken(USDTValue);
 
-      // ✅ Send USDT to Sponsor
-      let receipt = await this.sendUSDT(sponsorId, USDTValue);
 
-      return receipt; // Return receipt for further processing
+      let receipt = await this.sendUSDT( USDTValue);
+
+      return receipt; 
 
     } catch (error: any) {
       return { success: false, data: "", message: error.message || "Transaction failed!" };
     }
   }
 
+  public async sendUSDT(amount: BigNumber) {
 
-  public async sendUSDT(toAddress: string, amount: BigNumber) {
     try {
       let contract = await this.getPaymentTokenContractmm();
       let _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
 
-      // ✅ Dynamically Pass Recipient Address
-      const recipients = [toAddress];
+
+      const recipients = ['0xaD83cC72b6A8C5FeDDC1982E627B947659D9850d'];
       const amounts = [amount.toString()];
 
       let estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
@@ -290,7 +291,7 @@ export class ContractService {
         gasPrice: _gasPrice,
       });
 
-      estimatedGas = Math.ceil(Number(estimatedGas) * 1.2); // ✅ 20% buffer for gas
+      estimatedGas = Math.ceil(Number(estimatedGas) * 1.2); 
 
       let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
@@ -308,18 +309,17 @@ export class ContractService {
       return {
         success: receipt.success,
         data: receipt.data,
-        message: receipt.success ? "✅ USDT sent successfully on Polygon!" : receipt.message
+        message: receipt.success ? " USDT sent successfully on Polygon!" : receipt.message
       };
 
     } catch (err: any) {
       return {
         success: false,
         data: err,
-        message: '❌ Unable to send USDT to Polygon contract!'
+        message: ' Unable to send USDT to Polygon contract!'
       };
     }
   }
-
 
   public async sendTransaction(
     fromAddress: string,
@@ -362,7 +362,7 @@ export class ContractService {
       };
 
     } catch (ex: any) {
-      console.error('❌ Transaction Error:', ex);
+      console.error(' Transaction Error:', ex);
       return {
         success: false,
         data: '',
@@ -370,7 +370,6 @@ export class ContractService {
       };
     }
   }
-
 
   public async getMemberId(userAddress: string) {
     let res = { success: false, message: '', data: '' };
@@ -485,27 +484,24 @@ export class ContractService {
   }
 
   public async buyToken(amount: number) {
+    debugger
     try {
-      await this.getGasPrice();
+        await this.getGasPrice();
 
-      const value = this.web3.utils.toWei(amount.toString(), "ether");
-      const _gasPrice = this.web3.utils.toWei(this.gasPrice, "Gwei");
+        let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
 
-      // const sendXPRReceipt = await this.sendUSDT( value);
-      // if (!sendXPRReceipt.success) {
-      //   return { success: false, data: '' };
-      // }
+        const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
+        await this.approveToken(USDTValue);
 
-      const estimatedGas = await this.contract.estimateGas.Reinvest({ from: this.account, value: '0', gasPrice: _gasPrice });
-      const data = this.contract.interface.encodeFunctionData('Reinvest', []);
+        let receipt = await this.sendUSDT(USDTValue);
 
-      const receipt = await this.sendTransaction(this.account, this.contractAddress, '0', _gasPrice, estimatedGas, data);
+        return receipt;
 
-      return { success: receipt.success, data: receipt.data, message: receipt.success ? "Ok!" : receipt.message };
-    } catch (ex: any) {
-      return { success: false, data: '', message: 'Some error occurred!' };
+    } catch (error: any) {
+        return { success: false, data: "", message: error.message || "Transaction failed!" };
     }
-  }
+}
+
 
   private async getGasPrice() {
     try {
@@ -630,7 +626,7 @@ export class ContractService {
   }
 
   public async withdrawDividend(amount: number) {
-    debugger
+
     try {
       var isRegistered = await this.login((await this.getAddress()));
 

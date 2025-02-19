@@ -25,7 +25,7 @@ export class LevelDividendComponent implements OnInit {
   pageSize: number = 10;
   pageCount: number = 0;
   hasNextPage: boolean = false;
-  isVisible: boolean = false;
+  isAdmin: boolean = false;
   hasData: boolean = false;
   UserId: string | null; // Declare UserId here
   isSubmitted: boolean;
@@ -33,10 +33,10 @@ export class LevelDividendComponent implements OnInit {
   apiMessages: string[] = []; // Array to store all messages from the API response
 
   constructor(private api: UserService) {
-    const userType = sessionStorage.getItem('usertype');
-    this.isVisible = userType === 'Admin';
-    if (userType === 'User') {
-      this.filterUserId = sessionStorage.getItem('userId');
+    this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+
+    if (!this.isAdmin) {
+      this.filterUserId = sessionStorage.getItem('address');
       this.getLeveldiveidend();
     }
   }

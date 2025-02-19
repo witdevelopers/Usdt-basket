@@ -235,10 +235,67 @@
               <img src="assets/008.png" />
             </div> -->
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Rank</h5>
+              <h5 class="font-weight-normal">Royalty Rank</h5>
               <h2 class="mb-0">
                 <span class="progress-description">{{
-                  userInfo?.rank }} </span>
+                  userInfo?.Royaltyrank }} </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/008.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Club Rank</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.Clubrank }} </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/008.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Week Total Royalty</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.weektotalroyalty }} </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <!-- <div class="infobox-icon">
+              <img src="assets/008.png" />
+            </div> -->
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Week Total Club</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.weektotalclub }} </span>
               </h2>
             </div>
           </div>

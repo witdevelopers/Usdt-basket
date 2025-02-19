@@ -32,7 +32,9 @@ export class TeamComponent implements OnInit {
 
     if (!this.isAdmin) {
       this.filterUserId = sessionStorage.getItem('address');
+      this.onSearchClick();
     }
+
   }
 
   ngOnInit(): void { }

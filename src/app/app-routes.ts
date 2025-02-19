@@ -96,6 +96,11 @@ import { PoolIncomeComponent } from './user/pool-income/pool-income.component';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
+  },
+  {
     path: '',
     component: AuthMasterComponent,
     children: [{

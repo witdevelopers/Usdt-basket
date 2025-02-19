@@ -38,7 +38,6 @@ export class RegisterComponent implements OnInit {
   _subscription: any;
   maticToToken: any;
   tokenSymbol: string = "";
-
   packages: any[] = [];
   selectedPackage: any;
 
@@ -65,7 +64,7 @@ export class RegisterComponent implements OnInit {
   }
 
   async onPackageChange(): Promise<void> {
-    this.amount = this.selectedPackage?.minRange ?? 0; 
+    this.amount = this.selectedPackage?.minRange ?? 0;
     this.updateMaxAmount();
   }
 
@@ -73,7 +72,7 @@ export class RegisterComponent implements OnInit {
     const amountInput = document.getElementById('txtAmount') as HTMLInputElement;
     amountInput?.setAttribute('max', `${this.selectedPackage?.maxRange ?? 0}`);
   }
-  
+
   async connect() {
     await this.getAddress();
   }
@@ -90,81 +89,78 @@ export class RegisterComponent implements OnInit {
     await this.getAddress();
 
     if (!this.sponsorId) {
-        this.sponsorId = Settings.DefaultSponsor;
+      this.sponsorId = Settings.DefaultSponsor;
     }
 
     const usdtBalance = await this.contractService.fetchUSDTBalance();
-    
+
     if (this.amount < usdtBalance) {
-        if (this.amount > 0) {
-            this.spinnerService.show();
+      if (this.amount > 0) {
+        this.spinnerService.show();
 
-            let sponsorRes: any = await this.api.isSponsorValid(this.sponsorId);
-            if (!sponsorRes.status) {
-                this.spinnerService.hide();
-                Swal.fire({
-                    icon: "error",
-                    title: sponsorRes.message
-                });
-                return;
-            }
-
-            let userRes: any = await this.api.isSponsorValid(this.account);
-            if (userRes.status) {
-                this.spinnerService.hide();
-                Swal.fire({
-                    icon: "error",
-                    title: "You are already registered!"
-                });
-                return;
-            }
-
-            // ✅ Send USDT and Get Receipt
-            let receipt = await this.contractService.register(this.sponsorId, this.amount);
-
-            if (receipt.success) {
-                // ✅ Extract Transaction Hash
-                let transactionHash = receipt.data?.transactionHash || receipt.data?.hash;
-
-                // ✅ Send transaction details to API
-                let result: any = await this.api.register(this.sponsorId, this.amount, transactionHash);
-
-                this.spinnerService.hide();
-
-                if (result.status) {
-                    Swal.fire({
-                        icon: "success",
-                        title: '✅ Deposit Successful!',
-                    }).then(async () => {
-                        this.loginClick();
-                    });
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: result.message
-                    });
-                }
-            } else {
-                this.spinnerService.hide();
-                Swal.fire({
-                    icon: "error",
-                    title: '❌ Transaction failed!'
-                });
-            }
-        } else {
-            Swal.fire({
-                icon: "warning",
-                title: '⚠ Enter a valid amount!'
-            });
-        }
-    } else {
-        Swal.fire({
+        let sponsorRes: any = await this.api.isSponsorValid(this.sponsorId);
+        if (!sponsorRes.status) {
+          this.spinnerService.hide();
+          Swal.fire({
             icon: "error",
-            title: '❌ Insufficient balance!'
-        });
-    }
-}
+            title: sponsorRes.message
+          });
+          return;
+        }
 
+        let userRes: any = await this.api.isSponsorValid(this.account);
+        if (userRes.status) {
+          this.spinnerService.hide();
+          Swal.fire({
+            icon: "error",
+            title: "You are already registered!"
+          });
+          return;
+        }
+
+
+        let receipt = await this.contractService.register(this.sponsorId, this.amount);
+
+        if (receipt.success) {
+          let transactionHash = receipt.data?.transactionHash || receipt.data?.hash;
+
+          let result: any = await this.api.register(this.sponsorId, this.amount, transactionHash);
+
+          this.spinnerService.hide();
+
+          if (result.status) {
+            Swal.fire({
+              icon: "success",
+              title: '✅ Deposit Successful!',
+            }).then(async () => {
+              this.loginClick();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: result.message
+            });
+          }
+        } else {
+          this.spinnerService.hide();
+          Swal.fire({
+            icon: "error",
+            title: '❌ Transaction failed!'
+          });
+        }
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: '⚠ Enter a valid amount!'
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: '❌ Insufficient balance!'
+      });
+    }
+  }
 
   loginClick() {
     this.router.navigate(['auth/login']);

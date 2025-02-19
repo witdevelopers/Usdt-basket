@@ -2,7 +2,7 @@
   <div class="col-md-10 offset-md-1">
     <div class="card card-box">
       <div class="card-head">
-        <header>Referral Bonus</header>
+        <header>Referral Details</header>
       </div>
       <div class="card-body">
         @if (isAdmin) {
@@ -101,43 +101,35 @@
                 <tr>
                   <th>S.N.</th>
                   <th>User ID</th>
-                  <th>Name</th>
                   <th>Sponsor UserId</th>
-                  <th>Sponsor Name</th>
                   <th>Joining Date</th>
-                  <th>Mobile No.</th>
-                  <th>Email Id</th>
-                  <th>Deposit Date</th>
+                  <!-- <th>Deposit Date</th>
                   <th>Deposit Amount</th>
                   <th>Total Team</th>
                   <th>Active Team</th>
                   <th>Team Business</th>
-                  <th>Level</th>
+                  <th>Level</th> -->
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let user of filteredDirects; let i = index">
                   <td>{{ user.srno }}</td>
                   <td>{{ user.userId }}</td>
-                  <td>{{ user.name }}</td>
                   <td>{{ user.sponsorUserID }}</td>
-                  <td>{{ user.sponsorName }}</td>
                   <td>{{ user.joiningDate }}</td>
-                  <td>{{ user.mobileNo }}</td>
-                  <td>{{ user.emailId }}</td>
-                  <td>{{ user.depositDate }}</td>
+                  <!-- <td>{{ user.depositDate }}</td>
                   <td>{{ user.depositAmount }}</td>
                   <td>{{ user.totalDirects }}</td>
                   <td>{{ user.activeDirects }}</td>
                   <td>{{ user.teamBusiness }}</td>
-                  <td>{{ user.level }}</td>
+                  <td>{{ user.level }}</td> -->
                 </tr>
               </tbody>
             </table>
           }
 
-          <div *ngIf="filteredDirects.length < 0">
-            <label>No data found yet!</label>
+          <div *ngIf="filteredDirects.length === 0">
+            <label>{{ responseMessage }}</label>
           </div>
         </div>
       </div>

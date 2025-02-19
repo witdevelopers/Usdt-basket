@@ -12,11 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class DirectsComponent implements OnInit {
   directs: any[] = [];
-  filteredDirects: any[] = []; // To hold the filtered directs
-  filterUserId: string = ''; // For filtering by User ID
-  startDate: string | null = null; // For filtering by start date
-  endDate: string | null = null; // For filtering by end date
-  statusFilter: number = -1; // For filtering by status
+  filteredDirects: any[] = []; 
+  filterUserId: string = ''; 
+  startDate: string | null = null; 
+  endDate: string | null = null; 
+  statusFilter: number = -1;
   sideFilter: number = 0;
   pageNo: number = 1;
   pageSize: number = 100;
@@ -26,6 +26,7 @@ export class DirectsComponent implements OnInit {
   hasData: boolean = false;
   isSubmitted: boolean = false;
   isBinary: boolean = false;
+  responseMessage: string;
 
   constructor(private api: UserService) {
     this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
@@ -39,7 +40,6 @@ export class DirectsComponent implements OnInit {
   ngOnInit(): void { }
 
   onFilterChange() {
-    // Update filteredDirects based on the filter criteria
     this.filteredDirects = this.directs.filter((user) => {
       const matchesStartDate = this.startDate
         ? new Date(user.topupDate) >= new Date(this.startDate)
@@ -50,11 +50,10 @@ export class DirectsComponent implements OnInit {
       const matchesStatus =
         this.statusFilter !== -1
           ? user.status === Number(this.statusFilter)
-          : true; // Adjust as per your user object structure
+          : true; 
       return matchesStartDate && matchesEndDate && matchesStatus;
     });
 
-    // Reset to the first page whenever the filter changes
     this.pageNo = 1;
     this.updatePagination();
   }
@@ -73,27 +72,25 @@ export class DirectsComponent implements OnInit {
         this.sideFilter,
       )
       .then((res: any) => {
-        // Access the 'data.table' property from the API response
         const tableData = res?.data?.table;
-
-        // Check if tableData exists
-        if (tableData) {
+        if (tableData && tableData.length > 0) {
           this.directs = tableData;
-          this.filteredDirects = [...this.directs]; // Initialize filteredDirects with the full directs
+          this.filteredDirects = [...this.directs];
+          this.responseMessage = '';
           this.updatePagination();
         } else {
-          // If no data, set directs and filteredDirects to empty arrays
+          
           this.directs = [];
           this.filteredDirects = [];
+          this.responseMessage = res?.message;
         }
       })
       .catch((error) => {
-        console.error('Error fetching directs:', error);
-        // Handle error scenario here (e.g., set to empty arrays)
         this.directs = [];
         this.filteredDirects = [];
+        this.responseMessage = 'Error fetching data!';
       });
-  }
+}
 
   updatePagination() {
     this.pageCount = Math.ceil(this.filteredDirects.length / this.pageSize);
