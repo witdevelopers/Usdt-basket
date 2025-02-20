@@ -38,8 +38,8 @@ export class BuyComponent implements OnInit {
   packageId: number | null = null;
   ToToken: number = 0;
   selectedPackage: any;
-  userId: string = "0xad83cc72b6a8c5feddc1982e627b947659d9850d"; 
-
+  userId: string; 
+  isAdmin:any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private fund: FundService,
@@ -49,6 +49,11 @@ export class BuyComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+
+    if (!this.isAdmin) {
+      this.userId = sessionStorage.getItem('address');
+    }
     await this.initialize();
   }
 
@@ -133,7 +138,7 @@ export class BuyComponent implements OnInit {
           await this.initialize();
         });
       } else {
-        Swal.fire({ title: result.message });
+        Swal.fire({ icon: "success",title: result.message });
       }
     } else {
       Swal.fire({ icon: "error", title: "Transaction failed!", text: receipt.message });

@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
 
   account: string = '';
   sponsorId: string = '';
-  amount: number = 1;
+  amount: number = 4;
   _subscription: any;
   maticToToken: any;
   tokenSymbol: string = "";

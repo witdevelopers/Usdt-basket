@@ -482,18 +482,14 @@ export class ContractService {
 
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
 
-      console.log("🔹 Approving USDT:", amount, "USDTValue in wei:", USDTValue.toString());
-
       await this.approveToken(USDTValue);
-
-      console.log("✅ Approval successful. Sending USDT:", amount);
 
       let receipt = await this.sendUSDT(USDTValue);
 
       return receipt;
 
     } catch (error: any) {
-      return { success: false, data: "", message: error.message || "Transaction failed!" };
+      return { success: false, data: "", message: error.message };
     }
   }
 
