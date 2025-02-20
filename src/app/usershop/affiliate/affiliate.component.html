@@ -66,7 +66,7 @@
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">trending_up</mat-icon>
           <mat-panel-title >
-            <span>Re-invest</span>
+            <span>Upgrade</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
@@ -75,7 +75,7 @@
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">arrow_downward</mat-icon>
           <mat-panel-title>
-            <span>Deposit Details</span>
+            <span>Upgrade Details</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
@@ -86,7 +86,7 @@
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">group_add</mat-icon>
           <mat-panel-title>
-            <span>Referral Details</span>
+            <span>Referral </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
@@ -178,11 +178,20 @@
 
 
 
-      <mat-expansion-panel *ngIf="!isAdmin" disabled routerLink="/user/withdraw-dividend">
+      <!-- <mat-expansion-panel *ngIf="!isAdmin" disabled routerLink="/user/withdraw-dividend">
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">account_balance_wallet</mat-icon>
           <mat-panel-title routerLink="/user/withdraw-dividend">
             <span routerLink="/user/withdraw-dividend">Withdrawal</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel> -->
+
+      <mat-expansion-panel *ngIf="isAdmin" disabled routerLink="/user/request-for-withdrawl-admin-side">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">account_balance_wallet</mat-icon>
+          <mat-panel-title routerLink="/user/request-for-withdrawl-admin-side">
+            <span routerLink="/user/request-for-withdrawl-admin-side">Credit/Debit</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
