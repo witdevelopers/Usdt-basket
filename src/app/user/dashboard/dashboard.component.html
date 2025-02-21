@@ -48,42 +48,6 @@
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
-              <img src="assets/03.png" />
-            </div>
-            <div class="infobox-data">
-              <h5 class="font-weight-normal">Level Income</h5>
-              <div class="text-center">
-                <span class="progress-description">{{
-                  userInfo?.levelIncome }} {{paymentToken}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-3 col-md-4">
-      <div class="widget-section">
-        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
-          <div class="infobox card-body">
-            <div class="infobox-icon">
-              <img src="assets/04.png" />
-            </div>
-            <div class="infobox-data">
-              <h5 class="font-weight-normal">Club Income</h5>
-              <div class="text-center">
-                <span class="progress-description">{{userInfo?.totalclub }} {{paymentToken}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-3 col-md-4">
-      <div class="widget-section">
-        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
-          <div class="infobox card-body">
-            <div class="infobox-icon">
               <img src="assets/05.png" />
             </div>
             <div class="infobox-data">
@@ -92,25 +56,6 @@
                 <span class="progress-description">
                  {{ userInfo?.totalPoolIncome }}</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
-      <div class="widget-section">
-        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
-          <div class="infobox card-body">
-            <div class="infobox-icon">
-              <img src="assets/06.png" />
-            </div>
-            <div class="infobox-data">
-              <h5 class="font-weight-normal">Royalty Income</h5>
-              <h2 class="mb-0">
-                <span class="progress-description">{{
-                  userInfo?.totalroyalty }} {{paymentToken}}</span>
-              </h2>
             </div>
           </div>
         </div>
@@ -136,18 +81,37 @@
       </div>
     </div>
 
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/04.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Club Income</h5>
+              <div class="text-center">
+                <span class="progress-description">{{userInfo?.totalclub }} {{paymentToken}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
-              <img src="assets/08.png" />
+              <img src="assets/06.png" />
             </div>
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Royalty Rank</h5>
+              <h5 class="font-weight-normal">Royalty Income</h5>
               <h2 class="mb-0">
                 <span class="progress-description">{{
-                  userInfo?.Royaltyrank }} 0</span>
+                  userInfo?.totalroyalty }} {{paymentToken}}</span>
               </h2>
             </div>
           </div>
@@ -179,13 +143,13 @@
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
-              <img src="assets/10.png" />
+              <img src="assets/08.png" />
             </div>
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Week Total Royalty</h5>
+              <h5 class="font-weight-normal">Royalty Rank</h5>
               <h2 class="mb-0">
                 <span class="progress-description">{{
-                  userInfo?.weektotalroyalty }} </span>
+                  userInfo?.Royaltyrank }} 0</span>
               </h2>
             </div>
           </div>
@@ -211,6 +175,27 @@
         </div>
       </div>
     </div>
+
+    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/10.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Week Total Royalty</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.weektotalroyalty }} </span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
     <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">

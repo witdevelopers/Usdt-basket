@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContractService } from 'src/app/services/contract.service';
-// import Swal from 'sweetalert2';
 import { AuthService } from '../auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +10,7 @@ import { ValidationMessageComponent } from '../../validation-message/validation-
 import { NgStyle } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2/dist/sweetalert2.all';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -26,15 +26,15 @@ import Swal from 'sweetalert2/dist/sweetalert2.all';
     MatButtonModule,
   ],
 })
-export class LoginComponent implements OnInit {
-  account: any = '';
-  _subscription: any;
+export class LoginComponent implements OnInit, OnDestroy {
+  account: string = '';
+  private _subscription: Subscription | undefined;
 
   constructor(
     private contractService: ContractService,
     private router: Router,
     private api: AuthService,
-    private spinnerService: NgxSpinnerService,
+    private spinnerService: NgxSpinnerService
   ) {
     this.getAddress();
   }
@@ -42,14 +42,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async getAddress() {
-    this.account = await this.contractService.getAddress();
-    this.account =
-      this.account != undefined && this.account != null ? this.account : '';
-    this._subscription = this.contractService.accountChange.subscribe(
-      (value) => {
-        this.account = value != undefined && value != null ? value : '';
-      }
-    );
+    try {
+      this.account = await this.contractService.getAddress();
+      this._subscription = this.contractService.accountChange.subscribe(
+        (value) => {
+          this.account = value || '';
+        }
+      );
+    } catch (error) {
+      console.error('Error fetching address:', error);
+    }
   }
 
   async connect() {
@@ -58,42 +60,51 @@ export class LoginComponent implements OnInit {
 
   async login() {
     this.spinnerService.show();
-    let signature = await this.contractService.signMessage(
-      'Do you want to login?',
-    );
-    console.log(signature);
-    if (signature) {
-      var res: any = await this.api.login(this.account, signature);
-      //console.log(x);
-      if (res.status) {
-        sessionStorage.setItem('address', this.account);
-        sessionStorage.setItem('token', res.data);
-        sessionStorage.setItem('isAdmin', res.isAdmin?.toString());
+    try {
+      const signature = await this.contractService.signMessage('Do you want to login?');
+      console.log('Generated Signature:', signature);
 
-        this.spinnerService.hide();
-        this.router.navigate(['usershop/affiliate']);
-      } else {
-        this.spinnerService.hide();
-        Swal.fire(res.message, '', 'error');
+      if (signature) {
+        const res: any = await this.api.login(this.account, signature);
+
+        if (res.status) {
+          sessionStorage.setItem('address', this.account);
+          sessionStorage.setItem('token', res.data);
+          sessionStorage.setItem('isAdmin', res.isAdmin?.toString());
+
+          this.router.navigate(['usershop/affiliate']);
+        } else {
+          Swal.fire(res.message, '', 'error');
+        }
       }
+    } catch (error) {
+      console.error('Login error:', error);
+      Swal.fire('Failed to sign message!', '', 'error');
+    } finally {
+      this.spinnerService.hide();
     }
   }
 
   async demoLogin() {
-    let signature =
-      '0xda7ff5b62b6e36228461fd87bf9c6cab3ee57e3a838dd87f58dff265de200184216e925c214da2a97ed3139118a854718a3f998fcae7eacc89e7eb5a8d05875c1b';
-    let address = 'TSw3n3Tb2gTmKfENjTLVi65AbscuHPpBnr';
-    var res: any = await this.api.login(address, signature);
-    //console.log(x);
-    if (res.status) {
-      sessionStorage.setItem('address', address);
-      sessionStorage.setItem('token', res.data);
+    this.spinnerService.show();
+    try {
+      const signature =
+        '0xda7ff5b62b6e36228461fd87bf9c6cab3ee57e3a838dd87f58dff265de200184216e925c214da2a97ed3139118a854718a3f998fcae7eacc89e7eb5a8d05875c1b';
+      const address = 'TSw3n3Tb2gTmKfENjTLVi65AbscuHPpBnr';
+      const res: any = await this.api.login(address, signature);
 
+      if (res.status) {
+        sessionStorage.setItem('address', address);
+        sessionStorage.setItem('token', res.data);
+        this.router.navigate(['usershop/affiliate']);
+      } else {
+        Swal.fire(res.message, '', 'error');
+      }
+    } catch (error) {
+      console.error('Demo login error:', error);
+      Swal.fire('Demo login failed!', '', 'error');
+    } finally {
       this.spinnerService.hide();
-      this.router.navigate(['usershop/affiliate']);
-    } else {
-      this.spinnerService.hide();
-      Swal.fire(res.message, '', 'error');
     }
   }
 
@@ -102,6 +113,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    // this._subscription.unsubscribe();
+    if (this._subscription) {
+      this._subscription.unsubscribe();
+    }
   }
 }

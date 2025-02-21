@@ -211,14 +211,20 @@ export class ContractService {
 
   public async signMessage(message: string): Promise<string> {
     try {
-      const msg = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(message));
-      const signedMessage = await this.provider.send("eth_sign", [this.account, msg]);
-      return signedMessage;
+        const msg = ` ${message}`;
+        const account = await this.signer.getAddress();
+        const hexMessage = "0x" + Buffer.from(msg, "utf8").toString("hex");
+
+        if (!this.signer.provider) {
+            throw new Error("No provider found!");
+        }
+
+        return await (this.signer.provider as any).send("personal_sign", [hexMessage, account]);
+
     } catch (error) {
-      console.error("Error signing with eth_sign:", error);
-      throw error;
+        throw new Error("Failed to sign message! " + error.message);
     }
-  }
+}
 
 
   public async login(ethAddress: string): Promise<any> {
