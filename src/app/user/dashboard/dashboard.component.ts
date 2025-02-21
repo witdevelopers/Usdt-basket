@@ -4,13 +4,14 @@ import { UserService } from '../services/user.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [MatButtonModule, CommonModule],
+  imports: [MatButtonModule,MatIconModule , CommonModule],
 })
 export class DashboardComponent implements OnInit {
   isAdmin: any;

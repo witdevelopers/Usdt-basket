@@ -45,11 +45,11 @@ export class LoginComponent implements OnInit {
     this.account = await this.contractService.getAddress();
     this.account =
       this.account != undefined && this.account != null ? this.account : '';
-    // this._subscription = this.contractService.accountChange.subscribe(
-    //   (value) => {
-    //     this.account = value != undefined && value != null ? value : '';
-    //   }
-    // );
+    this._subscription = this.contractService.accountChange.subscribe(
+      (value) => {
+        this.account = value != undefined && value != null ? value : '';
+      }
+    );
   }
 
   async connect() {

@@ -54,28 +54,41 @@ export class ContractService {
     }
   }
 
-  public getWeb3 = async () => {
-    if (this.web3 == undefined || this.web3 == null) {
+  public async getWeb3() {
+    if (!this.web3) {
       if (this.window.ethereum) {
         await this.initializeWeb3();
-        var that = this;
-        this.window.ethereum.on('accountsChanged', function (accounts: any) {
-          that.account = accounts[0];
 
-          that.accountChange.next(that.account);
-          that.fetchAddressBalance();
-        });
-        this.window.ethereum.on('networkChanged', async function (networkId: any) {
+        const accounts = await this.window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          this.account = accounts[0];
+          this.accountChange.next(this.account);
+          await this.fetchAddressBalance();
+        }
 
-          console.log('networkChanged', networkId);
-          await that.initializeWeb3();
-        });
+        // Ensure event listeners are only added once
+        if (typeof this.window.ethereum.on === 'function') {
+          this.window.ethereum.on('accountsChanged', async (accounts: string[]) => {
+            if (accounts.length > 0) {
+              this.account = accounts[0];
+              this.accountChange.next(this.account);
+              await this.fetchAddressBalance();
+              await this.initializeWeb3(); // Reinitialize Web3 after wallet change
+            } else {
+              console.log("No accounts connected");
+            }
+          });
+
+          this.window.ethereum.on('chainChanged', async (chainId: string) => {
+            console.log('Network changed:', chainId);
+            await this.initializeWeb3(); // Reinitialize Web3 after network change
+          });
+        }
+
         return this.web3;
-      }
-      else {
+      } else {
         Swal.fire("Non-Dapp browser detected!", "Try Metamask or Trustwallet.");
-
-        this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
+        this.web3 = new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
         return this.web3;
       }
     }
@@ -83,28 +96,28 @@ export class ContractService {
   }
 
   public async initializeWeb3() {
-    if ((this.window.ethereum.networkVersion == 137 && !Settings.IsTestNetworkSupported)
-      ||
-      (this.window.ethereum.networkVersion == 80001 && Settings.IsTestNetworkSupported)) {
-      //this.web3 = await new Web3(this.window.ethereum);
-      this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));//'https://polygon-rpc.com'
-      //alert(this.web3);
-    }
-    else {
-      if (!Settings.IsTestNetworkSupported) {
-        this.addPolygonMainNetwork();
-      }
-      else {
-        this.addPolygonTestnetNetwork();
-      }
-      //this.web3 = await new Web3(this.window.ethereum);
-      this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
+    try {
+      await this.window.ethereum.request({ method: 'eth_requestAccounts' }); // Ensure wallet is connected
+      const chainIdHex = await this.window.ethereum.request({ method: 'eth_chainId' });
+      const chainIdDecimal = parseInt(chainIdHex, 16); // Convert hex to decimal
+      console.log("Detected Chain ID:", chainIdDecimal);
 
-      //Swal.fire("Change to Polygon network!");
-      //this.web3 = undefined;
+      if ((chainIdDecimal == 137 && !Settings.IsTestNetworkSupported) ||
+        (chainIdDecimal == 80001 && Settings.IsTestNetworkSupported)) {
+        this.web3 = new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
+      } else {
+        if (!Settings.IsTestNetworkSupported) {
+          await this.addPolygonMainNetwork();
+        } else {
+          await this.addPolygonTestnetNetwork();
+        }
+        this.web3 = new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
+      }
+    } catch (error) {
+      console.error("Error initializing Web3:", error);
     }
-    //console.log(this.web3)
   }
+
 
   async addPolygonTestnetNetwork() {
     try {
@@ -178,39 +191,35 @@ export class ContractService {
     return this.contract;
   }
 
-  public getAddress = async () => {
+  public async getAddress(): Promise<any> {
+    try {
+      if (!this.window.ethereum) throw new Error("Ethereum wallet is not installed!");
 
-    if (this.account == null || this.account == undefined || this.account == '') {
-      let addresses = null;
-      try {
-        addresses = await this.window.ethereum.request({ method: 'eth_requestAccounts' });
-      }
-      catch (exception) {
-        try {
-          addresses = await this.window.ethereum.enable();
-        }
-        catch (innerEx) {
-          console.log(innerEx);
-        }
-        console.log(exception);
-      }
+      const accounts = await this.window.ethereum.request({ method: "eth_requestAccounts" });
 
-      if (addresses != null && addresses != undefined && addresses.length > 0) {
-        this.account = addresses.length ? addresses[0] : null;
+      if (accounts.length > 0) {
+        this.account = accounts[0];
         return this.account;
+      } else {
+        throw new Error("No accounts found!");
       }
-
-      return undefined;
+    } catch (error) {
+      console.error("Error getting address:", error);
+      return null;
     }
-    return this.account;
   }
 
   public async signMessage(message: string): Promise<string> {
-    const msg = ` ${message}`;
-    console.log(msg);
-    const signedMessage = await this.signer.signMessage(msg);
-    return signedMessage;
+    try {
+      const msg = ethers.utils.hexlify(ethers.utils.toUtf8Bytes(message));
+      const signedMessage = await this.provider.send("eth_sign", [this.account, msg]);
+      return signedMessage;
+    } catch (error) {
+      console.error("Error signing with eth_sign:", error);
+      throw error;
+    }
   }
+
 
   public async login(ethAddress: string): Promise<any> {
     if (/^[0-9]+$/.test(ethAddress)) {

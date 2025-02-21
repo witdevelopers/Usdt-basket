@@ -376,8 +376,8 @@ button {
 
 .card,
 .deposit-container {
-  background: linear-gradient(90deg, #26a07c 15%, #6364bc) !important;
-  border: 1px solid #007bff !important;
+  background: #4f4f70!important;
+  border: 1px solid #4f4f70 !important;
 }
 
 .card-head header {
