@@ -62,7 +62,7 @@
         </mat-expansion-panel-header>
       </mat-expansion-panel> -->
 
-      <mat-expansion-panel  disabled  routerLink="/user/token">
+      <mat-expansion-panel *ngIf="!isAdmin"  disabled  routerLink="/user/token">
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">trending_up</mat-icon>
           <mat-panel-title >
@@ -191,12 +191,12 @@
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">account_balance_wallet</mat-icon>
           <mat-panel-title routerLink="/user/request-for-withdrawl-admin-side">
-            <span routerLink="/user/request-for-withdrawl-admin-side">Credit/Debit</span>
+            <span routerLink="/user/request-for-withdrawl-admin-side">Withdrawal Details</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
 
-      <mat-expansion-panel *ngIf="isAdmin" disabled routerLink="/user/Credit-Debit">
+      <mat-expansion-panel *ngIf="!isAdmin" disabled routerLink="/user/Credit-Debit">
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">account_balance_wallet</mat-icon>
           <mat-panel-title routerLink="/user/Credit-Debit">
@@ -238,7 +238,7 @@
 
 <mat-toolbar class="custom-footer">
   <div class="footer-text">
-    © 2025 <a target="_blank" rel="noopener noreferrer">USDTBasket</a>. All rights
+    © 2025 <a target="_blank" rel="noopener noreferrer">USDT Basket</a>. All rights
     reserved.
   </div>
   <span class="spacer"></span>
