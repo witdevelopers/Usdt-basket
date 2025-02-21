@@ -23,25 +23,27 @@
               <thead>
                 <tr>
                   <th>S.N.</th>
-                  <th>Pool Number</th>
+                  <!-- <th>Pool Number</th> -->
                   <th>Required Team</th>
                   <th>Actual Team</th>
                   <th>Income</th>
                   <th>Upgrade</th>
                   <th>Actual Income</th>
                   <th>Pool Upgrade</th>
+                  <th>Upgrade Type</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let pool of filteredpool; let i = index">
                   <td>{{ pool.srno }}</td>
-                  <td>{{ pool.poonNumber }}</td>  
+                  <!-- <td>{{ pool.poonNumber }}</td>   -->
                   <td>{{ pool["require Team"] }}</td> <!-- Corrected -->
                   <td>{{ pool["actual Team"] }}</td>  <!-- Corrected -->
                   <td>{{ pool.income }}</td>
                   <td>{{ pool.upgrade }}</td>
                   <td>{{ pool["actual Income"] }}</td> <!-- Corrected -->
                   <td>{{ pool.isPoolIUpgrage }}</td> <!-- Corrected -->
+                  <td>{{ pool.upgradeType }}</td>
                 </tr>
               </tbody>
             </table>
