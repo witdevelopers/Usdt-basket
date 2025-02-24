@@ -1125,9 +1125,12 @@ export class UserService {
   }
 
   nextPool(userId: string): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}UserHome/NextPool?UserId=${userId}`, {}); 
-}
+    return this.http.post(`${this.apiBaseUrl}UserHome/NextPool?UserId=${userId}`, {});
+  }
 
+  CheckForPoolUpgrade(userId: string): Observable<any>{
+    return this.http.get(`${this.apiBaseUrl}UserHome/CheckForPoolUpgrade?userId==${userId}`,{});
+  }
 
   updateCustomer(TempUserId: number, customerId: number): Observable<any> {
     const headers = new HttpHeaders({

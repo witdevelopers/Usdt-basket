@@ -28,7 +28,7 @@ import { UserService } from '../../services/user.service';
   ],
 })
 export class BuyComponent implements OnInit {
-
+  CheckForPoolUpgrade:boolean;
   Amount: number = 1;
   tokenAmount: number = 0;
   tokenSymbol: string = Settings.coinSymbol;
@@ -62,6 +62,9 @@ export class BuyComponent implements OnInit {
     this.Balance = await this.contractService.fetchAddressBalance();
     await this.fetchPackages();
     this.calculateTokens();
+    this.userService.CheckForPoolUpgrade(this.userId).toPromise().then((res: any) => 
+      this.CheckForPoolUpgrade = res?.status && res?.data?.table?.length ? res.data.table[0].status === "TRUE" : false
+    );    
   }
 
   async fetchPackages() {

@@ -2,7 +2,7 @@
   <div class="col-md-10 offset-md-1">
     <div class="card card-box">
       <div class="card-head">
-        <header>Level Income</header>
+        <header>Sponsored Income</header>
       </div>
       <div class="card-body">
         <div *ngIf="isAdmin">
@@ -56,9 +56,11 @@
             <thead>
               <tr>
                 <th >S.N</th>
+               
                 <th >Date</th>
                 <th >User ID</th>
-                <th >Referral</th>
+                <th >Income</th>
+                <th>Pool No</th>
                 <th >From UserId</th>
               </tr>              
             </thead>
@@ -69,6 +71,7 @@
                   <td >{{ income.onDate  | date : 'short' }}</td>
                   <td >{{ income.userId }}</td>
                   <td >{{ income.referral }}</td>
+                  <td >{{ income.poolNo }}</td>
                   <td >{{ income.fromUserId }}</td>
 
                 </tr>                

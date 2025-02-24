@@ -48,6 +48,25 @@
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
+              <img src="assets/07.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Referral Income</h5>
+              <h2 class="mb-0">
+                <span class="progress-description">{{
+                  userInfo?.totalDirectIncome }} {{paymentToken}}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
               <img src="assets/05.png" />
             </div>
             <div class="infobox-data">
@@ -67,19 +86,22 @@
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
-              <img src="assets/07.png" />
+              <img src="assets/050.png" />
             </div>
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Referal  Income</h5>
-              <h2 class="mb-0">
-                <span class="progress-description">{{
-                  userInfo?.totalReferal }} {{paymentToken}}</span>
-              </h2>
+              <h5 class="font-weight-normal">Sponsored Income </h5>
+              <div class="text-center">
+                <span class="progress-description">
+                 {{ userInfo?.totalReferal }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
+
 
     <div class="col-xl-3 col-md-4">
       <div class="widget-section">
@@ -235,7 +257,7 @@
       </div>
     </div>
 
-    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+    <!-- <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
@@ -252,9 +274,27 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
+              <img src="assets/060.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Rank</h5>
+              <div class="text-center">
+                <span class="progress-description">
+                 {{ userInfo?.packageValue }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+    <!-- <div *ngIf="userInfo" class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
@@ -271,7 +311,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     
   </div>
