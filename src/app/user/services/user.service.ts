@@ -1129,7 +1129,7 @@ export class UserService {
   }
 
   CheckForPoolUpgrade(userId: string): Observable<any>{
-    return this.http.get(`${this.apiBaseUrl}UserHome/CheckForPoolUpgrade?userId==${userId}`,{});
+    return this.http.get(`${this.apiBaseUrl}UserHome/CheckForPoolUpgrade?userId=${userId}`,{});
   }
 
   updateCustomer(TempUserId: number, customerId: number): Observable<any> {
