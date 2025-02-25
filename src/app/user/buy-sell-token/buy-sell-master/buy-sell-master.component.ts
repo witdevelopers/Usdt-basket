@@ -33,13 +33,13 @@ export class BuySellMasterComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.getMemberCoinPrice();
+    //await this.getMemberCoinPrice();
   }
 
-  async getMemberCoinPrice() {
+  // async getMemberCoinPrice() {
 
-    let result = await this.contractService.getCoinPriceForMember(sessionStorage.getItem("memberId"));
-    //console.log(result);
-    this.maticToToken = result.data;
-  }
+  //   let result = await this.contractService.getCoinPriceForMember(sessionStorage.getItem("memberId"));
+  //   //console.log(result);
+  //   this.maticToToken = result.data;
+  // }
 }

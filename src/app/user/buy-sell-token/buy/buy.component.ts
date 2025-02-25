@@ -62,9 +62,15 @@ export class BuyComponent implements OnInit {
     this.Balance = await this.contractService.fetchAddressBalance();
     await this.fetchPackages();
     this.calculateTokens();
-    this.userService.CheckForPoolUpgrade(this.userId).toPromise().then((res: any) => 
-      this.CheckForPoolUpgrade = res?.status && res?.data?.table?.length ? res.data.table[0].status === "TRUE" : false
-    );    
+    this.userService.CheckForPoolUpgrade(this.userId).toPromise().then((res: any) => {
+      console.log("API Response:", res);
+    
+      this.CheckForPoolUpgrade = res?.status && res?.data?.table?.length 
+        ? res.data.table[0].status === "TRUE" 
+        : false;
+    
+      console.log("CheckForPoolUpgrade Value:", this.CheckForPoolUpgrade);
+    });   
   }
 
   async fetchPackages() {
