@@ -462,3 +462,20 @@ html {
 .goog-te-gadget{
   font-size: 0px !important;
 }
+
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+/* Hide the "Powered by" text */
+.goog-te-gadget-simple {
+  display: none !important;
+}
+
+/* Hide the Google Translate logo */
+.goog-te-gadget img {
+  display: none !important;
+}
+.goog-te-gadget{
+  font-size: 0px !important;
+}

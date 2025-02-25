@@ -556,19 +556,19 @@ export class ContractService {
     }
   }
 
-  public async getCoinPriceForMember(memberId: any) {
-    let res = { success: false, message: '', data: '' };
+  // public async getCoinPriceForMember(memberId: any) {
+  //   let res = { success: false, message: '', data: '' };
 
-    await (await this.getContract()).methods.getCoinRate(memberId).call((error: any, result: any) => {
-      if (!error) {
-        res = { success: true, message: "Ok!", data: result };
-      }
-      else {
-        res = { success: false, message: "Invalid User!", data: '' };
-      }
-    });
-    return res;
-  }
+  //   await (await this.getContract()).methods.getCoinRate(memberId).call((error: any, result: any) => {
+  //     if (!error) {
+  //       res = { success: true, message: "Ok!", data: result };
+  //     }
+  //     else {
+  //       res = { success: false, message: "Invalid User!", data: '' };
+  //     }
+  //   });
+  //   return res;
+  // }
 
   public async getCoinBuyPrice() {
     let res = { success: false, message: '', data: '' };
