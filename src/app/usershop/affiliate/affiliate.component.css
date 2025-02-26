@@ -479,3 +479,6 @@ html {
 .goog-te-gadget{
   font-size: 0px !important;
 }
+.goog-te-gadget, .goog-te-combo {
+  margin: 7px 0 !important;
+}

@@ -657,3 +657,8 @@ button {
 .goog-te-gadget{
   font-size: 0px !important;
 }
+.goog-te-combo{
+  background-color: transparent !important;
+  padding: 10px;
+  border: unset !important;
+}
