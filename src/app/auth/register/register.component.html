@@ -73,7 +73,7 @@
     </div> -->
     <div class="form-group" [ngStyle]="{'display': (account!=''?'block':'none')}">
         <button mat-raised-button type="button" class="btn-theme btn-md" id="btnRegister"
-            [disabled]=registerForm.invalid (click)=register()>Join</button>
+            [disabled]=registerForm.invalid (click)=register()>Register</button>
     </div>
     <div class="form-group" [ngStyle]="{'display': (account==''?'block':'none')}">
         <button mat-raised-button type="button" class="btn-theme btn-md" id="btnRegister"
@@ -82,5 +82,5 @@
 </form>
 <div class="form-group mt-5">
     <h4><b>Already joined?</b></h4><button mat-raised-button class="btn-md btn-theme btn-register"
-        (click)=loginClick()>Sign In </button>
+        (click)=loginClick()>Login </button>
 </div>

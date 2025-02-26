@@ -51,8 +51,9 @@
   box-shadow: 0 0 35px rgb(0 0 0 / 10%);
   background: linear-gradient(
     90deg,
-    #26a07c 15%,
-    #6364bc) !important;
+    #4e585f 15%,
+    #9b59b6 50%,
+    #e7b4c6 100%)
 }
 
 .login-6 .col-pad-0 {
