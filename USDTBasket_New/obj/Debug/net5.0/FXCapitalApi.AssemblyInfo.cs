@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FXCapitalApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7eb9bec36873db006dbc28335b4ede205bb890d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f73170fd8265a68eff27d806ddb775d13b5b249")]
 [assembly: System.Reflection.AssemblyProductAttribute("FXCapitalApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FXCapitalApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
