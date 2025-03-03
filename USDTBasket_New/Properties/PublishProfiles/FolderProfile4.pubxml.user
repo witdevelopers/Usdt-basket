@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\matik\Publish</_PublishTargetUrl>
+    <History>True|2025-02-15T15:03:45.3351929Z||;True|2025-02-15T20:05:37.7705125+05:30||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="connectionString">
+      <Value>Data Source=92.205.61.177,2019%3bInitial Catalog=DB_MaticBasketPro%3bUser ID=lg_MBP_Login%3bPassword=cq7%40E9xg#%2aSFD%3bpooling=false</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

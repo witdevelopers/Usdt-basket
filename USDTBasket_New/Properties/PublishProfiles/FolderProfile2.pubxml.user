@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\Moneta\Publish</_PublishTargetUrl>
+    <History>True|2025-01-31T14:52:11.3576936Z||;True|2025-01-31T19:55:51.4475940+05:30||;True|2025-01-29T21:01:36.7243251+05:30||;True|2025-01-29T20:10:08.3678971+05:30||;False|2025-01-29T20:08:46.4541577+05:30||;True|2025-01-29T19:59:19.5756261+05:30||;True|2025-01-29T12:43:51.9501380+05:30||;True|2025-01-29T12:41:21.9367921+05:30||;False|2025-01-29T12:30:18.5867102+05:30||;True|2025-01-25T14:01:16.0095972+05:30||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="connectionString">
+      <Value>Data Source=92.205.61.177,2019%3bInitial Catalog=DB_MonetaWorld%3bUser ID=lg_MBP_Login%3bPassword=cq7%40E9xg#%2aSFD%3bpooling=false</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

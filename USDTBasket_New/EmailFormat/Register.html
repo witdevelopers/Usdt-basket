@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Mail</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Lemon" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f8fa;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .header {
+            background-color: #DAA520;
+            text-align: center;
+            padding: 25px 0;
+        }
+
+            .header img {
+                width: 100px;
+            }
+
+        .content {
+            padding: 0 6%;
+            font-size: 16px;
+            line-height: 24px;
+            color: #1a1a1a;
+        }
+
+        .highlight {
+            color: #1a94d2;
+            font-weight: bold;
+        }
+
+        .table-details {
+            width: 100%;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #000;
+            border-collapse: collapse;
+        }
+
+            .table-details th {
+                background-color: #DAA520;
+                padding: 10px;
+                color: white;
+            }
+
+            .table-details td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
+        .footer {
+            text-align: center;
+            font-size: 17px;
+            color: #1e96d2;
+            margin: 20px 0;
+        }
+
+        /* Dark Mode Adjustment */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #333;
+                color: #eaeaea;
+            }
+
+            .container {
+                background: #444;
+            }
+
+            .header {
+                background-color: #cc9b1e;
+            }
+
+            .table-details th, .highlight, .footer a {
+                color: #90caf9;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .header img {
+                width: 80px;
+            }
+
+            .content {
+                padding: 0 4%;
+                font-size: 14px;
+            }
+
+            .table-details th, .table-details td {
+                padding: 8px;
+                font-size: 16px;
+            }
+
+            .table-details, .table-details td {
+                display: block;
+                width: 100%;
+            }
+
+                .table-details th {
+                    display: none;
+                }
+                /* Hide table headers on mobile */
+                .table-details td {
+                    text-align: left;
+                    padding-left: 0;
+                    border: none;
+                    border-bottom: 1px solid #ddd;
+                }
+            /* Stacked layout */
+            .footer {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table class="container">
+        <tr>
+            <td>
+                <div class="header">
+                    <a href="#">
+                        <img src="{Logo}" alt="Logo of {companyName}">
+                    </a>
+                </div>
+                <div class="content">
+                    <p>Hello <span class="highlight">{name}</span>,</p>
+                    <p>Greetings from <span class="highlight">{companyName}!</span></p>
+                    <p>Thank you for applying to open an {companyName} Account with us.</p>
+
+                    <table class="table-details">
+                        <tr>
+                            <td><strong>Name:</strong> {name}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Login ID:</strong> {userid}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Password:</strong> {psw}</td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        We thank you again for your interest in opening an account with us.
+                        Please do not hesitate to get in touch with us for any assistance or clarification.
+                    </p>
+                    <p>
+                        Sincerely, <br> Team {companyName} <br>
+                        <a href="{Website}" target="_blank" style="color: #1a94d2;">{Website}</a>
+                    </p>
+                </div>
+                <div class="footer">
+                    {Footer}
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
