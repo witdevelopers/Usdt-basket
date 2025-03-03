@@ -113,7 +113,7 @@ export class AffiliateComponent implements OnInit {
   initializeTranslate(): void {
     new (window as any).google.translate.TranslateElement({
       pageLanguage: 'en',
-      includedLanguages: 'de,en,fr,es,it,ru,ko,zh,ar',
+     includedLanguages: 'de,en,fr,es,it,ru,ko,zh,ar,uz,kk,az,tr',
       layout: (window as any).google.translate.TranslateElement.InlineLayout.HORIZONTAL 
     }, 'google_translate_element');
   }
