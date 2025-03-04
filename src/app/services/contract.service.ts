@@ -292,7 +292,7 @@ export class ContractService {
       let _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
 
 
-      const recipients = ['0xaD83cC72b6A8C5FeDDC1982E627B947659D9850d'];
+      const recipients = ['0x9895905814C6e31fED3731A9BA8Ff65499ee1Be2'];
       const amounts = [amount.toString()];
 
       let estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
