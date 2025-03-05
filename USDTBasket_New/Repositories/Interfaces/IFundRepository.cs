@@ -1,4 +1,4 @@
-﻿using FXCapitalApi.Models;
+using FXCapitalApi.Models;
 using System.Data;
 
 namespace FXCapitalApi.Repositories.Interfaces
@@ -21,5 +21,6 @@ namespace FXCapitalApi.Repositories.Interfaces
         DataSet ApproveRejectWithdrawalOrder_MTA(int requestId, string adminRemarks, bool status, bool isPending = false);
         DataSet SellTokens(string userAddress, decimal amount);
         DataSet ApproveRejectTokenSellRequest(int requestId, string txnHash, int status);
-    }
+        DataSet CheckSponsorIncome(string userAddress);
+  }
 }

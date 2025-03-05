@@ -1,4 +1,4 @@
-﻿using FXCapitalApi.Models;
+using FXCapitalApi.Models;
 using FXCapitalApi.Repositories;
 using FXCapitalApi.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -149,9 +149,23 @@ namespace FXCapitalApi.Controllers
             return new JsonResult(new { status = false, message = "Data Not Found", data = new { } });
         }
 
+    [HttpGet("CheckSponsorIncome")]
+    public IActionResult CheckSponsorIncome(string UserId)
+    {
 
-        //For Mlm
-        [HttpGet("GetWithdraw-MLM")]
+      DataSet ds = fundRepository.CheckSponsorIncome(UserId);
+      if (ds.HasDataTable() && ds.Tables[0].IsDataTable())
+      {
+        var res = new JsonResult(new { status = true, data = ds });
+        return res;
+      }
+
+      return new JsonResult(new { status = false, message = "Data Not Found", data = new { } });
+    }
+
+
+    //For Mlm
+    [HttpGet("GetWithdraw-MLM")]
         public IActionResult GetWithdrawMlm(string UserId, string Fromdate, string Todate, int? Status)
         {
             

@@ -1,4 +1,4 @@
-﻿using FXCapitalApi.Models;
+using FXCapitalApi.Models;
 using FXCapitalApi.Repositories.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
@@ -87,8 +87,18 @@ namespace FXCapitalApi.Repositories
             return ds;
         }
 
+    public DataSet CheckSponsorIncome(string userID)
+    {
+      DataSet ds = utils.ExecuteQuery("USP_CheckSponsor", new SqlParameter[]
+      {
+                new SqlParameter("@UserId", userID)
 
-        public DataSet GetRequestsForWithdrawal(string UserId, string Fromdate, string Todate, int? Status)
+      });
+      return ds;
+    }
+
+
+    public DataSet GetRequestsForWithdrawal(string UserId, string Fromdate, string Todate, int? Status)
         {
             DataSet ds = utils.ExecuteQuery("USP_GetRequestsForWithdrawal", new SqlParameter[]
             {
