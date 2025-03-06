@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { Settings } from 'src/app/app-setting';
 
 @Component({
   selector: 'app-pool-income',
@@ -16,7 +17,8 @@ export class PoolIncomeComponent {
   filteredpool: any[] = [];
   isSubmitted: boolean = false;
   filterUserId: string = '';
-
+  paymentToken: string = Settings.paymentToken;
+  
   constructor(private api: UserService, private fb: FormBuilder) {
     this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     this.filterUserId = this.isAdmin ? '' : sessionStorage.getItem('address') || '';

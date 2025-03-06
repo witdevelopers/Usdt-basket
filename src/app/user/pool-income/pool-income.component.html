@@ -2,7 +2,7 @@
     <div class="col-md-10 offset-md-1">
       <div class="card card-box">
         <div class="card-head">
-          <header>Pool Income</header>
+          <header>Rank Income</header>
         </div>
         <div class="card-body">
           <div *ngIf="isAdmin">
@@ -22,7 +22,7 @@
             <table *ngIf="filteredpool.length > 0" class="table table-bordered table-striped panel">
               <thead>
                 <tr>
-                  <th>S.N.</th>
+                  <th>Level</th>
                   <!-- <th>Pool Number</th> -->
                   <th>Required Team</th>
                   <th>Rank Team</th>
@@ -41,9 +41,9 @@
                   <td>{{ pool["require Team"] }}</td> <!-- Corrected -->
                   <td>{{ pool["actual Team"] }}</td>  <!-- Corrected -->
                   <td>{{ pool["main Team"] }}</td>
-                  <td>{{ pool.income }}</td>
-                  <td>{{ pool.upgrade }}</td>
-                  <td>{{ pool["actual Income"] }}</td> <!-- Corrected -->
+                  <td>{{paymentToken}}{{ pool.income }}</td>
+                  <td>{{paymentToken}}{{ pool.upgrade }}</td>
+                  <td>{{paymentToken}}{{ pool["actual Income"] }}</td> <!-- Corrected -->
                   <td>{{ pool.isPoolIUpgrage }}</td> <!-- Corrected -->
                   <td>{{ pool.upgradeType }}</td>
                 </tr>

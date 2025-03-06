@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { Settings } from 'src/app/app-setting';
 
 @Component({
   selector: 'app-deposit-crypto-deatils',
@@ -14,7 +15,7 @@ export class DepositCryptoDeatilsComponent implements OnInit {
   userId: string = '';
   depositData: any[] = [];
   isAdmin: boolean = false ;
-
+ paymentToken: string = Settings.paymentToken;
   constructor(private userService: UserService) {
     this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
      if (this.isAdmin) {

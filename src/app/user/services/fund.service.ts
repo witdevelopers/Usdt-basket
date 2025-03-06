@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Settings } from '../../app-setting';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, firstValueFrom, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -70,5 +70,9 @@ export class FundService {
           resolve(res);
         });
     });
+  }
+
+  async CheckSponsorIncome(userId: string): Promise<any> {
+    return await firstValueFrom(this.http.get(`${this.apiBaseUrl}CheckSponsorIncome?UserId=${userId}`));
   }
 }

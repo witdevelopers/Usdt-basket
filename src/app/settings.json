@@ -4,7 +4,7 @@
   "IsTestNetworkSupported": false,
   "MainNetContractAddress": "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D",
   "TestNetContractAddress": "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D",
-  "DefaultSponsor": "0xaD83cC72b6A8C5FeDDC1982E627B947659D9850d",
+  "DefaultSponsor": "0x3c9f5b13B4DCCf9A2853E00D3F3B86d23A230349",
   "TokenContractAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
   "CoinName": "Meta",
   "CoinSymbol": "MTN",

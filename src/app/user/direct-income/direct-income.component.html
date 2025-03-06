@@ -79,7 +79,7 @@
                   <th>Date</th>
                   <th>User ID</th>
                   <th>From ID</th>
-                  <th>On Income</th>
+                  <th>Income</th>
                 </tr>
               </thead>
               <tbody>
@@ -89,7 +89,7 @@
                     <td>{{ income.date | date : 'dd/MM/yyyy  hh:mm a' }}</td>
                     <td>{{ income.userId }}</td>
                     <td>{{ income.fromUserID }}</td>
-                    <td>{{ income.directcomm }}</td>
+                    <td>{{paymentToken}}{{ income.directcomm }}</td>
                   </tr>
                 }
               </tbody>

@@ -28,6 +28,7 @@ export class DirectIncomeComponent implements OnInit {
   UserId: string | null; // Declare UserId here
   isSubmitted: boolean;
   message: string = ''; // To store the message from API response
+  paymentToken: string = Settings.paymentToken;
 
   constructor(private api: UserService) {
     this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
@@ -37,7 +38,6 @@ export class DirectIncomeComponent implements OnInit {
     }
   }
 
-  paymentToken: string = Settings.paymentToken;
   // Handle filter changes
   onFilterChange() {
     // Update filteredDirects based on the filter criteria

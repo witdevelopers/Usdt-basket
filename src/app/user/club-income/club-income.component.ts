@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
+import { Settings } from 'src/app/app-setting';
 
 @Component({
   selector: 'app-club-income',
@@ -16,6 +17,7 @@ export class ClubIncomeComponent {
   filteredclub: any[] = [];
   isSubmitted: boolean = false;
   filterUserId: string = '';
+  paymentToken: string = Settings.paymentToken;
 
   constructor(private api: UserService, private fb: FormBuilder) {
     this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
