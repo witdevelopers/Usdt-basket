@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { BigNumber, ethers } from 'ethers';
+import { FundService } from '../user/services/fund.service';
 
 
 @Injectable({
@@ -22,6 +23,7 @@ export class ContractService {
   accountChange: Subject<string> = new Subject<string>();
 
   constructor(@Inject('Window') private window: any,
+  private fundapi : FundService,
     private router: Router) {
     this.initialize();
     this.getWeb3();
@@ -277,7 +279,8 @@ export class ContractService {
 
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
       await this.approveToken(USDTValue);
-      let receipt = await this.sendUSDT(USDTValue);
+      let receipt = await this.sendUSDT(USDTValue , sponsorId);
+
 
       return receipt;
 
@@ -286,44 +289,68 @@ export class ContractService {
     }
   }
 
-  public async sendUSDT(amount: BigNumber) {
+  public async sendUSDT(amount: BigNumber, sponsorId: string) {
+    debugger
     try {
-      let contract = await this.getPaymentTokenContractmm();
-      let _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
+      const contract = await this.getPaymentTokenContractmm();
+      const _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
+  
+      const sponsorIncomeRes = await this.fundapi.CheckSponsorIncome(sponsorId);
+  
+      if (!sponsorIncomeRes?.status || !sponsorIncomeRes.data?.table?.length) {
+        return {
+          success: false,
+          message: 'Invalid sponsor income response',
+          data: sponsorIncomeRes
+        };
+      }
+  
+      const incomeData = sponsorIncomeRes.data.table[0];
+  
+      let recipients=[];
+      let amounts=[];
+  
+      if (incomeData.admindeposit === "TRUE") {
+        recipients[0]=incomeData.adminaddress;
+        recipients[1]=incomeData.sponsor;
 
-
-      const recipients = ['0x9895905814C6e31fED3731A9BA8Ff65499ee1Be2'];
-      const amounts = [amount.toString()];
-
-      let estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
+        amounts[0]=ethers.utils.parseUnits(incomeData.sponsoramount, 6).toString();
+        amounts[1] =ethers.utils.parseUnits(incomeData.adminamount, 6).toString()
+      } else {
+        recipients[0]=incomeData.sponsor;
+        amounts[0] =ethers.utils.parseUnits(incomeData.sponsoramount, 6).toString()
+      }
+  
+      const estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
         from: this.account,
         gasPrice: _gasPrice,
       });
-
-      estimatedGas = Math.ceil(Number(estimatedGas) * 1.2);
-
-      let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
-
-      var receipt = await this.sendTransaction(
+  
+      const finalGas = Math.ceil(Number(estimatedGas) * 1.2);
+  
+      const data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
+  
+      const receipt = await this.sendTransaction(
         this.account,
-        "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D",
+        "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", 
         "0",
         _gasPrice,
-        estimatedGas.toString(),
+        finalGas.toString(),
         data
       );
-
+  
       return {
         success: receipt.success,
         data: receipt.data,
-        message: receipt.success ? " USDT sent successfully" : receipt.message
+        message: receipt.success ? "USDT sent successfully" : receipt.message
       };
-
+  
     } catch (err: any) {
+      console.error("USDT Send Error:", err);
       return {
         success: false,
         data: err,
-        message: ' Unable to send USDT'
+        message: 'Unable to send USDT'
       };
     }
   }
@@ -490,7 +517,7 @@ export class ContractService {
     return res;
   }
 
-  public async buyToken(amount: number) {
+  public async buyToken(amount: number , sponsorId : any) {
     try {
       await this.getGasPrice();
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
@@ -499,7 +526,7 @@ export class ContractService {
 
       await this.approveToken(USDTValue);
 
-      let receipt = await this.sendUSDT(USDTValue);
+      let receipt = await this.sendUSDT(USDTValue , sponsorId);
 
       return receipt;
 

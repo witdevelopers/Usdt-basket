@@ -40,6 +40,8 @@ export class BuyComponent implements OnInit {
   selectedPackage: any;
   userId: string; 
   isAdmin:any;
+  sponsorId: string = '';
+  
   constructor(
     private spinnerService: NgxSpinnerService,
     private fund: FundService,
@@ -135,7 +137,11 @@ export class BuyComponent implements OnInit {
     }
 
     this.spinnerService.show();
-    const receipt = await this.contractService.buyToken(this.Amount);
+    if (!this.sponsorId) {
+      this.sponsorId = Settings.DefaultSponsor;
+    }
+
+    const receipt = await this.contractService.buyToken(this.Amount, this.sponsorId);
 
     if (receipt.success) {
       const result: any = await this.fund.invest(receipt.data.transactionHash, this.Amount, this.packageId);
