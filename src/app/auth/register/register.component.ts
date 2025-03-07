@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
 
     const usdtBalance = await this.contractService.fetchUSDTBalance();
 
-    if (this.amount < usdtBalance) {
+    if (this.amount <= usdtBalance) {
       if (this.amount > 0) {
         this.spinnerService.show();
 

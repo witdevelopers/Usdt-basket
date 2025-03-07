@@ -4,8 +4,18 @@
     <div class="col-md-12">
       <mat-form-field appearance="fill" class="font-size-16">
         <mat-label> Amount</mat-label>
-        <input matInput id="txtAmount" name="Amount" [(ngModel)]="Amount" required #txtAmount="ngModel" type="number"
-          class="width-100" readonly />
+  
+  <input
+    matInput
+    id="txtAmount"
+    name="Amount"
+    [(ngModel)]="Amount"
+    required
+    #txtAmount="ngModel"
+    type="number"
+    class="width-100"
+    readonly
+  />
       </mat-form-field>
       <app-validation-message [control]="txtAmount"></app-validation-message>
     </div>
@@ -19,7 +29,7 @@
         <mat-label>Select Package</mat-label>
         <mat-select [(ngModel)]="selectedPackage" name="selectedPackage" (selectionChange)="onPackageChange()">
           <mat-option *ngFor="let pack of packages" [value]="pack">
-            {{ pack.poolName }} <!-- ✅ Updated to show poolName -->
+            {{ pack.poolName }}
           </mat-option>
         </mat-select>
       </mat-form-field>

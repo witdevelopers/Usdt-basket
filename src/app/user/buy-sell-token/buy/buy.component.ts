@@ -41,6 +41,7 @@ export class BuyComponent implements OnInit {
   userId: string; 
   isAdmin:any;
   sponsorId: string = '';
+  paymentToken: string = Settings.paymentToken;
   
   constructor(
     private spinnerService: NgxSpinnerService,
