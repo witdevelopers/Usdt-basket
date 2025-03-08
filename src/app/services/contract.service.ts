@@ -317,8 +317,8 @@ export class ContractService {
         amounts[0]=ethers.utils.parseUnits(incomeData.sponsoramount, 6).toString();
         amounts[1] =ethers.utils.parseUnits(incomeData.adminamount, 6).toString()
       } else {
-        recipients[0]=incomeData.sponsor;
-        amounts[0] =ethers.utils.parseUnits(incomeData.sponsoramount, 6).toString()
+        recipients = [incomeData.sponsor];
+        amounts = [amount.toString()];
       }
   
       const estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
