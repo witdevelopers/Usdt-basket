@@ -98,28 +98,28 @@ export class ContractService {
   }
 
   public async initializeWeb3() {
-    try {
-      await this.window.ethereum.request({ method: 'eth_requestAccounts' }); // Ensure wallet is connected
-      const chainIdHex = await this.window.ethereum.request({ method: 'eth_chainId' });
-      const chainIdDecimal = parseInt(chainIdHex, 16); // Convert hex to decimal
-      console.log("Detected Chain ID:", chainIdDecimal);
-
-      if ((chainIdDecimal == 137 && !Settings.IsTestNetworkSupported) ||
-        (chainIdDecimal == 80001 && Settings.IsTestNetworkSupported)) {
-        this.web3 = new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
-      } else {
-        if (!Settings.IsTestNetworkSupported) {
-          await this.addPolygonMainNetwork();
-        } else {
-          await this.addPolygonTestnetNetwork();
-        }
-        this.web3 = new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
-      }
-    } catch (error) {
-      console.error("Error initializing Web3:", error);
+    if ((this.window.ethereum.networkVersion == 137 && !Settings.IsTestNetworkSupported)
+      ||
+      (this.window.ethereum.networkVersion == 80001 && Settings.IsTestNetworkSupported)) {
+      //this.web3 = await new Web3(this.window.ethereum);
+      this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
+      //alert(this.web3);
     }
-  }
+    else {
+      if (!Settings.IsTestNetworkSupported) {
+        this.addPolygonMainNetwork();
+      }
+      else {
+        this.addPolygonTestnetNetwork();
+      }
+      //this.web3 = await new Web3(this.window.ethereum);
+      this.web3 = await new Web3(new Web3.providers.HttpProvider(Settings.mainnetHttpProvider));
 
+      //Swal.fire("Change to Polygon network!");
+      //this.web3 = undefined;
+    }
+    //console.log(this.web3)
+  }
 
   async addPolygonTestnetNetwork() {
     try {
