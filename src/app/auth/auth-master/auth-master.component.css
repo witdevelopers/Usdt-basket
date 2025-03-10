@@ -1,5 +1,5 @@
 .login-6 {
-  background:#161C2C;
+  background: #14546a !important; 
   min-height: 100vh;
   position: relative;
   text-align: center;
@@ -49,11 +49,7 @@
   /* max-width: 445px; */
   border-radius: 10px;
   box-shadow: 0 0 35px rgb(0 0 0 / 10%);
-  background: linear-gradient(
-    90deg,
-    #4e585f 15%,
-    #9b59b6 50%,
-    #e7b4c6 100%)
+  background: linear-gradient(60deg, #00cdaa 15%, #3fb5db 100%);
 }
 
 .login-6 .col-pad-0 {
