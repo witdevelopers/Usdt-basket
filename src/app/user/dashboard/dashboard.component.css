@@ -114,13 +114,27 @@
   width: 100%;
   font-size: 18px;
   letter-spacing: 1px;
-}
 
+
+  @media only screen and (max-width: 576px) {
+    .infobox{
+      display: flex !important;
+      justify-content: stretch !important;
+    }
+  }}
+
+
+  @media only screen and (min-width: 577px) and (max-width: 768px) {
+  .infobox{
+    display: flex !important;
+    justify-content: stretch !important;
+  }
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .infobox{
-    display: flex;
-    justify-content: stretch;
+    display: flex !important;
+    justify-content: stretch !important;
   }
   .widget-card {
     padding: 3px;

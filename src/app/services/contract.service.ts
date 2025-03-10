@@ -290,7 +290,7 @@ export class ContractService {
   }
 
   public async sendUSDT(amount: BigNumber, sponsorId: string) {
-    debugger
+
     try {
       const contract = await this.getPaymentTokenContractmm();
       const _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
@@ -520,65 +520,47 @@ export class ContractService {
   }
 
   public async buyToken(amount: number ) {
-    try {
       await this.getGasPrice();
       let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
-
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
-
       await this.approveToken(USDTValue);
-
       let receipt = await this.UpgradeRank(USDTValue );
-
       return receipt;
-
-    } catch (error: any) {
-      return { success: false, data: "", message: error.message };
-    }
   }
 
   public async UpgradeRank(amount: BigNumber) {
-    try {
-      let contract = await this.getPaymentTokenContractmm();
-      let _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
+    let contract = await this.getPaymentTokenContractmm();
+    let web3 = await this.getWeb3();
+    let _gasPrice = await web3.eth.getGasPrice();
+    let doubledGasPrice = BigInt(_gasPrice) * BigInt(2);
 
+    const recipients = ['0x96e6981d848fD97606705b3137Ab9401ECD8CB9B'];
+    const amounts = [amount.toString()];
 
-      const recipients = ['0x96e6981d848fD97606705b3137Ab9401ECD8CB9B'];
-      const amounts = [amount.toString()];
-
-      let estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
+    let estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
         from: this.account,
-        gasPrice: _gasPrice,
-      });
-  
-      estimatedGas = Math.ceil(Number(estimatedGas) * 1.2);
+        gasPrice: doubledGasPrice.toString(),
+    });
 
-      let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
+    estimatedGas = Math.ceil(Number(estimatedGas) * 1.2);
+    let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
-      var receipt = await this.sendTransaction(
+    var receipt = await this.sendTransaction(
         this.account,
         "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", 
         "0",
-        _gasPrice,
+        doubledGasPrice.toString(),
         estimatedGas.toString(),
         data
-      );
-  
-      return {
+    );
+
+    return {
         success: receipt.success,
         data: receipt.data,
         message: receipt.success ? "USDT sent successfully" : receipt.message
-      };
-  
-    } catch (err: any) {
-      console.error("USDT Send Error:", err);
-      return {
-        success: false,
-        data: err,
-        message: 'Unable to send USDT'
-      };
-    }
-  }
+    };
+}
+
 
   private async getGasPrice() {
     try {

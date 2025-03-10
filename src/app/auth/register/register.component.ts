@@ -100,7 +100,7 @@ export class RegisterComponent implements OnInit {
 
         let sponsorRes: any = await this.api.isSponsorValid(this.sponsorId);
         if (!sponsorRes.status) {
-          this.spinnerService.hide();
+          // this.spinnerService.hide();
           Swal.fire({
             icon: "error",
             title: sponsorRes.message
@@ -110,7 +110,7 @@ export class RegisterComponent implements OnInit {
 
         let userRes: any = await this.api.isSponsorValid(this.account);
         if (userRes.status) {
-          this.spinnerService.hide();
+          // this.spinnerService.hide();
           Swal.fire({
             icon: "error",
             title: "You are already registered!"
