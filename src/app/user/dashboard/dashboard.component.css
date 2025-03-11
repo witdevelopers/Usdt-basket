@@ -7,7 +7,6 @@
 
 /* Card Styling */
 .card {
-  background: linear-gradient(to right, #64a6f8 20%, #00cdaa 70%) !important;
   color: #fff;
   border-radius: 15px;
   padding: 25px;
@@ -24,7 +23,7 @@
   left: -10%;
   width: 120%;
   height: 120%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, rgba(0,0,0,0) 60%);
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, rgba(0,0,0,0) 60%) !important;
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
 }
@@ -40,7 +39,7 @@
 
 /* Widgets */
 .widget-card {
-  background: linear-gradient(to right, #64a6f8 20%, #00cdaa 70%) !important;
+  background: #4f4f70 !important;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -64,7 +63,7 @@
 .widget-card .progress-description {
   font-size: 18px;
   font-weight: 700;
-  color: #ffff;
+  color: #00cdaa;
 }
 
 /* Buttons */
@@ -88,7 +87,7 @@
 
 /* Referral Link */
 .referral-link {
-  background: linear-gradient(to right, #64a6f8 20%, #00cdaa 70%) !important;
+  background: #282c34 !important;
   color: #fff;
   padding: 12px;
   border-radius: 8px;
@@ -105,7 +104,7 @@
 
 /* Marquee */
 .news-marquee {
-  background: linear-gradient(to right, #64a6f8 20%, #00cdaa 70%) !important;
+  background: #4f4f70 !important;
   color: #fff;
   font-weight: bold;
   padding: 12px;
@@ -114,28 +113,9 @@
   width: 100%;
   font-size: 18px;
   letter-spacing: 1px;
-
-
-  @media only screen and (max-width: 576px) {
-    .infobox{
-      display: flex !important;
-      justify-content: stretch !important;
-    }
-  }}
-
-
-  @media only screen and (min-width: 577px) and (max-width: 768px) {
-  .infobox{
-    display: flex !important;
-    justify-content: stretch !important;
-  }
 }
 /* Responsive Design */
 @media (max-width: 768px) {
-  .infobox{
-    display: flex !important;
-    justify-content: stretch !important;
-  }
   .widget-card {
     padding: 3px;
   }
