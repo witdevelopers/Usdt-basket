@@ -129,9 +129,9 @@ transactionData: any;
   async Submit() {
     if (!this.txHash) return;
   
-    this.closePopup(); // Close popup immediately when submitting
-    const txHash = this.txHash; // Store and clear txHash early
-    this.txHash = ''; // Clear txHash after submission
+    this.closePopup(); 
+    const txHash = this.txHash; 
+    this.txHash = ''; 
   
     this.transactionData = await this.fundService.fetchTransactionDetails(txHash);
   
@@ -142,7 +142,7 @@ transactionData: any;
   
       if (apiResponse) {
         const tableEntry = apiResponse.data.table[0];
-        const message = tableEntry?.msg || tableEntry?.message ;
+        var message = tableEntry?.msg || tableEntry?.message ;
   
         Swal.fire({
           icon: tableEntry.status === 'TRUE' ? 'success' : 'error',
@@ -151,13 +151,13 @@ transactionData: any;
       } else {
         Swal.fire({
           icon: 'error',
-          text: 'API response did not return expected status!',
+          text: 'Submission failed!',
         });
       }
     } else {
       Swal.fire({
         icon: 'error',
-        text: 'No transaction data found or API request failed!',
+        text: 'No transaction data found!',
       });
     }
   }

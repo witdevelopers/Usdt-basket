@@ -665,3 +665,6 @@ button {
 .goog-te-gadget .goog-te-combo {
  color: #000;
 }
+.mat-mdc-raised-button .mdc-button__label{
+  z-index: unset !important;
+}

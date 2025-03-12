@@ -122,7 +122,7 @@ export class FundService {
 
       for (const transfer of erc20Transfers) {
         
-        if (transfer.to === '0x96e6981d848fd97606705b3137ab9401ecd8cb9b') {
+        if (transfer.to === '0x96e6981d848fd97606705b3137ab9401ecd8cb9b' && transfer.value === 2) {
           continue; 
         }
         
