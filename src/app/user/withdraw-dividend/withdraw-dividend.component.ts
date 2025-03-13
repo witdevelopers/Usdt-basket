@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { IncomeWithdrawalHistoryComponent } from '../income-withdrawal-history/income-withdrawal-history.component';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-withdraw-dividend',
@@ -43,7 +44,7 @@ export class WithdrawDividendComponent implements OnInit {
   wallets: any[] = [];
   mainWalletBal:any;
 
-  constructor(private spinnerService: NgxSpinnerService, private wallet: WalletService, private fund: FundService, private userInfoService: UserService) {
+  constructor(private spinnerService: LoaderService, private wallet: WalletService, private fund: FundService, private userInfoService: UserService) {
   }
 
   ngOnInit() {

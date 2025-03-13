@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessageComponent } from 'src/app/validation-message/validation-message.component';
 import { MatSelectModule } from '@angular/material/select';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-register',
@@ -44,7 +45,7 @@ export class RegisterComponent implements OnInit {
   constructor(private contractService: ContractService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private spinnerService: NgxSpinnerService,
+    private spinnerService: LoaderService,
     private company: CompanyService,
     private api: AuthService) {
 

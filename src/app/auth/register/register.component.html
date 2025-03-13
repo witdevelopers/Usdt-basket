@@ -37,7 +37,7 @@
         <mat-form-field appearance="fill">
             <mat-label>USDT Amount</mat-label>
             <input matInput [(ngModel)]="amount" [ngModelOptions]="{standalone: true}" required #txtAmount="ngModel"
-                type="number" [min]="selectedPackage?.minRange" [max]="selectedPackage?.maxRange" id="txtAmount" readonly="4" />
+                type="number" [min]="selectedPackage?.minRange" [max]="selectedPackage?.maxRange" id="txtAmount"  />
         </mat-form-field>
         <app-validation-message [control]="txtAmount"></app-validation-message>
     </div>

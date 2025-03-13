@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2/dist/sweetalert2.all';
 import { Subscription } from 'rxjs';
 import { FundService } from 'src/app/user/services/fund.service';
+import { LoaderService } from 'src/app/services/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,7 @@ transactionData: any;
     private contractService: ContractService,
     private router: Router,
     private api: AuthService,
-    private spinnerService: NgxSpinnerService
+    private Loader: LoaderService
   ) {
     this.getAddress();
   }
@@ -67,7 +68,7 @@ transactionData: any;
   }
 
   async login() {
-    this.spinnerService.show();
+    this.Loader.show();
     try {
       const signature = await this.contractService.signMessage('Do you want to login?');
       console.log('Generated Signature:', signature);
@@ -89,12 +90,12 @@ transactionData: any;
       console.error('Login error:', error);
       Swal.fire('Failed to sign message!', '', 'error');
     } finally {
-      this.spinnerService.hide();
+      this.Loader.hide();
     }
   }
 
   async demoLogin() {
-    this.spinnerService.show();
+    this.Loader.show();
     try {
       const signature =
         '0xda7ff5b62b6e36228461fd87bf9c6cab3ee57e3a838dd87f58dff265de200184216e925c214da2a97ed3139118a854718a3f998fcae7eacc89e7eb5a8d05875c1b';
@@ -112,7 +113,7 @@ transactionData: any;
       console.error('Demo login error:', error);
       Swal.fire('Demo login failed!', '', 'error');
     } finally {
-      this.spinnerService.hide();
+      this.Loader.hide();
     }
   }
 
