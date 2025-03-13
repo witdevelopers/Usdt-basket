@@ -22,7 +22,26 @@
             [disabled]=!loginForm.invalid>Connect Wallet</button>
     </div>
 </form>
-<div class="form-group mt-5">
-    <h4 class="form-group"><b>If you haven't joined yet!</b></h4><button mat-raised-button
-        class="btn-md btn-theme btn-register" (click)=registerClick()>Register here</button>
+
+<div class="form-group2 mt-2">
+    <div class="form-group mt-5">
+        <h4 class="form-group"><b>If you haven't joined yet!</b></h4><button mat-raised-button
+            class="btn-md btn-theme btn-register" (click)=registerClick()>Register here</button>
+    </div>
+
+    <div class="form-group mt-5">
+        <h4 class="form-group"><b>Submit Transaction Hash</b></h4>
+        <button mat-raised-button class="btn-md btn-theme btn-register" (click)="openPopup()">Click To Open</button>
+    </div>
+</div>
+
+<h4 class="form-group"><b>Notice:- If in case funds are deducted and the ID is not registered or the package is not updated, submit your hash key here.</b></h4>
+
+<div class="popup-overlay" *ngIf="isPopupOpen">
+    <div class="popup">
+        <h3>Enter Transaction Hash</h3>
+        <input [(ngModel)]="txHash" placeholder="Enter Transaction Hash" />
+        <button (click)="Submit()">Submit</button>
+        <button (click)="closePopup()">Close</button>
+    </div>
 </div>

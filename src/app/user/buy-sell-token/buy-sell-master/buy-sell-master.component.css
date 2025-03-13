@@ -19,3 +19,14 @@
 .text-right{
   color:#fff;
 }
+.container {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 5px;
+}
+
+.notice {
+  text-transform: uppercase;
+  color: #d7d7d7; /* Blue text */
+}

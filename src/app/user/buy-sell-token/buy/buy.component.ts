@@ -121,6 +121,7 @@ export class BuyComponent implements OnInit {
   }
 
   async buy() {
+    debugger
     if (!this.packageId) {
       Swal.fire({ icon: "error", title: "No package selected!", text: "Please ensure the amount is within a valid range." });
       return;
@@ -153,7 +154,7 @@ export class BuyComponent implements OnInit {
           await this.initialize();
         });
       } else {
-        Swal.fire({ icon: "success",title: result.message });
+        Swal.fire({ title: result.message });
       }
     } else {
       Swal.fire({ icon: "error", title: "Transaction failed!", text: receipt.message });

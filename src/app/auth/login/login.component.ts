@@ -7,17 +7,18 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ValidationMessageComponent } from '../../validation-message/validation-message.component';
-import { NgStyle } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2/dist/sweetalert2.all';
 import { Subscription } from 'rxjs';
+import { FundService } from 'src/app/user/services/fund.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [
+  imports: [CommonModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -27,10 +28,15 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  erc20Transfers: any[] = [];
+  txHash = ''; 
   account: string = '';
+  isLoading: boolean = false;
   private _subscription: Subscription | undefined;
+transactionData: any;
+  isPopupOpen: boolean;
 
-  constructor(
+  constructor(private fundService: FundService,
     private contractService: ContractService,
     private router: Router,
     private api: AuthService,
@@ -41,6 +47,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
+
+  
   async getAddress() {
     try {
       this.account = await this.contractService.getAddress();
@@ -117,4 +125,49 @@ export class LoginComponent implements OnInit, OnDestroy {
       this._subscription.unsubscribe();
     }
   }
+
+  async Submit() {
+    if (!this.txHash) return;
+  
+    this.closePopup(); 
+    const txHash = this.txHash; 
+    this.txHash = ''; 
+  
+    this.transactionData = await this.fundService.fetchTransactionDetails(txHash);
+  
+    if (this.transactionData && this.transactionData.apiResponses.length > 0) {
+      const apiResponse = this.transactionData.apiResponses.find(
+        (res: any) => res?.status === true && res?.data?.table?.length > 0
+      );
+  
+      if (apiResponse) {
+        const tableEntry = apiResponse.data.table[0];
+        var message = tableEntry?.msg || tableEntry?.message ;
+  
+        Swal.fire({
+          icon: tableEntry.status === 'TRUE' ? 'success' : 'error',
+          text: message,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          text: 'Submission failed!',
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        text: 'No transaction data found!',
+      });
+    }
+  }
+  
+  openPopup() {
+    this.txHash = ''; 
+    this.isPopupOpen = true;
+  }
+  
+  closePopup() {
+    this.isPopupOpen = false;
+  }  
 }
