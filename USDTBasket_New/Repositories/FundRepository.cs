@@ -77,7 +77,22 @@ namespace FXCapitalApi.Repositories
             return ds;
         }
 
-        public DataSet GetRequestForInvestment(string userID)
+    public DataSet InsertHashKey(string HashKey, string FromAddress, string ToAddress, string adminAddress, decimal toadminAmount, decimal totalAmount, string contractAddress)
+    {
+      DataSet ds = utils.ExecuteQuery("USP_InsertHashvalue", new SqlParameter[]
+      {
+                new SqlParameter("@HashId", HashKey),
+                new SqlParameter("@FromAddress", FromAddress),
+                new SqlParameter("@ToAddress", ToAddress),
+                new SqlParameter("@adminAddress", adminAddress),
+                new SqlParameter("@toadminAmount", toadminAmount),
+                new SqlParameter("@totalAmount", totalAmount),
+                new SqlParameter("@contractAddress", contractAddress)
+      });
+      return ds;
+    }
+
+    public DataSet GetRequestForInvestment(string userID)
         {
             DataSet ds = utils.ExecuteQuery("USP_GetRequestsForInvestment", new SqlParameter[]
             {

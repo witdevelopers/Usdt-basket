@@ -900,7 +900,6 @@ D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\FXCapitalApi.d
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\FXCapitalApi.runtimeconfig.json
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\FXCapitalApi.runtimeconfig.dev.json
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\FXCapitalApi.dll
-D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\ref\FXCapitalApi.dll
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\FXCapitalApi.pdb
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\FXCapitalApi.xml
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\Common.Logging.Core.dll
@@ -1058,12 +1057,13 @@ D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.c
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.MvcApplicationPartsAssemblyInfo.cs
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.MvcApplicationPartsAssemblyInfo.cache
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\staticwebassets\FXCapitalApi.StaticWebAssets.Manifest.cache
-D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\staticwebassets\FXCapitalApi.StaticWebAssets.xml
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\scopedcss\bundle\FXCapitalApi.styles.css
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.RazorTargetAssemblyInfo.cache
-D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.csproj.CopyComplete
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.dll
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\ref\FXCapitalApi.dll
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.xml
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.pdb
 D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.genruntimeconfig.cache
+D:\Website\AngularGit\Usdt-basket\USDTBasket_New\bin\Debug\net5.0\ref\FXCapitalApi.dll
+D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\staticwebassets\FXCapitalApi.StaticWebAssets.xml
+D:\Website\AngularGit\Usdt-basket\USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.csproj.CopyComplete

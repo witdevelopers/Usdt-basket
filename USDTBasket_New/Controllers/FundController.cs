@@ -134,7 +134,20 @@ namespace FXCapitalApi.Controllers
             return new JsonResult(new { status = true,  data = ds });
         }
 
-        [HttpGet("GetRequestForInvestment")]
+    [HttpGet("InsertHashKey")]
+    public IActionResult InsertHashKey(string HashKey, string FromAddress, string ToAddress, string adminAddress, decimal toadminAmount, decimal totalAmount, string contractAddress)
+    {
+      DataSet ds = fundRepository.InsertHashKey(HashKey, FromAddress, ToAddress, adminAddress, toadminAmount, totalAmount, contractAddress);
+      if (ds.HasDataTable() && ds.Tables[0].IsDataTable())
+      {
+        var res = new JsonResult(new { status = true, data = ds });
+        return res;
+      }
+
+      return new JsonResult(new { status = false, message = "Data Not Found", data = new { } });
+    }
+
+    [HttpGet("GetRequestForInvestment")]
         public IActionResult GetRequestForInvestment(string UserId)
         {
 
