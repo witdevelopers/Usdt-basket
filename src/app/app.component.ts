@@ -3,7 +3,6 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { LoaderService } from './services/loader.service';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +23,10 @@ export class AppComponent {
   ) {}
 
   ngOnInit(): void {
-    this.spinner.show();
+    this.loader.show();
+
+    setTimeout(() => {
+      this.loader.hide();
+    }, 500); 
   }
 }

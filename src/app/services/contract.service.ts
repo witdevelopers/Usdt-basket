@@ -6,12 +6,13 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { BigNumber, ethers } from 'ethers';
 import { FundService } from '../user/services/fund.service';
+import { LoaderService } from './loader.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContractService {
+export class ContractService  {
   public provider: ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider;
   public signer: ethers.Signer;
   public account: any = null;
@@ -24,6 +25,7 @@ export class ContractService {
 
   constructor(@Inject('Window') private window: any,
   private fundapi : FundService,
+  private loader: LoaderService,
     private router: Router) {
     this.initialize();
     this.getWeb3();
@@ -230,6 +232,7 @@ export class ContractService {
 
 
   public async login(ethAddress: string): Promise<any> {
+    this.loader.show();
     if (/^[0-9]+$/.test(ethAddress)) {
       const res = await this.getAddressById(ethAddress);
       if (res.success) {
@@ -366,13 +369,15 @@ export class ContractService {
     data: any
   ) {
     try {
-      var _gas = Math.ceil(Number(gas) + (Number(gas) * 0.2)); // ✅ 20% buffer
+      this.loader.show(); // 🔥 Show Spinner before execution
+
+      var _gas = Math.ceil(Number(gas) + Number(gas) * 0.2); // ✅ 20% buffer
       gas = _gas.toString();
 
-      var _gasPrice = Math.ceil(Number(gasPrice) + (Number(gasPrice) * 0.2));
+      var _gasPrice = Math.ceil(Number(gasPrice) + Number(gasPrice) * 0.2);
       gasPrice = _gasPrice.toString();
 
-      var _web3: any = await new Web3(this.window.ethereum);
+      var _web3: any = await new Web3((window as any).ethereum); // Ensure window is casted
 
       const estimatedGas = await _web3.eth.estimateGas({
         from: fromAddress,
@@ -398,12 +403,14 @@ export class ContractService {
       };
 
     } catch (ex: any) {
-      console.error(' Transaction Error:', ex);
+      console.error('Transaction Error:', ex);
       return {
         success: false,
         data: '',
         message: ex.message || 'Transaction failed!'
       };
+    } finally {
+      this.loader.hide(); // 🔥 Hide Spinner after transaction completes
     }
   }
 

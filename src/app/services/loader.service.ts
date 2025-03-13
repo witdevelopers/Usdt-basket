@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { BehaviorSubject, defer, finalize, NEVER, share } from 'rxjs';
+import { BehaviorSubject, defer, finalize, timer, share } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,19 +12,44 @@ export class LoaderService {
   constructor(private spinner: NgxSpinnerService) {}
 
   public show(): void {
-    this.isLoadingSubject.next(true); // Emit true to show the loader
-    this.spinner.show(); // Show the spinner
+    if (!this.isLoadingSubject.getValue()) {
+      this.isLoadingSubject.next(true);
+      this.spinner.show();
+    }
   }
+
   public hide(): void {
-    this.isLoadingSubject.next(false); // Emit false to hide the loader
-    this.spinner.hide(); // Hide the spinner
+    if (this.isLoadingSubject.getValue()) {
+      this.isLoadingSubject.next(false);
+      this.spinner.hide();
+    }
   }
+
+  /**
+   * Auto-hides after a given duration (e.g., 5 seconds)
+   */
   public readonly loader$ = defer(() => {
-    this.show(); // Show the loader when observable is triggered
-    return NEVER.pipe(
+    this.show();
+    return timer(5000).pipe(
       finalize(() => {
-        this.hide(); // Hide the loader after the observable completes
-      }),
+        this.hide();
+      })
     );
   }).pipe(share());
+
+  /**
+   * Show spinner when a wallet transaction starts and hide when it ends
+   */
+  public async trackWalletTransaction(txPromise: Promise<any>): Promise<any> {
+    this.show(); // Show the loader when transaction starts
+    try {
+      const result = await txPromise;
+      return result;
+    } catch (error) {
+      console.error('Transaction failed:', error);
+      throw error;
+    } finally {
+      this.hide(); // Hide the loader after transaction completes
+    }
+  }
 }
