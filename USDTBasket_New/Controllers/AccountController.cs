@@ -1,4 +1,4 @@
-﻿using Api.Services;
+using Api.Services;
 using FXCapitalApi.Authentication;
 using FXCapitalApi.Models;
 using FXCapitalApi.Repositories;
@@ -916,7 +916,7 @@ namespace FXCapitalApi.Controllers
                             }
                             else
                             {
-                                var sponsorAddress = "0xad83cc72b6a8c5feddc1982e627b947659d9850d";
+                                var sponsorAddress = "0x3b48F1a6aEf01976cB7Ef98a49321b5926a42439";
                                 RegistrationPayload payload = new RegistrationPayload
                                 {
                                     sponsorAddress = sponsorAddress,

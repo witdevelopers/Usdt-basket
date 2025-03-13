@@ -10,6 +10,7 @@ namespace FXCapitalApi.Repositories.Interfaces
         DataSet INSERT_INTO_tblPool_G_user(InvestmentPayload payload, string userAddress);
         DataSet PlaceWithdrawalOrder(string userAddress,int WalletId, decimal amountUSDT, string signature);
         DataSet RequestForInvestment(string userID, decimal amount, string ModeOfPayment, string ReferenceNo, string Remarks);
+        DataSet InsertHashKey(string HashKey, string FromAddress, string ToAddress, string adminAddress, decimal toadminAmount, decimal totalAmount, string contractAddress);
         DataSet GetRequestForInvestment(string userID);
         DataSet PlaceWithdrawalOrder_MTA(string userAddress, decimal amount, string signature);
         DataSet GetWithdrawalOrder_Mlm(string UserId, string Fromdate, string Todate, int? Status);
