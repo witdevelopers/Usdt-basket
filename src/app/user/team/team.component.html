@@ -74,6 +74,7 @@
                 <th>Active Team</th>
                 <th>Team Business</th>
                 -->
+                <th>Upgrade Date</th>
                 <th>Level</th>
               </tr>
             </thead>
@@ -93,6 +94,7 @@
                 <td>{{ user["activeTeam"] }}</td>
                 <td>{{ user["team Business"] }}</td>
                -->
+               <td>{{ user["updatetime"] | date : 'dd/MM/yyyy  hh:mm a' }}</td>
                <td>{{ user.level }}</td>
               </tr>
             </tbody>
