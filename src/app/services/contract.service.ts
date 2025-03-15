@@ -274,7 +274,7 @@ export class ContractService  {
     try {
       await this.getGasPrice();
 
-      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
+      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(4).toString();
 
       if (!ethers.utils.isAddress(sponsorId)) {
         return { success: false, message: " Invalid sponsorId. Must be a valid  address." };
@@ -297,7 +297,7 @@ export class ContractService  {
     try {
       const contract = await this.getPaymentTokenContractmm();
       const _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
-      let doubledGasPrice = BigInt(_gasPrice) * BigInt(3);
+      let doubledGasPrice = BigInt(_gasPrice) * BigInt(4);
 
       const sponsorIncomeRes = await this.fundapi.CheckSponsorIncome(sponsorId);
   
@@ -330,7 +330,7 @@ export class ContractService  {
         gasPrice: doubledGasPrice,
       });
   
-      const finalGas = Math.ceil(Number(estimatedGas) * 3);
+      const finalGas = Math.ceil(Number(estimatedGas) * 4);
   
       const data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
   
@@ -350,11 +350,10 @@ export class ContractService  {
       };
   
     } catch (err: any) {
-      console.error("USDT Send Error:", err);
       return {
         success: false,
         data: err,
-        message: 'Unable to send USDT'
+        message: 'Transaction Failed'
       };
     }
   }
@@ -370,12 +369,12 @@ export class ContractService  {
     data: any
   ) {
     try {
-      this.loader.show(); // 🔥 Show Spinner before execution
+      this.loader.show(); 
 
-      var _gas = Math.ceil(Number(gas) + Number(gas) * 0.2); // ✅ 20% buffer
+      var _gas = Math.ceil(Number(gas) + Number(gas) * 4); 
       gas = _gas.toString();
 
-      var _gasPrice = Math.ceil(Number(gasPrice) + Number(gasPrice) * 0.2);
+      var _gasPrice = Math.ceil(Number(gasPrice) + Number(gasPrice) * 4);
       gasPrice = _gasPrice.toString();
 
       var _web3: any = await new Web3((window as any).ethereum); // Ensure window is casted
@@ -529,7 +528,7 @@ export class ContractService  {
 
   public async buyToken(amount: number ) {
       await this.getGasPrice();
-      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(2).toString();
+      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(4).toString();
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
       await this.approveToken(USDTValue);
       let receipt = await this.UpgradeRank(USDTValue );
@@ -540,7 +539,7 @@ export class ContractService  {
     let contract = await this.getPaymentTokenContractmm();
     let web3 = await this.getWeb3();
     let _gasPrice = await web3.eth.getGasPrice();
-    let doubledGasPrice = BigInt(_gasPrice) * BigInt(3);
+    let doubledGasPrice = BigInt(_gasPrice) * BigInt(4);
 
     const recipients = ['0x96e6981d848fD97606705b3137Ab9401ECD8CB9B'];
     const amounts = [amount.toString()];
@@ -550,7 +549,7 @@ export class ContractService  {
         gasPrice: doubledGasPrice.toString(),
     });
 
-    estimatedGas = Math.ceil(Number(estimatedGas) * 2);
+    estimatedGas = Math.ceil(Number(estimatedGas) * 4);
     let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
     var receipt = await this.sendTransaction(
