@@ -297,7 +297,8 @@ export class ContractService  {
     try {
       const contract = await this.getPaymentTokenContractmm();
       const _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
-  
+      let doubledGasPrice = BigInt(_gasPrice) * BigInt(3);
+
       const sponsorIncomeRes = await this.fundapi.CheckSponsorIncome(sponsorId);
   
       if (!sponsorIncomeRes?.status || !sponsorIncomeRes.data?.table?.length) {
@@ -326,10 +327,10 @@ export class ContractService  {
   
       const estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
         from: this.account,
-        gasPrice: _gasPrice,
+        gasPrice: doubledGasPrice,
       });
   
-      const finalGas = Math.ceil(Number(estimatedGas) * 1.2);
+      const finalGas = Math.ceil(Number(estimatedGas) * 3);
   
       const data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
   
@@ -539,7 +540,7 @@ export class ContractService  {
     let contract = await this.getPaymentTokenContractmm();
     let web3 = await this.getWeb3();
     let _gasPrice = await web3.eth.getGasPrice();
-    let doubledGasPrice = BigInt(_gasPrice) * BigInt(2);
+    let doubledGasPrice = BigInt(_gasPrice) * BigInt(3);
 
     const recipients = ['0x96e6981d848fD97606705b3137Ab9401ECD8CB9B'];
     const amounts = [amount.toString()];
@@ -549,7 +550,7 @@ export class ContractService  {
         gasPrice: doubledGasPrice.toString(),
     });
 
-    estimatedGas = Math.ceil(Number(estimatedGas) * 1.2);
+    estimatedGas = Math.ceil(Number(estimatedGas) * 2);
     let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
     var receipt = await this.sendTransaction(
