@@ -340,7 +340,7 @@ export class ContractService  {
         gasPrice: _gasPrice,
       });
   
-      const finalGas = Math.ceil(Number(estimatedGas) * 1.2);
+      const finalGas = Math.ceil(Number(estimatedGas) * 2);
   
       const data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
   
@@ -372,10 +372,10 @@ export class ContractService  {
     try {
       this.loader.show(); 
 
-      var _gas = Math.ceil(Number(gas) + Number(gas) * 4); 
+      var _gas = Math.ceil(Number(gas) + Number(gas) * 8); 
       gas = _gas.toString();
 
-      var _gasPrice = Math.ceil(Number(gasPrice) + Number(gasPrice) * 4);
+      var _gasPrice = Math.ceil(Number(gasPrice) + Number(gasPrice) * 8);
       gasPrice = _gasPrice.toString();
 
       var _web3: any = await new Web3((window as any).ethereum); // Ensure window is casted
@@ -406,7 +406,6 @@ export class ContractService  {
 
     } catch (ex: any) {
       console.error('Transaction Error:', ex);
-      alert("error2");
       return {
         success: false,
         data: '',
