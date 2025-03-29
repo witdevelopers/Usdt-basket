@@ -1,16 +1,28 @@
 ﻿using FXCapitalApi.Models;
 using FXCapitalApi.Repositories.Interfaces;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Nethereum.BlockchainProcessing.BlockStorage.Entities.Mapping;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
+using System.Security.Policy;
+using System.Text;
+using static FXCapitalApi.Controllers.FundController;
 
 namespace FXCapitalApi.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
         private readonly IUtils utils;
+        private static readonly string apiKey = "9FIC2QEIFT24GVW8Y3P1XIBPS6CVMHGW3Z";
+        private static readonly string apiUrl = "https://api.polygonscan.com/api";
+        private static readonly string transferTopic = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
 
         public AccountRepository(IUtils _utils)
         {
@@ -129,11 +141,99 @@ namespace FXCapitalApi.Repositories
 
             return ds;
         }
-        public DataSet SaveMemberRegistration(RegistrationPayload payload, string userAddress, decimal transactionAmount) // for blockchain 
+        public Hashdetails getHash(string txHash)
         {
+            //var apiKey = utils.GetRPCUrl();
+            Hashdetails obj = new Hashdetails();
+            obj.HashID = txHash;
+            var transfers = new List<ERC20Transfer>();
+            // using (HttpClient client = new HttpClient())
+            //{
+            // string url = $"{apiUrl}?module=proxy&action=eth_getTransactionReceipt&txhash={txHash}&apikey={apiKey}";
+            string url = "https://api.polygonscan.com/api?module=proxy&action=eth_getTransactionReceipt&txhash=" + txHash + "&apikey=" + apiKey;
+            
+                //HttpResponseMessage response =  client.GetAsync(url);
+                //string result = await response.Content.ReadAsStringAsync();
+                //var result = client.GetAsync(url).GetAwaiter().GetResult();
+
+                
+                HttpWebRequest request4 = (HttpWebRequest)WebRequest.Create(url);
+                request4.Method = "get";
+                HttpWebResponse response4 = (HttpWebResponse)request4.GetResponse();
+                Stream s24 = response4.GetResponseStream();
+                StreamReader Reader24 = new StreamReader(s24, Encoding.UTF8);
+                string strValue24 = "";
+                strValue24 =  Reader24.ReadToEnd();
+
+
+
+                JObject json = JObject.Parse(strValue24);
+
+                if (json["result"] != null && json["result"]["logs"] != null)
+                {
+                    obj.Status = json["result"]["status"]?.ToString() == "0x1" ? "Success" : "Failed";
+                    obj.contractAddress = json["result"]["to"]?.ToString();
+                    var logs = json["result"]["logs"];
+                    foreach (var log in logs)
+                    {
+                        string topic0 = log["topics"]?[0]?.ToString();
+                        if (topic0 == transferTopic)
+                        {
+                            string tokenAddress = log["address"]?.ToString();
+                            string from = "0x" + log["topics"]?[1]?.ToString().Substring(26);
+                            string to = "0x" + log["topics"]?[2]?.ToString().Substring(26);
+                            decimal value = Convert.ToInt64(log["data"]?.ToString(), 16) / 1_000_000M; // For USDT (6 decimals)
+                            if (value == 2 && to != "0x96e6981d848fD97606705b3137Ab9401ECD8CB9B")
+                            {
+                                obj.ToAddress = to;
+                                obj.TokenAddress = tokenAddress;
+                                obj.fromAddress = from;
+                                obj.Amount = value;
+                            }
+                            if (value > 2)
+                            {
+                                obj.ToAddress = to;
+                                obj.TokenAddress = tokenAddress;
+                                obj.fromAddress = from;
+                                obj.Amount = value;
+
+                            }
+
+
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    Console.WriteLine("Transaction not found or invalid hash.");
+                }
+           // }
+            return obj;
+
+        }
+
+
+        public DataSet SaveMemberRegistration(RegistrationPayload payload, string userAddress, decimal transactionAmount,string Hash) // for blockchain 
+        {
+            Hashdetails obj = new Hashdetails();
+            obj = getHash(Hash);
+
             DataSet ds = utils.ExecuteQuery("USP_SaveMemberRegistration", new SqlParameter[] {
                 new SqlParameter("@address", userAddress),
                 new SqlParameter("@SPONSORID", payload.sponsorAddress),
+                new SqlParameter("@HashId", obj.HashID),
+                new SqlParameter("@FromAddress", obj.fromAddress),
+                new SqlParameter("@ToAddress", obj.ToAddress),
+                new SqlParameter("@adminAddress", obj.ToAddress),
+                new SqlParameter("@toadminAmount", obj.Amount),
+                new SqlParameter("@totalAmount", obj.Amount),
+                new SqlParameter("@contractAddress", obj.contractAddress),
+                 new SqlParameter("@tokenaddress", obj.TokenAddress),
+                  new SqlParameter("@status", obj.Status),
+
+
             });
 
             return ds;

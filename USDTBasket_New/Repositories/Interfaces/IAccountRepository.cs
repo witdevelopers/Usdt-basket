@@ -18,7 +18,7 @@ namespace FXCapitalApi.Repositories.Interfaces
         public DataSet InsertCryptoTransactionInfo(RegistrationPayload payload, string userAddress, decimal transactionAmount);
 
         public DataSet Register(RegistrationPayload payload, string userAddress, decimal transactionAmount); // for blockchain \
-        public DataSet SaveMemberRegistration(RegistrationPayload payload, string userAddress, decimal transactionAmount);
+        public DataSet SaveMemberRegistration(RegistrationPayload payload, string userAddress, decimal transactionAmount, string Hash);
 
         public DataSet Deposit(DepositPayload payload, string userAddress, decimal transactionAmount); // for blockchain 
 

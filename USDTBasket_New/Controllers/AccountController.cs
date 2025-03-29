@@ -51,7 +51,11 @@ namespace FXCapitalApi.Controllers
             this.smsService = smsService;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        //[HttpGet("Registertest")]
+        //public IActionResult Registertest()
+        //{
+        //    return ProcessTransaction_NativeERCToken("0xfa908bc7885c0ca6b53d9c0f425522efdce5ef8643ad523d99d36036ac6c5e46", 4, "0x9E55c2D097C6D794d91655A62F0BBf91854F154b");
+        //}
 
         [HttpGet("CompanyDetails")]
         public IActionResult CompanyDetails()
@@ -90,6 +94,10 @@ namespace FXCapitalApi.Controllers
 
             return new JsonResult(new { status = true, data = ds });
         }
+
+
+
+
 
 
         [HttpGet("IsEmailExists")]
@@ -510,7 +518,7 @@ namespace FXCapitalApi.Controllers
 
                                 DataSet result = accountRepository.InsertCryptoTransactionInfo(payload, transactionValidity.fromAddress, transactionAmount);
 
-                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount);
+                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount, transactionHash);
 
                                 //if (result.HasDataTable() && result.Tables[0].IsDataTable())
                                 //{
@@ -923,7 +931,7 @@ namespace FXCapitalApi.Controllers
                                     transactionHash = transactionHash
                                 };
                                 DataSet result = accountRepository.InsertCryptoTransactionInfo(payload, transactionValidity.fromAddress, transactionAmount);
-                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount);
+                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount, transactionHash);
 
                                 if (res.HasDataTable() && res.Tables[0].IsDataTable())
                                 {
