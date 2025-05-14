@@ -10,7 +10,7 @@ export class FundService {
   private apiBaseUrl = Settings.apiUrl + 'Fund/';
 
   private apiUrlPOLY = 'https://api.polygonscan.com/api';
-  private apiKeyPOLY = '9FIC2QEIFT24GVW8Y3P1XIBPS6CVMHGW3Z';
+  private apiKeyPOLY = 'YS39IKW6IM9FZXKIUAMEYRNN74WIQR9BQV';
 
   constructor(private http: HttpClient) {}
 
