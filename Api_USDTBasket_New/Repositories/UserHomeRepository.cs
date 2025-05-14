@@ -268,7 +268,16 @@ namespace FXCapitalApi.Repositories
             });
             return ds;
         }
-        public DataSet BinaryTree(string userID, string SponsoruserID)
+
+    public DataSet PoolTree(string userID)
+    {
+      DataSet ds = utils.ExecuteQuery("SP_Tree_new", new SqlParameter[]
+      {
+                new SqlParameter("@user", userID)
+      });
+      return ds;
+    }
+    public DataSet BinaryTree(string userID, string SponsoruserID)
         {
             DataSet ds = utils.ExecuteQuery("USP_GetBinaryTree_Old", new SqlParameter[]
             {

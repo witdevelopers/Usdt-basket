@@ -1,4 +1,4 @@
-﻿using FXCapitalApi.Authentication;
+using FXCapitalApi.Authentication;
 using FXCapitalApi.Repositories;
 using FXCapitalApi.Repositories.Interfaces;
 using Google.Type;
@@ -338,8 +338,22 @@ namespace FXCapitalApi.Controllers
             return new JsonResult(new { status = false, message = "Data Not Found", data = new { } });
         }
 
+    [HttpGet("PoolTree")]
+    public IActionResult PoolTree(string userID)
+    {
+      //string userAddress = User.getUserId();
+      DataSet ds = userHome.PoolTree(userID);
 
-        [HttpGet("BinaryIncome")]
+      if (ds.HasDataTable() && ds.Tables[0].IsDataTable())
+      {
+        var res = new JsonResult(new { status = true, data = ds });
+        return res;
+      }
+      return new JsonResult(new { status = false, message = "Data Not Found", data = new { } });
+    }
+
+
+    [HttpGet("BinaryIncome")]
         public IActionResult BinaryIncome(string userID, int PayoutNo)
         {
             try

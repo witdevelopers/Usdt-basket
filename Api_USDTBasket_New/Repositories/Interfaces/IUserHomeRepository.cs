@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 
 namespace FXCapitalApi.Repositories.Interfaces
@@ -19,6 +19,7 @@ namespace FXCapitalApi.Repositories.Interfaces
         DataSet DirectDetails(string userID, string fromDate, string toDate, int status, int side);
         DataSet DirectTree(string userID);
         DataSet BinaryTree(string userID, string SponsoruserID);
+        DataSet PoolTree(string userID);
         DataSet BinaryIncome(string userID, int PayoutNo);
         DataSet SpillIncome(string userID, string Fromdate, string Todate);
         DataSet TeamDetails(string userID, string fromDate, string toDate, int level, int side, int PageIndex, int PageSize);
