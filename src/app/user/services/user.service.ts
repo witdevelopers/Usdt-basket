@@ -1662,4 +1662,14 @@ export class UserService {
       });
     });
   }
+
+  getMatrixTree(userID: string, sponsorUserID: string, poolID: number): Observable<any> {
+    const params = new HttpParams()
+      .set('userID', userID)
+      .set('SponsoruserID', sponsorUserID)
+      .set('PoolID', poolID.toString());
+  
+    // Correctly pass the API URL as a string
+    return this.http.get<any>(`${this.apiBaseUrl}UserHome/GetMatrixTree`, { params });
+  }
 }

@@ -409,7 +409,7 @@ html {
 .mat-expansion-panel-header {
  background-color: #4f4f70 !important;
   border: 1px solid #9096ee;
-  padding: 0 10px !important;
+  padding: 0 5px !important;
 }
 .mat-accordion .mat-expansion-panel:first-of-type,.mat-accordion .mat-expansion-panel:not(.mat-expanded),
  .mat-accordion .mat-expansion-panel:not(.mat-expansion-panel-spacing){

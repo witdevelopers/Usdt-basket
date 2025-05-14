@@ -1,0 +1,19 @@
+<div class="tree-wrapper">
+    <!-- Tree Controls: Input and Button -->
+    <div class="tree-controls">
+      <input type="text" [(ngModel)]="userId" placeholder="Enter User ID">
+      <button (click)="showTree()" [disabled]="loading">
+        {{ loading ? 'Loading...' : 'Show Tree' }}
+      </button>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    </div>
+  
+    <!-- Container for the Tree -->
+    <div #treeContainer class="tree-container"></div>
+  
+    <!-- Popup content for node info -->
+    <div *ngIf="showPopup" class="node-popup" [style.left.px]="popupPosition.x" [style.top.px]="popupPosition.y">
+      <div [innerHTML]="popupContent"></div>
+    </div>
+  </div>
+  

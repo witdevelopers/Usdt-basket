@@ -1,0 +1,162 @@
+
+.node
+{
+    cursor: pointer;
+}
+
+.overlay
+{
+    background-color: #fff;
+}
+
+.node circle
+{
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 0px;
+}
+
+.node text
+{
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.link
+{
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.8px;
+}
+
+.templink
+{
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+}
+
+.ghostCircle.show
+{
+    display: block;
+}
+
+.ghostCircle, .activeDrag .ghostCircle
+{
+    display: none;
+}
+
+.tree-container {
+    background-color: #fff !important;
+    position: relative;
+    width: 100%;
+    height: 80vh;  /* Ensure enough height for the tree to render */
+  }
+  .error {
+    color: red;
+  }
+  .node-popup {
+    position: absolute;
+    /* background-color: white; */
+    border: 1px solid black;
+    padding: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+
+  /* Overall wrapper */
+.tree-wrapper {
+    background-color: #fcfcfc; /* dark background */
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    max-width: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Tree Controls */
+  .tree-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .tree-controls input[type="text"] {
+    padding: 10px 14px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    width: 250px;
+  }
+  
+  .tree-controls input::placeholder {
+    color: #bbb;
+  }
+  
+  .tree-controls button {
+    padding: 10px 18px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tree-controls button:hover:not(:disabled) {
+    background-color: #45a049;
+  }
+  
+  .tree-controls button:disabled {
+    background-color: #7fbf7f;
+    cursor: not-allowed;
+  }
+  
+  .tree-controls .error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  
+  /* Tree Container */
+  .tree-container {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    overflow: auto;
+  }
+  
+  /* Node Popup */
+  .node-popup {
+    position: absolute;
+    background: rgba(51, 51, 51, 0.95);
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    max-width: 280px;
+    color: white;
+    font-size: 14px;
+    animation: fadeIn 0.25s ease-out;
+    backdrop-filter: blur(5px); /* nice blur effect */
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  

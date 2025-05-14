@@ -93,6 +93,7 @@ import { CommunityIncomeComponent } from './user/community-income/community-inco
 import { RoyaltyIncomeComponent } from './user/royalty-income/royalty-income.component';
 import { ClubIncomeComponent } from './user/club-income/club-income.component';
 import { PoolIncomeComponent } from './user/pool-income/pool-income.component';
+import { MatrixTreeComponent } from './user/matrix-tree/matrix-tree.component';
 
 export const routes: Routes = [
   {
@@ -453,6 +454,11 @@ export const routes: Routes = [
         path: 'user-search',
         component: UserSearchComponent,
         title: 'User Search',
+      },
+      {
+        path: 'Matrix-tree',
+        component: MatrixTreeComponent,
+        title: 'Matrix-tree',
       },
       {
         path: 'update-usdt-address',
