@@ -1672,4 +1672,12 @@ export class UserService {
     // Correctly pass the API URL as a string
     return this.http.get<any>(`${this.apiBaseUrl}UserHome/GetMatrixTree`, { params });
   }
+
+    getPoolTree(userID: string): Observable<any> {
+    const params = new HttpParams()
+      .set('userID', userID)
+  
+    // Correctly pass the API URL as a string
+    return this.http.get<any>(`${this.apiBaseUrl}UserHome/PoolTree`, { params });
+  }
 }

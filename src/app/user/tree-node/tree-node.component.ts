@@ -1,14 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewEncapsulation,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 interface Member {
+  memId: string;
   lmid: string;
   rmid: string;
   srno: string;
   recLmid?: string;
   recRmid?: string;
+  memIdDetails?: string; // raw string from API if available
 }
 
 interface TreeNode {
@@ -16,6 +25,16 @@ interface TreeNode {
   left?: TreeNode;
   right?: TreeNode;
   parent?: TreeNode;
+}
+
+interface UserDetail {
+  userID: string;
+  userName: string;
+  selfBV: number;
+  teamBV: number;
+  status: string;
+  topDate: string;
+  srno?: string;
 }
 
 @Component({
@@ -26,81 +45,197 @@ interface TreeNode {
   styleUrls: ['./tree-node.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TreeNodeComponent implements OnInit {
-  @Input() node: TreeNode;
+export class TreeNodeComponent implements OnInit, OnChanges {
+  @Input() node!: TreeNode;
 
-  showUserDetails: boolean = false;
-  recLmidDetails: any[] = [];
-  recRmidDetails: any[] = [];
+  showUserDetails = false;
+  isLoading = false;
+
+  recLmidDetails: UserDetail[] = [];
+  recRmidDetails: UserDetail[] = [];
+
+  private memMap = new Map<string, Member>();
+  private userDetailsMap = new Map<string, UserDetail>();
 
   constructor(
     private router: Router,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    if (this.node) {
-      this.fetchUserDetails(this.node.member);
+    this.loadAndBuildTree();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['node']?.currentValue) {
+      this.loadAndBuildTree();
     }
   }
 
-  fetchUserDetails(member: Member) {
-    const userId = sessionStorage.getItem('userId');
-    const sponsorUserID = sessionStorage.getItem('userId');
+  private loadAndBuildTree(): void {
+    const userId = sessionStorage.getItem('address');
+    if (!userId) {
+      console.error('User address not found in session.');
+      return;
+    }
 
-    this.userService
-      .binarytree(userId, sponsorUserID)
-      .then((response) => {
-        console.log('API Response:', response);
-        if (response && response.data && Array.isArray(response.data.table)) {
+    this.isLoading = true;
+
+    this.userService.getPoolTree(userId).subscribe({
+      next: (response: any) => {
+        const data = response?.data?.table;
+
+        if (!Array.isArray(data)) {
+          console.warn('Tree data is not valid:', data);
+          this.isLoading = false;
+          return;
+        }
+
+        this.memMap.clear();
+        this.userDetailsMap.clear();
+
+        data.forEach((item: any) => {
+          if (item.memId) {
+            const member: Member = {
+              memId: item.memId,
+              lmid: item.lmid ?? '0',
+              rmid: item.rmid ?? '0',
+              srno: item.memId,
+              recLmid: item.recLmid,
+              recRmid: item.recRmid,
+              memIdDetails: item.memIdDetails // Adjust if API differs
+            };
+            this.memMap.set(member.memId, member);
+
+            if (member.memIdDetails) {
+              const userDetail = this.parseMemIdDetails(member.memIdDetails);
+              this.userDetailsMap.set(member.memId, userDetail);
+            } else {
+              this.userDetailsMap.set(member.memId, {
+                srno: member.memId,
+                userID: 'N/A',
+                userName: 'Unknown',
+                selfBV: 0,
+                teamBV: 0,
+                status: 'Unknown',
+                topDate: new Date().toLocaleString(),
+              });
+            }
+          }
+        });
+
+        if (this.node && this.node.member) {
+          const builtTree = this.buildTree(this.node.member.memId);
+          if (builtTree) {
+            this.node = builtTree;
+          }
+
           this.recLmidDetails = [];
           this.recRmidDetails = [];
 
-          response.data.table.forEach((userDetail) => {
-            // Check if the userDetail matches the left member ID
-            if (userDetail.memId === member.lmid) {
-              if (userDetail.recLmid) {
-                const recLmidData = userDetail.recLmid.split(',');
-                this.recLmidDetails.push({
-                  ...this.createUserDetails(recLmidData),
-                  srno: userDetail.srno, // Fetching srno directly from the API response
-                });
-              }
-            }
-
-            // Check if the userDetail matches the right member ID
-            if (userDetail.memId === member.rmid) {
-              if (userDetail.recRmid) {
-                const recRmidData = userDetail.recRmid.split(',');
-                this.recRmidDetails.push({
-                  ...this.createUserDetails(recRmidData),
-                  srno: userDetail.srno, // Fetching srno directly from the API response
-                });
-              }
-            }
-          });
-        } else {
-          console.warn('Invalid response structure:', response);
+          if (this.node.left) {
+            this.collectUserDetails(this.node.left, this.recLmidDetails);
+          }
+          if (this.node.right) {
+            this.collectUserDetails(this.node.right, this.recRmidDetails);
+          }
         }
-      })
-      .catch((error) => {
+      },
+      error: (error) => {
         console.error('Error fetching user details:', error);
-      });
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
-  private createUserDetails(dataArray: string[]): any {
+  private buildTree(rootMemId: string): TreeNode | null {
+    if (!rootMemId || rootMemId === '0') {
+      return null;
+    }
+
+    const rootMember = this.memMap.get(rootMemId);
+    if (!rootMember) {
+      return null;
+    }
+
+    const rootNode: TreeNode = {
+      member: rootMember,
+    };
+
+    const queue: TreeNode[] = [rootNode];
+
+    while (queue.length > 0) {
+      const currentNode = queue.shift()!;
+
+      if (currentNode.member.lmid && currentNode.member.lmid !== '0') {
+        const leftMember = this.memMap.get(currentNode.member.lmid);
+        if (leftMember) {
+          const leftNode: TreeNode = { member: leftMember, parent: currentNode };
+          currentNode.left = leftNode;
+          queue.push(leftNode);
+        }
+      }
+
+      if (currentNode.member.rmid && currentNode.member.rmid !== '0') {
+        const rightMember = this.memMap.get(currentNode.member.rmid);
+        if (rightMember) {
+          const rightNode: TreeNode = { member: rightMember, parent: currentNode };
+          currentNode.right = rightNode;
+          queue.push(rightNode);
+        }
+      }
+    }
+
+    return rootNode;
+  }
+
+  private collectUserDetails(node: TreeNode, detailsArray: UserDetail[]): void {
+    if (!node || !node.member) return;
+
+    const userDetail = this.userDetailsMap.get(node.member.memId);
+    if (userDetail) {
+      detailsArray.push(userDetail);
+    } else {
+      detailsArray.push({
+        srno: node.member.memId,
+        userID: 'N/A',
+        userName: 'Unknown',
+        selfBV: 0,
+        teamBV: 0,
+        status: 'Unknown',
+        topDate: new Date().toLocaleString(),
+      });
+    }
+
+    if (node.left) {
+      this.collectUserDetails(node.left, detailsArray);
+    }
+    if (node.right) {
+      this.collectUserDetails(node.right, detailsArray);
+    }
+  }
+
+  private parseMemIdDetails(detailsStr: string): UserDetail {
+    const parts = detailsStr.split(',');
+
     return {
-      userId: dataArray[0] || 'No ID',
-      userName: dataArray[1] || 'Unknown Name',
-      selfBV: parseFloat(dataArray[10] || '0'),
-      teamBV: parseFloat(dataArray[11] || '0'),
-      status: dataArray[20] || 'Unknown',
-      topDate: dataArray[6] || new Date().toLocaleString(),
+      srno: parts[0] ?? 'N/A',
+      userID: parts[1] ?? 'N/A',
+      userName: parts[2] ?? 'Unknown',
+      selfBV: 0,
+      teamBV: 0,
+      status: parts[3] ?? 'Inactive',
+      topDate: new Date().toLocaleString(),
     };
   }
 
   onAddUser(direction: 'left' | 'right'): void {
-    this.router.navigate(['/auth/signup']);
+    this.router.navigate(['/auth/signup'], {
+      queryParams: { direction, parentId: this.node.member.srno }
+    });
   }
 
   toggleUserDetails(): void {

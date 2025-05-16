@@ -62,10 +62,10 @@
         </mat-expansion-panel-header>
       </mat-expansion-panel> -->
 
-      <mat-expansion-panel *ngIf="!isAdmin"  disabled  routerLink="/user/token">
+      <mat-expansion-panel *ngIf="!isAdmin" disabled routerLink="/user/token">
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">trending_up</mat-icon>
-          <mat-panel-title >
+          <mat-panel-title>
             <span>Rank Upgrade</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -100,19 +100,29 @@
         </mat-expansion-panel-header>
       </mat-expansion-panel>
 
-      <mat-expansion-panel disabled  routerLink="/user/Matrix-tree">
+      <mat-expansion-panel disabled routerLink="/user/binary-tree">
         <mat-expansion-panel-header>
-          <mat-icon class="small-icon">tree</mat-icon>
-          <mat-panel-title >
-            <span>Matrix-Tree</span>
+          <mat-icon class="small-icon">eco</mat-icon>
+          <mat-panel-title routerLink="/user/binary-tree">
+            <span routerLink="/user/binary-tree">binary-tree</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
       </mat-expansion-panel>
 
-       <mat-expansion-panel disabled  routerLink="/user/direct-income">
+
+      <!-- <mat-expansion-panel disabled routerLink="/user/Matrix-tree">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">nature</mat-icon>
+          <mat-panel-title>
+            <span>Matrix-Tree</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel> -->
+
+      <mat-expansion-panel disabled routerLink="/user/direct-income">
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">attach_money</mat-icon>
-          <mat-panel-title >
+          <mat-panel-title>
             <span>Referral Income</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -196,14 +206,6 @@
         </mat-expansion-panel-header>
       </mat-expansion-panel>
 
-      <!-- <mat-expansion-panel *ngIf="isAdmin" disabled routerLink="/user/Credit-Debit">
-        <mat-expansion-panel-header>
-          <mat-icon class="small-icon">account_balance_wallet</mat-icon>
-          <mat-panel-title routerLink="/user/Credit-Debit">
-            <span routerLink="/user/Credit-Debit">Credit/Debit</span>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel> -->
 
 
       <!-- <mat-expansion-panel disabled (click)="ContrectAddress()">

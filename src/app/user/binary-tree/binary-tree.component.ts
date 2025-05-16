@@ -1,8 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+
 import { TreeNodeComponent } from '../tree-node/tree-node.component';
 import { UserService } from '../services/user.service';
+
+interface Member {
+  memId: string;
+  lmid: string;
+  rmid: string;
+  srno: string;
+  recLmid?: string;
+  recRmid?: string;
+  rowt?: number; // optional root indicator
+}
+
+interface TreeNode {
+  member: Member;
+  left?: TreeNode | null;
+  right?: TreeNode | null;
+}
 
 @Component({
   selector: 'app-binary-tree',
@@ -12,68 +28,60 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./binary-tree.component.css'],
 })
 export class BinaryTreeComponent implements OnInit {
-  treeData: any[] = []; // Store the tree data here
-  treeRoot: any = null; // Store the root node of the tree
-  userId: string; // User ID from session
-  sponsorUserID: string; // Sponsor User ID from session
-  isLoading: boolean = true; // Loading state
+  treeData: Member[] = [];
+  treeRoot: TreeNode | null = null;
+  userId: string = '';
+  isLoading: boolean = true;
 
-  constructor(
-    private http: HttpClient,
-    private userService: UserService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.getUserIdsFromSession();
+    this.getUserIdFromSession();
     this.fetchBinaryTreeData();
   }
 
-  // Get User ID and Sponsor User ID from session storage or any other storage
-  getUserIdsFromSession(): void {
-    this.userId = sessionStorage.getItem('userId'); // Adjust key as necessary
-    this.sponsorUserID = sessionStorage.getItem('userId'); // Adjust key as necessary
+  getUserIdFromSession(): void {
+    this.userId = sessionStorage.getItem('address') || '';
   }
 
-  // Fetch data from API using service method
   fetchBinaryTreeData(): void {
-    if (this.userId && this.sponsorUserID) {
-      this.userService
-        .binarytree(this.userId, this.sponsorUserID)
-        .then((response: any) => {
-          if (response.status && response.data && response.data.table) {
-            this.treeData = response.data.table;
-            this.treeRoot = this.buildTree('1'); // Start building the tree with root srno '1'
-          }
-        })
-        .catch((error) => {
-          console.error('Error fetching binary tree data:', error);
-        })
-        .finally(() => {
-          this.isLoading = false; // Stop loading state
-        });
-    } else {
-      console.error(
-        'User ID or Sponsor User ID is not available in session storage.',
-      );
-      this.isLoading = false; // Stop loading state if IDs are not available
+    if (!this.userId) {
+      console.error('User ID is missing from session.');
+      this.isLoading = false;
+      return;
     }
+
+    this.userService.getPoolTree(this.userId).subscribe({
+      next: (response: any) => {
+        if (response.status && response.data?.table?.length > 0) {
+          this.treeData = response.data.table;
+          const rootMember = this.treeData.find(m => m.rowt === 1);
+          if (rootMember) {
+            this.treeRoot = this.buildTree(rootMember.memId);
+          } else {
+            console.warn('Root node not found in the tree data.');
+          }
+        } else {
+          console.warn('No valid tree data returned.');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching binary tree data:', error);
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
-  // Recursively build the tree structure
-  buildTree(memId: string): any {
-    const member = this.treeData.find((item) => item.memId === memId);
+  buildTree(memId: string): TreeNode | null {
+    const member = this.treeData.find(m => m.memId === memId);
     if (!member) return null;
 
     return {
-      member: {
-        lmid: member.lmid,
-        rmid: member.rmid,
-        srno: member.srno.toString(),
-      },
-      left:
-        member.lmid && member.lmid !== '0' ? this.buildTree(member.lmid) : null,
-      right:
-        member.rmid && member.rmid !== '0' ? this.buildTree(member.rmid) : null,
+      member,
+      left: member.lmid && member.lmid !== '0' ? this.buildTree(member.lmid) : null,
+      right: member.rmid && member.rmid !== '0' ? this.buildTree(member.rmid) : null,
     };
   }
 }

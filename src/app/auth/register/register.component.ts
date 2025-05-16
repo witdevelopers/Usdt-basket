@@ -87,6 +87,7 @@ export class RegisterComponent implements OnInit {
   }
 
   async register() {
+  
     await this.getAddress();
 
     if (!this.sponsorId) {
