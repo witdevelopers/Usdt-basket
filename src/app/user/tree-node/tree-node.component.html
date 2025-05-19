@@ -7,9 +7,7 @@
         <thead>
           <tr>
             <th>User ID</th>
-            <th>Name</th>
-            <th>Self BV</th>
-            <th>Team BV</th>
+            <th>Sponsor</th>
             <th>Status</th>
             <th>Top Date</th>
           </tr>
@@ -18,8 +16,6 @@
           <tr *ngFor="let detail of (side === 'recLmid' ? recLmidDetails : recRmidDetails)">
             <td>{{ detail.userID }}</td>
             <td>{{ detail.userName }}</td>
-            <td>{{ detail.selfBV | number: '1.2-2' }}</td>
-            <td>{{ detail.teamBV | number: '1.2-2' }}</td>
             <td>{{ detail.status }}</td>
             <td>{{ detail.topDate }}</td>
           </tr>
@@ -32,30 +28,35 @@
   </div>
 
   <!-- Display Node Info (Top of Tree) -->
-  <div class="dual">
-    <div
-      class="node"
-      *ngIf="recLmidDetails.length > 0"
-      (click)="toggleUserDetails()"
-      title="Toggle Rec Lmid Details"
-    >
+
+<div class="node" (click)="toggleUserDetails()" title="Toggle User Details">
+  <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
+  
+  <div class="node-info-wrapper">
+    <div class="node-info">
+      {{ formatUserId(node?.member?.userID) }}
+    </div>
+    <div class="full-details" *ngIf="node?.memIdDetails">
+      {{ node.memIdDetails }}
+    </div>
+  </div>
+</div>
+
+
+  <!-- <div class="dual">
+    <div class="node" *ngIf="recLmidDetails.length > 0" (click)="toggleUserDetails()" title="Toggle Rec Lmid Details">
       <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
       <div class="node-info">
-       {{ recLmidDetails[0]?.userID.slice(0, 6) + '...' + recLmidDetails[0]?.userID.slice(-7) }}
+        {{ recLmidDetails[0]?.userID.slice(0, 6) + '...' + recLmidDetails[0]?.userID.slice(-7) }}
       </div>
     </div>
-    <div
-      class="node"
-      *ngIf="recRmidDetails.length > 0"
-      (click)="toggleUserDetails()"
-      title="Toggle Rec Rmid Details"
-    >
+    <div class="node" *ngIf="recRmidDetails.length > 0" (click)="toggleUserDetails()" title="Toggle Rec Rmid Details">
       <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
       <div class="node-info">
         {{ recRmidDetails[0]?.userID.slice(0, 6) + '...' + recRmidDetails[0]?.userID.slice(-7) }}
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Render Children Recursively -->
   <table width="100%">
@@ -78,7 +79,7 @@
         </ng-template> -->
       </td>
 
-   
+
       <td class="child-wrapper">
         <ng-container *ngIf="node?.right">
           <app-tree-node [node]="node.right"></app-tree-node>

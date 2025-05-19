@@ -5,6 +5,7 @@ import { TreeNodeComponent } from '../tree-node/tree-node.component';
 import { UserService } from '../services/user.service';
 
 interface Member {
+  userID: string;
   memId: string;
   lmid: string;
   rmid: string;
@@ -18,6 +19,7 @@ interface TreeNode {
   member: Member;
   left?: TreeNode | null;
   right?: TreeNode | null;
+  memIdDetails?: string;
 }
 
 @Component({

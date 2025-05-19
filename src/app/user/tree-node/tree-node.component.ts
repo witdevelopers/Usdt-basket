@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 interface Member {
+  userID: string;
   memId: string;
   lmid: string;
   rmid: string;
@@ -25,6 +26,7 @@ interface TreeNode {
   left?: TreeNode;
   right?: TreeNode;
   parent?: TreeNode;
+  memIdDetails?: string;
 }
 
 interface UserDetail {
@@ -97,6 +99,7 @@ export class TreeNodeComponent implements OnInit, OnChanges {
         data.forEach((item: any) => {
           if (item.memId) {
             const member: Member = {
+              userID: item.userID,
               memId: item.memId,
               lmid: item.lmid ?? '0',
               rmid: item.rmid ?? '0',
@@ -241,4 +244,10 @@ export class TreeNodeComponent implements OnInit, OnChanges {
   toggleUserDetails(): void {
     this.showUserDetails = !this.showUserDetails;
   }
+
+  formatUserId(userId: string | undefined): string {
+  if (!userId) return '';
+  return `${userId.slice(0, 6)}...${userId.slice(-7)}`;
+}
+
 }
