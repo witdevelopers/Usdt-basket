@@ -9,27 +9,40 @@
       </div>
 
       <div class="full-details" *ngIf="isExpanded(node?.member?.memId)">
-        <div class="table-responsive" *ngIf="node?.member?.memIdDetails">
-          <table class="details-table">
-            <thead>
-              <tr>
-                <th>MemID</th>
-                <th>User ID</th>
-                <th>Sponsor</th>
-                <th>Status</th>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="node?.member?.memIdDetails as details">
-                <ng-container [ngTemplateOutlet]="detailsRow"
-                  [ngTemplateOutletContext]="{ row: parseMemIdDetailsStr(details) }"></ng-container>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div *ngIf="!node?.member?.memIdDetails">No details available</div>
+  <div class="table-responsive" *ngIf="node?.member?.memIdDetails">
+    <!-- <table class="details-table desktop-view">
+      <thead>
+        <tr>
+          <th>MemID</th>
+          <th>User ID</th>
+          <th>Sponsor</th>
+          <th>Status</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="node?.member?.memIdDetails as details">
+          <ng-container
+            [ngTemplateOutlet]="detailsRow"
+            [ngTemplateOutletContext]="{ row: parseMemIdDetailsStr(details) }"
+          ></ng-container>
+        </tr>
+      </tbody>
+    </table> -->
+
+    <!-- Mobile Card View -->
+    <div class="card-view">
+      <div class="detail-card" *ngIf="node?.member?.memIdDetails as details">
+        <div class="card-field"><strong>MemID:</strong> {{ parseMemIdDetailsStr(details)?.memid }}</div>
+        <div class="card-field"><strong>User ID:</strong> {{ parseMemIdDetailsStr(details)?.userID }}</div>
+        <div class="card-field"><strong>Sponsor:</strong> {{ parseMemIdDetailsStr(details)?.sponsor }}</div>
+        <div class="card-field"><strong>Status:</strong> {{ parseMemIdDetailsStr(details)?.status }}</div>
+        <div class="card-field"><strong>Time:</strong> {{ parseMemIdDetailsStr(details)?.time }}</div>
       </div>
+    </div>
+  </div>
+  <div *ngIf="!node?.member?.memIdDetails">No details available</div>
+</div>
     </div>
   </div>
 

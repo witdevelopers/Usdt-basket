@@ -58,8 +58,9 @@
   margin-top: 8px;
   display: block;
   border-radius: 8px;
-  background-color: #222;
+  background-color: #fff;
   padding: 6px;
+  color: #000;
 }
 
 /* Responsive table */
@@ -131,3 +132,5 @@
   border: 2px dashed #000000; 
 
 }
+
+
