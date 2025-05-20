@@ -27,16 +27,17 @@ interface TreeNode {
   right?: TreeNode;
   parent?: TreeNode;
   memIdDetails?: string;
+  userDetail?: UserDetail;
 }
 
 interface UserDetail {
+  srno?: string;
   userID: string;
   userName: string;
   selfBV: number;
   teamBV: number;
   status: string;
   topDate: string;
-  srno?: string;
 }
 
 @Component({
@@ -222,6 +223,7 @@ export class TreeNodeComponent implements OnInit, OnChanges {
   }
 
   private parseMemIdDetails(detailsStr: string): UserDetail {
+    // memIdDetails format example: "277,0x3c9f5b13B4DCCf9A2853E00D3F3B86d23A230349,0x01980def8ab533fdc8844128c88c6feadc6d3cc4,Bronze"
     const parts = detailsStr.split(',');
 
     return {
@@ -241,13 +243,40 @@ export class TreeNodeComponent implements OnInit, OnChanges {
     });
   }
 
-  toggleUserDetails(): void {
-    this.showUserDetails = !this.showUserDetails;
-  }
+public expandedNodes = new Set<string>();
 
-  formatUserId(userId: string | undefined): string {
-  if (!userId) return '';
-  return `${userId.slice(0, 6)}...${userId.slice(-7)}`;
+toggleNodeDetails(memId: string): void {
+  if (this.expandedNodes.has(memId)) {
+    this.expandedNodes.delete(memId);
+  } else {
+    this.expandedNodes.add(memId);
+  }
 }
 
+isExpanded(memId: string): boolean {
+  return this.expandedNodes.has(memId);
+}
+
+parseMemIdDetailsStr(detailsStr: string): {
+  memid: string;
+  userID: string;
+  sponsor: string;
+  status: string;
+  time: string;
+} {
+  const parts = detailsStr.split(',');
+  return {
+    memid: parts[0] ?? 'N/A',
+    userID: parts[1] ?? 'N/A',
+    sponsor: parts[2] ?? 'N/A',
+    status: parts[3] ?? 'N/A',
+    time: parts[4] ?? new Date().toLocaleString(),
+  };
+}
+
+
+  formatUserId(userId: string | undefined): string {
+    if (!userId) return '';
+    return `${userId.slice(0, 6)}...${userId.slice(-7)}`;
+  }
 }

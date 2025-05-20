@@ -1,47 +1,45 @@
 <div class="tree-node-wrapper">
-  <!-- Show Rec Lmid & Rmid User Details -->
-  <div class="user-details" *ngIf="showUserDetails">
-    <ng-container *ngFor="let side of ['recLmid', 'recRmid']">
-      <h3>{{ side === 'recLmid' ? 'Rec Lmid Details' : 'Rec Rmid Details' }}</h3>
-      <table width="100%" class="user-info-table">
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>Sponsor</th>
-            <th>Status</th>
-            <th>Top Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let detail of (side === 'recLmid' ? recLmidDetails : recRmidDetails)">
-            <td>{{ detail.userID }}</td>
-            <td>{{ detail.userName }}</td>
-            <td>{{ detail.status }}</td>
-            <td>{{ detail.topDate }}</td>
-          </tr>
-          <tr *ngIf="(side === 'recLmid' ? recLmidDetails : recRmidDetails).length === 0">
-            <td colspan="6" class="no-users">No {{ side === 'recLmid' ? 'Rec Lmid' : 'Rec Rmid' }} Users Available</td>
-          </tr>
-        </tbody>
-      </table>
-    </ng-container>
-  </div>
 
-  <!-- Display Node Info (Top of Tree) -->
+  <div class="node" (click)="toggleNodeDetails(node?.member?.memId)" title="Toggle User Details">
+    <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
 
-<div class="node" (click)="toggleUserDetails()" title="Toggle User Details">
-  <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
-  
-  <div class="node-info-wrapper">
-    <div class="node-info">
-      {{ formatUserId(node?.member?.userID) }}
-    </div>
-    <div class="full-details" *ngIf="node?.memIdDetails">
-      {{ node.memIdDetails }}
+    <div class="node-info-wrapper">
+      <div class="node-info">
+        {{ formatUserId(node?.member?.userID) }}
+      </div>
+
+      <div class="full-details" *ngIf="isExpanded(node?.member?.memId)">
+        <div class="table-responsive" *ngIf="node?.member?.memIdDetails">
+          <table class="details-table">
+            <thead>
+              <tr>
+                <th>MemID</th>
+                <th>User ID</th>
+                <th>Sponsor</th>
+                <th>Status</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="node?.member?.memIdDetails as details">
+                <ng-container [ngTemplateOutlet]="detailsRow"
+                  [ngTemplateOutletContext]="{ row: parseMemIdDetailsStr(details) }"></ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!node?.member?.memIdDetails">No details available</div>
+      </div>
     </div>
   </div>
-</div>
 
+  <ng-template #detailsRow let-row="row">
+    <td>{{ row.memid }}</td>
+    <td>{{ row.userID }}</td>
+    <td>{{ row.sponsor }}</td>
+    <td>{{ row.status }}</td>
+    <td>{{ row.time }}</td>
+  </ng-template>
 
   <!-- <div class="dual">
     <div class="node" *ngIf="recLmidDetails.length > 0" (click)="toggleUserDetails()" title="Toggle Rec Lmid Details">
@@ -61,7 +59,6 @@
   <!-- Render Children Recursively -->
   <table width="100%">
     <tr>
-
       <td class="child-wrapper">
         <ng-container *ngIf="node?.left">
           <app-tree-node [node]="node.left"></app-tree-node>
@@ -78,7 +75,6 @@
           </div>
         </ng-template> -->
       </td>
-
 
       <td class="child-wrapper">
         <ng-container *ngIf="node?.right">

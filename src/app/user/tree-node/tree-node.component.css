@@ -1,33 +1,15 @@
+/* Reset box-sizing for easier sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 .tree-node-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
   padding: 1rem 0;
-}
-
-.dual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  gap: 2rem;
-  margin: 1rem 0;
-}
-
-.dual::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  margin-top: 20px;
-  background-color: #ccc;
-  z-index: -1;
+  overflow-x: auto;
 }
 
 .node {
@@ -35,12 +17,14 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  position: relative;
   margin: 30px 0;
-  border: 2px solid #4caf50;
-  padding: 10px;
+  padding: 12px;
+  /* border: 2px solid #4caf50; */
   border-radius: 10px;
+  /* background-color: #1a1a1a; */
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 400px; /* limit width on big screens */
 }
 
 .node:hover {
@@ -50,98 +34,100 @@
 .node-image {
   width: 60px;
   height: auto;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.node-info-wrapper {
+  width: 100%;
+  text-align: center;
 }
 
 .node-info {
-  color: white !important;
-  font-size: 0.9rem;
-  white-space: nowrap;
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  word-break: break-word; /* wrap long text */
+  white-space: normal;
 }
 
-.child-wrapper {
-  text-align: center;
-  position: relative;
-  border: 2px dashed #888;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.add-new-user {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  border: 2px dashed #aaa;
-  padding: 10px;
-  border-radius: 8px;
-  background-color: #3a3a4a;
-  transition: background-color 0.2s;
-}
-
-.add-new-user:hover {
-  background-color: #505060;
-}
-
-.add-new-user img {
-  width: 50px;
-  height: auto;
-  margin-bottom: 5px;
-}
-
-.user-details {
+/* Table container for horizontal scrolling */
+.table-responsive {
   width: 100%;
   overflow-x: auto;
-  margin-bottom: 1rem;
-  color: white !important;
-  border: 2px solid #ccc;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 8px;
+  display: block;
   border-radius: 8px;
-  padding: 10px;
-  background-color: #2a2a3a;
+  background-color: #222;
+  padding: 6px;
 }
 
-.user-info-table {
-  border-collapse: collapse;
+/* Responsive table */
+.details-table {
   width: 100%;
-  font-size: 0.85rem;
+  border-collapse: collapse;
+  color: white;
+  font-size: 0.9rem;
+  min-width: 300px; 
 }
 
-.user-info-table th,
-.user-info-table td {
-  padding: 6px 8px;
-  border: 1px solid #ddd;
-  color: white !important;
+.details-table th,
+.details-table td {
+  border: 1px solid #555;
+  padding: 8px 10px;
+  text-align: left;
+  white-space: normal; /* allow text wrapping */
 }
 
-.user-info-table th {
-  background-color: #444 !important;
-  color: #fff !important;
+.details-table th {
+  background-color: #444;
+  font-weight: 600;
 }
 
-.no-users {
-  text-align: center;
-  color: #888;
-  font-style: italic;
+.details-table td {
+  background-color: #2a2a2a;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .dual {
-    align-items: center;
+  .node {
+    max-width: 100%; /* full width on small devices */
+    margin: 20px 0;
+    padding: 10px;
+  }
+  .node-info {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .details-table {
+    font-size: 0.85rem;
+  }
+  .details-table th,
+  .details-table td {
+    padding: 6px 8px;
   }
 
-  .user-info-table {
-    font-size: 0.75rem;
+  .tree-node-wrapper{
+    align-items: start !important;
   }
+}
 
+@media (max-width: 400px) {
   .node-info {
     font-size: 0.8rem;
   }
-
-  .child-wrapper {
-    padding: 0.5rem;
+  .details-table {
+    font-size: 0.75rem;
   }
-
-  .tree-node-wrapper {
-    align-items: normal !important;
+  .details-table th,
+  .details-table td {
+    padding: 4px 6px;
   }
+}
+
+
+.child-wrapper {
+
+  border: 2px dashed #000000; 
+
 }
