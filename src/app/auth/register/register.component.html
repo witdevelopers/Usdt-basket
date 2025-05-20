@@ -8,6 +8,10 @@
             <mat-label>Sponsor Id or Address (optional)</mat-label>
             <input matInput name="sponsorId" [(ngModel)]=sponsorId #txtSponsorIdOrAddress=ngModel
                 onkeyup="this.value = this.value.replace(/[^0-9a-z]/i, '')" />
+                <mat-error *ngIf="txtSponsorIdOrAddress.invalid && txtSponsorIdOrAddress.touched">
+      Sponsor ID is required
+    </mat-error>
+
         </mat-form-field>
     </div>
 

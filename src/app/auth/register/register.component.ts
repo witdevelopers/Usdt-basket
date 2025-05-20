@@ -90,9 +90,18 @@ export class RegisterComponent implements OnInit {
   
     await this.getAddress();
 
+    // if (!this.sponsorId) {
+    //   this.sponsorId = Settings.DefaultSponsor;
+    // }
+
     if (!this.sponsorId) {
-      this.sponsorId = Settings.DefaultSponsor;
-    }
+  Swal.fire({
+    icon: 'warning',
+    text: 'Please enter a valid sponsor ID.',
+    confirmButtonText: 'OK'
+  });
+  return; // Stop further execution if sponsor ID is missing
+}
 
     const usdtBalance = await this.contractService.fetchUSDTBalance();
 
