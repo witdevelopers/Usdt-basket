@@ -1,7 +1,21 @@
 <div class="tree-node-wrapper">
 
-  <div class="node" (click)="toggleNodeDetails(node?.member?.memId)" title="Toggle User Details">
-    <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
+  <!-- Back Button -->
+  <button *ngIf="treeHistory.length > 0" (click)="goBack()" class="back-button" aria-label="Go back to previous tree">
+    ← Back
+  </button>
+
+  <!-- Root Node -->
+ <div
+  class="node"
+  (click)="onNodeClick(node)"
+  (contextmenu)="toggleNodeDetails(node?.member?.memId); $event.preventDefault();"
+  title="Left Click to Load Subtree | Right Click to Toggle Details"
+  tabindex="0"
+  role="button"
+  [attr.aria-pressed]="isExpanded(node?.member?.memId)"
+>
+    <img src="assets/binary-tree/green.png" alt="Node Icon" class="node-image" />
 
     <div class="node-info-wrapper">
       <div class="node-info">
@@ -9,101 +23,30 @@
       </div>
 
       <div class="full-details" *ngIf="isExpanded(node?.member?.memId)">
-  <div class="table-responsive" *ngIf="node?.member?.memIdDetails">
-    <!-- <table class="details-table desktop-view">
-      <thead>
-        <tr>
-          <th>MemID</th>
-          <th>User ID</th>
-          <th>Sponsor</th>
-          <th>Status</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="node?.member?.memIdDetails as details">
-          <ng-container
-            [ngTemplateOutlet]="detailsRow"
-            [ngTemplateOutletContext]="{ row: parseMemIdDetailsStr(details) }"
-          ></ng-container>
-        </tr>
-      </tbody>
-    </table> -->
-
-    <!-- Mobile Card View -->
-    <div class="card-view">
-      <div class="detail-card" *ngIf="node?.member?.memIdDetails as details">
-        <div class="card-field"><strong>MemID:</strong> {{ parseMemIdDetailsStr(details)?.memid }}</div>
-        <div class="card-field"><strong>User ID:</strong> {{ parseMemIdDetailsStr(details)?.userID }}</div>
-        <div class="card-field"><strong>Sponsor:</strong> {{ parseMemIdDetailsStr(details)?.sponsor }}</div>
-        <div class="card-field"><strong>Status:</strong> {{ parseMemIdDetailsStr(details)?.status }}</div>
-        <div class="card-field"><strong>Time:</strong> {{ parseMemIdDetailsStr(details)?.time }}</div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="!node?.member?.memIdDetails">No details available</div>
-</div>
-    </div>
-  </div>
-
-  <ng-template #detailsRow let-row="row">
-    <td>{{ row.memid }}</td>
-    <td>{{ row.userID }}</td>
-    <td>{{ row.sponsor }}</td>
-    <td>{{ row.status }}</td>
-    <td>{{ row.time }}</td>
-  </ng-template>
-
-  <!-- <div class="dual">
-    <div class="node" *ngIf="recLmidDetails.length > 0" (click)="toggleUserDetails()" title="Toggle Rec Lmid Details">
-      <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
-      <div class="node-info">
-        {{ recLmidDetails[0]?.userID.slice(0, 6) + '...' + recLmidDetails[0]?.userID.slice(-7) }}
-      </div>
-    </div>
-    <div class="node" *ngIf="recRmidDetails.length > 0" (click)="toggleUserDetails()" title="Toggle Rec Rmid Details">
-      <img src="assets/binary-tree/green.png" alt="Node Image" class="node-image" />
-      <div class="node-info">
-        {{ recRmidDetails[0]?.userID.slice(0, 6) + '...' + recRmidDetails[0]?.userID.slice(-7) }}
-      </div>
-    </div>
-  </div> -->
-
-  <!-- Render Children Recursively -->
-  <table width="100%">
-    <tr>
-      <td class="child-wrapper">
-        <ng-container *ngIf="node?.left">
-          <app-tree-node [node]="node.left"></app-tree-node>
-        </ng-container>
-        <!-- <ng-template #addLeft>
-          <div
-            *ngIf="!recLmidDetails.length"
-            class="add-new-user"
-            (click)="onAddUser('left')"
-            title="Add User to Left"
-          >
-            <img src="assets/binary-tree/newPerson.jpg" style="width: 50px" />
-            <strong>Add User</strong>
+        <div class="table-responsive" *ngIf="node?.member?.memIdDetails">
+          <div class="card-view">
+            <div class="detail-card" *ngIf="node?.member?.memIdDetails as details">
+              <div class="card-field"><strong>MemID:</strong> {{ parseMemIdDetailsStr(details)?.memid }}</div>
+              <div class="card-field"><strong>User ID:</strong> {{ parseMemIdDetailsStr(details)?.userID }}</div>
+              <div class="card-field"><strong>Sponsor:</strong> {{ parseMemIdDetailsStr(details)?.sponsor }}</div>
+              <div class="card-field"><strong>Status:</strong> {{ parseMemIdDetailsStr(details)?.status }}</div>
+              <div class="card-field"><strong>Time:</strong> {{ parseMemIdDetailsStr(details)?.time }}</div>
+            </div>
           </div>
-        </ng-template> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Child Nodes -->
+  <table width="100%" class="children-table">
+    <tr>
+      <td class="child-wrapper" *ngIf="node?.left">
+        <app-tree-node [node]="node.left"></app-tree-node>
       </td>
 
-      <td class="child-wrapper">
-        <ng-container *ngIf="node?.right">
-          <app-tree-node [node]="node.right"></app-tree-node>
-        </ng-container>
-        <!-- <ng-template #addRight>
-          <div
-            *ngIf="!recRmidDetails.length"
-            class="add-new-user"
-            (click)="onAddUser('right')"
-            title="Add User to Right"
-          >
-            <img src="assets/binary-tree/newPerson.jpg" style="width: 50px" />
-            <strong>Add User</strong>
-          </div>
-        </ng-template> -->
+      <td class="child-wrapper" *ngIf="node?.right">
+        <app-tree-node [node]="node.right"></app-tree-node>
       </td>
     </tr>
   </table>
