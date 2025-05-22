@@ -127,9 +127,10 @@
 }
 
 
-/* .tree-node-wrapper {
-  border: 2px solid #928a8a; 
-} */
+/* .tree-node-wrapper  */
+ .child-wrapper {
+  border: 1px solid green; 
+}
 
 
 .back-button-wrapper {
@@ -190,8 +191,8 @@
 .full-details-hover {
   display: none;
   position: absolute;
-  top: 110%; /* Push below the node */
-  left: 50%;
+  top: -30%; /* Push below the node */
+  left: 90%;
   transform: translateX(-50%);
   z-index: 20;
   background-color: white;
@@ -214,6 +215,8 @@
   position: relative;
   display: block;
   margin: 0 auto 10px auto;
-  max-width: 300px; /* adjust as needed */
+  max-width: 700px; /* adjust as needed */
   height: 40px;
 }
+
+
