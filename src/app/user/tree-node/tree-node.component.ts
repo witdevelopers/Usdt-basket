@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 interface Member {
   userID: string;
@@ -39,13 +40,13 @@ interface TreeNode {
 export class TreeNodeComponent implements OnInit, OnChanges {
   @Input() node!: TreeNode;
 
-  treeRoot!: TreeNode | null;           // Current root node of the displayed tree
-  treeHistory: TreeNode[] = [];         // History stack for back navigation
-  expandedNodes = new Set<string>();    // Track expanded details
+  treeRoot!: TreeNode | null;
+  treeHistory: TreeNode[] = [];
+  expandedNodes = new Set<string>();
 
   private memMap = new Map<string, Member>();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     if (this.node?.member?.userID && this.node?.member?.memId) {
@@ -63,9 +64,6 @@ export class TreeNodeComponent implements OnInit, OnChanges {
     }
   }
 
-  /**
-   * Loads tree data from API by userID, then builds tree starting at rootMemId.
-   */
   loadAndBuildTree(rootUserId: string, rootMemId: string): void {
     this.treeRoot = null;
     this.expandedNodes.clear();
@@ -74,13 +72,11 @@ export class TreeNodeComponent implements OnInit, OnChanges {
       next: (res) => {
         const data = res?.data?.table;
         if (!Array.isArray(data)) {
-          console.warn('Invalid data format:', data);
           return;
         }
 
         this.memMap.clear();
         data.forEach((item: any) => {
-          // Skip invalid or zero memId entries that can't be keys
           if (!item.memId || item.memId === '0' || item.memId === null) return;
 
           this.memMap.set(item.memId, {
@@ -96,29 +92,22 @@ export class TreeNodeComponent implements OnInit, OnChanges {
         });
 
         if (!this.memMap.has(rootMemId)) {
-          console.warn(`buildTree: rootMember not found for memId '${rootMemId}'`);
           return;
         }
 
         const builtTree = this.buildTree(rootMemId);
         if (builtTree) {
           this.treeRoot = builtTree;
-          this.node = this.treeRoot; // Sync for template
-        } else {
-          console.warn('buildTree failed for rootMemId:', rootMemId);
+          this.node = this.treeRoot;
         }
       },
-      error: (err) => console.error('Error fetching tree:', err),
+      error: () => {},
     });
   }
 
-  /**
-   * Build binary tree starting at rootMemId from the memMap.
-   */
   buildTree(rootMemId: string): TreeNode | null {
     const rootMember = this.memMap.get(rootMemId);
     if (!rootMember) {
-      console.warn('buildTree: rootMember not found for memId', rootMemId);
       return null;
     }
 
@@ -143,35 +132,27 @@ export class TreeNodeComponent implements OnInit, OnChanges {
     return rootNode;
   }
 
-  /**
-   * Handles node click to load subtree.
-   * Uses node.userID for API call, node.memId as root of subtree.
-   */
-onNodeClick(node: TreeNode): void {
-  if (!node?.member?.userID || !node?.member?.memIdDetails) {
-    console.warn('onNodeClick: invalid node or missing userID or memIdDetails');
-    return;
+  onNodeClick(node: TreeNode): void {
+    if (!node?.member?.userID || !node?.member?.memIdDetails) {
+      return;
+    }
+
+    const parsedDetails = this.parseMemIdDetailsStr(node.member.memIdDetails);
+    const correctedMemId = parsedDetails.memid?.trim();
+
+    if (!correctedMemId) {
+      return;
+    }
+
+    const currentClone = this.deepCloneTree(this.treeRoot);
+    if (currentClone) {
+      this.treeHistory.push(currentClone);
+    }
+
+    this.loadAndBuildTree(node.member.userID, correctedMemId);
+    this.router.navigate(['/user/tree', node.member.userID, correctedMemId]);
   }
 
-  const parsedDetails = this.parseMemIdDetailsStr(node.member.memIdDetails);
-  const correctedMemId = parsedDetails.memid?.trim();
-
-  if (!correctedMemId) {
-    console.warn('onNodeClick: Could not parse memId from memIdDetails:', node.member.memIdDetails);
-    return;
-  }
-
-  const currentClone = this.deepCloneTree(this.treeRoot);
-  if (currentClone) {
-    this.treeHistory.push(currentClone);
-  }
-
-  this.loadAndBuildTree(node.member.userID, correctedMemId);
-}
-
-  /**
-   * Navigate back to previous tree state.
-   */
   goBack(): void {
     const previous = this.treeHistory.pop();
     if (previous) {

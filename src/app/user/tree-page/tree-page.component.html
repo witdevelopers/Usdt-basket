@@ -1,0 +1,13 @@
+<div style="display: flex; flex-direction: column; align-items: center; padding: 10px;">
+  <button (click)="goBack()" style="margin-bottom: 20px; align-self: center;">
+    ⬅ Back
+  </button>
+
+  <div *ngIf="treeRoot" style="width: 100%;">
+    <app-tree-node [node]="treeRoot"></app-tree-node>
+  </div>
+
+  <div *ngIf="!treeRoot">
+    Loading tree...
+  </div>
+</div>

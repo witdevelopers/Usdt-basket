@@ -60,6 +60,7 @@ export class AffiliateComponent implements OnInit {
   isMatrixPlan: boolean = false;
   userName: string = '';
   isGameEnabled: boolean = false;
+address: any;
   // lastScrollTop: number = 0;
   // scrollDelta: number = -1;
 

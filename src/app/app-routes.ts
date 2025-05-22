@@ -94,6 +94,7 @@ import { RoyaltyIncomeComponent } from './user/royalty-income/royalty-income.com
 import { ClubIncomeComponent } from './user/club-income/club-income.component';
 import { PoolIncomeComponent } from './user/pool-income/pool-income.component';
 import { MatrixTreeComponent } from './user/matrix-tree/matrix-tree.component';
+import { TreePageComponent } from './user/tree-page/tree-page.component';
 
 export const routes: Routes = [
   {
@@ -128,7 +129,9 @@ export const routes: Routes = [
       {
         path: 'register/:id',
         component: RegisterComponent
-      }
+      },
+   
+      
     ]
   },
   // { path: 'home', component: HomeComponent, title: 'Home' },
@@ -240,20 +243,20 @@ export const routes: Routes = [
       },
       { path: 'deposit', component: DepositComponent, title: 'Deposit' },
       {
-        path:'token',
-        component:BuySellMasterComponent,
-        children:[
+        path: 'token',
+        component: BuySellMasterComponent,
+        children: [
           {
-            path:'',
-            component:BuyComponent
+            path: '',
+            component: BuyComponent
           },
           {
-            path:'buy',
-            component:BuyComponent
+            path: 'buy',
+            component: BuyComponent
           },
           {
-            path:'sell',
-            component:SellComponent
+            path: 'sell',
+            component: SellComponent
           }
         ]
       },
@@ -369,6 +372,10 @@ export const routes: Routes = [
         path: 'direct-tree',
         component: DirectTreeComponent,
         title: 'Direct Tree',
+      },
+         {
+        path: 'tree/:userId/:memId',
+        component: TreePageComponent,
       },
       {
         path: 'topup-by-e-pin',

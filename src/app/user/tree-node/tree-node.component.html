@@ -1,20 +1,20 @@
-<div class="tree-node-wrapper">
-
+<div class="tree-node-wrapper mt-5">
   <!-- Back Button -->
-  <button *ngIf="treeHistory.length > 0" (click)="goBack()" class="back-button" aria-label="Go back to previous tree">
-    ← Back
-  </button>
+  <div class="back-button-wrapper" *ngIf="treeHistory.length > 0">
+    <button (click)="goBack()" class="back-button" aria-label="Go back to previous tree">
+      ← Back
+    </button>
+  </div>
 
   <!-- Root Node -->
- <div
-  class="node"
-  (click)="onNodeClick(node)"
-  (contextmenu)="toggleNodeDetails(node?.member?.memId); $event.preventDefault();"
-  title="Left Click to Load Subtree | Right Click to Toggle Details"
-  tabindex="0"
-  role="button"
-  [attr.aria-pressed]="isExpanded(node?.member?.memId)"
->
+  <div
+    class="node"
+    (click)="onNodeClick(node)"
+    title="Click to Load Subtree"
+    tabindex="0"
+    role="button"
+    aria-label="Tree Node"
+  >
     <img src="assets/binary-tree/green.png" alt="Node Icon" class="node-image" />
 
     <div class="node-info-wrapper">
@@ -22,21 +22,85 @@
         {{ formatUserId(node?.member?.userID) }}
       </div>
 
-      <div class="full-details" *ngIf="isExpanded(node?.member?.memId)">
-        <div class="table-responsive" *ngIf="node?.member?.memIdDetails">
-          <div class="card-view">
-            <div class="detail-card" *ngIf="node?.member?.memIdDetails as details">
-              <div class="card-field"><strong>MemID:</strong> {{ parseMemIdDetailsStr(details)?.memid }}</div>
-              <div class="card-field"><strong>User ID:</strong> {{ parseMemIdDetailsStr(details)?.userID }}</div>
-              <div class="card-field"><strong>Sponsor:</strong> {{ parseMemIdDetailsStr(details)?.sponsor }}</div>
-              <div class="card-field"><strong>Status:</strong> {{ parseMemIdDetailsStr(details)?.status }}</div>
-              <div class="card-field"><strong>Time:</strong> {{ parseMemIdDetailsStr(details)?.time }}</div>
+      <div class="full-details-hover" *ngIf="node?.member?.memIdDetails">
+        <div class="card-view">
+          <div class="detail-card" *ngIf="node?.member?.memIdDetails as details">
+            <div class="card-field">
+              <strong>User ID:</strong>
+              {{
+                (parseMemIdDetailsStr(details)?.userID)
+                  ? parseMemIdDetailsStr(details)?.userID.slice(0, 6) + '...' + parseMemIdDetailsStr(details)?.userID.slice(-7)
+                  : ''
+              }}
             </div>
+            <div class="card-field">
+              <strong>Sponsor:</strong>
+              {{
+                parseMemIdDetailsStr(details)?.sponsor
+                  ? parseMemIdDetailsStr(details)?.sponsor.slice(0, 6) + '...' + parseMemIdDetailsStr(details)?.sponsor.slice(-7)
+                  : ''
+              }}
+            </div>
+
+            <div class="card-field"><strong>Status:</strong> {{ parseMemIdDetailsStr(details)?.status }}</div>
+            <div class="card-field"><strong>Date:</strong> {{ parseMemIdDetailsStr(details)?.time }}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- SVG Lines connecting parent to children -->
+  <svg
+    class="connector-lines"
+    width="100%"
+    height="40"
+    viewBox="0 0 100 40"
+    preserveAspectRatio="none"
+  >
+    <!-- Vertical line from parent down -->
+    <line x1="50" y1="0" x2="50" y2="20" stroke="green" stroke-width="2" />
+    <!-- Horizontal line connecting to left child -->
+    <line
+      *ngIf="node?.left"
+      x1="50"
+      y1="20"
+      x2="25"
+      y2="20"
+      stroke="green"
+      stroke-width="2"
+    />
+    <!-- Vertical line down to left child -->
+    <line
+      *ngIf="node?.left"
+      x1="25"
+      y1="20"
+      x2="25"
+      y2="40"
+      stroke="green"
+      stroke-width="2"
+    />
+    <!-- Horizontal line connecting to right child -->
+    <line
+      *ngIf="node?.right"
+      x1="50"
+      y1="20"
+      x2="75"
+      y2="20"
+      stroke="green"
+      stroke-width="2"
+    />
+    <!-- Vertical line down to right child -->
+    <line
+      *ngIf="node?.right"
+      x1="75"
+      y1="20"
+      x2="75"
+      y2="40"
+      stroke="green"
+      stroke-width="2"
+    />
+  </svg>
 
   <!-- Child Nodes -->
   <table width="100%" class="children-table">
@@ -44,7 +108,6 @@
       <td class="child-wrapper" *ngIf="node?.left">
         <app-tree-node [node]="node.left"></app-tree-node>
       </td>
-
       <td class="child-wrapper" *ngIf="node?.right">
         <app-tree-node [node]="node.right"></app-tree-node>
       </td>
