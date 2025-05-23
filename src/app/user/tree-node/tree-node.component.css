@@ -1,15 +1,10 @@
-/* Reset box-sizing for easier sizing */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
 .tree-node-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 1rem 0;
-  overflow-x: auto;
+  position: relative;
+  text-align: center;
 }
 
 .node {
@@ -17,14 +12,10 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  margin: 30px 0;
-  padding: 12px;
-  /* border: 2px solid #4caf50; */
+  padding: 2px;
   border-radius: 10px;
-  /* background-color: #1a1a1a; */
-  transition: transform 0.2s ease;
   width: 100%;
-  max-width: 400px; /* limit width on big screens */
+  max-width: 400px;
 }
 
 .node:hover {
@@ -32,25 +23,27 @@
 }
 
 .node-image {
-  width: 60px;
-  height: auto;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
   margin-bottom: 10px;
 }
 
 .node-info-wrapper {
   width: 100%;
   text-align: center;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .node-info {
   color: white;
   font-size: 1rem;
-  margin-bottom: 12px;
-  word-break: break-word; /* wrap long text */
+  word-break: break-word;
   white-space: normal;
 }
 
-/* Table container for horizontal scrolling */
 .table-responsive {
   width: 100%;
   overflow-x: auto;
@@ -63,13 +56,12 @@
   color: #000;
 }
 
-/* Responsive table */
 .details-table {
   width: 100%;
   border-collapse: collapse;
   color: white;
   font-size: 0.9rem;
-  min-width: 300px; 
+  min-width: 300px;
 }
 
 .details-table th,
@@ -77,7 +69,7 @@
   border: 1px solid #555;
   padding: 8px 10px;
   text-align: left;
-  white-space: normal; /* allow text wrapping */
+  white-space: normal;
 }
 
 .details-table th {
@@ -89,26 +81,45 @@
   background-color: #2a2a2a;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
+  .mt-5 {
+    margin-top: 30% !important;
+  }
+
+  .full-details-hover {
+    display: none;
+    position: absolute;
+    top: -190px !important;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+  }
+
   .node {
-    max-width: 100%; /* full width on small devices */
-    margin: 20px 0;
+    max-width: 100%;
     padding: 10px;
   }
+
   .node-info {
     font-size: 0.9rem;
-    margin-bottom: 8px;
   }
+
   .details-table {
     font-size: 0.85rem;
   }
+
   .details-table th,
   .details-table td {
     padding: 6px 8px;
   }
 
-  .tree-node-wrapper{
+  .tree-node-wrapper {
     align-items: start !important;
   }
 }
@@ -117,21 +128,20 @@
   .node-info {
     font-size: 0.8rem;
   }
+
   .details-table {
     font-size: 0.75rem;
   }
+
   .details-table th,
   .details-table td {
     padding: 4px 6px;
   }
 }
 
-
-/* .tree-node-wrapper  */
- .child-wrapper {
-  border: 1px solid green; 
+.child-wrapper {
+  border: 1px solid green;
 }
-
 
 .back-button-wrapper {
   display: flex;
@@ -148,19 +158,13 @@
   font-weight: bold;
 }
 
-.node-info-wrapper {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
 .full-details-hover {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 200%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 10000;
   background-color: #fff;
   padding: 10px;
   border: 1px solid #ccc;
@@ -169,7 +173,7 @@
   white-space: nowrap;
 }
 
-.node-info-wrapper:hover .full-details-hover {
+.node:hover .full-details-hover {
   display: block;
 }
 
@@ -177,46 +181,19 @@
   margin: 4px 0;
 }
 
-.node-image {
-  width: 32px;
-  height: 32px;
-  vertical-align: middle;
-}
-
 .node-hover-container {
   position: relative;
   display: inline-block;
-}
-
-.full-details-hover {
-  display: none;
-  position: absolute;
-  top: -30%; /* Push below the node */
-  left: 90%;
-  transform: translateX(-50%);
-  z-index: 20;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  min-width: 250px;
 }
 
 .node-hover-container:hover .full-details-hover {
   display: block;
 }
 
-.tree-node-wrapper {
-  position: relative;
-  text-align: center;
-}
-
 .connector-lines {
   position: relative;
   display: block;
-  margin: 0 auto 10px auto;
-  max-width: 700px; /* adjust as needed */
+  max-width: 700px;
   height: 40px;
+  z-index: 0;
 }
-
-

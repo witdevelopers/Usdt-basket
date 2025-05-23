@@ -34,7 +34,7 @@
     </button>
 
     <mat-accordion [multi]="false">
-      <mat-expansion-panel style="margin-top: 10%;" disabled>
+      <mat-expansion-panel style="margin-top: 20%;" disabled>
         <mat-expansion-panel-header>
           <mat-icon class="small-icon">dashboard</mat-icon>
           <mat-panel-title routerLink="/usershop/affiliate" (click)="onNavItemClick(sidenav)">
@@ -43,18 +43,15 @@
         </mat-expansion-panel-header>
       </mat-expansion-panel>
 
-     <mat-expansion-panel
-  *ngIf="address === '0x3b48F1a6aEf01976cB7Ef98a49321b5926a42439'"
-  disabled
-  routerLink="/user/binary-tree"
->
-  <mat-expansion-panel-header>
-    <mat-icon class="small-icon">eco</mat-icon>
-    <mat-panel-title>
-      <span>Tree View</span>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-</mat-expansion-panel>
+      <mat-expansion-panel *ngIf="address === '0x3b48f1a6aef01976cb7ef98a49321b5926a42439'" disabled
+        routerLink="/user/binary-tree">
+        <mat-expansion-panel-header>
+          <mat-icon class="small-icon">eco</mat-icon>
+          <mat-panel-title>
+            <span>Tree View</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
 
 
       <mat-expansion-panel *ngIf="isAdmin" disabled routerLink="/user/user-search">

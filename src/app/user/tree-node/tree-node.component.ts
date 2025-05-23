@@ -43,10 +43,12 @@ export class TreeNodeComponent implements OnInit, OnChanges {
   treeRoot!: TreeNode | null;
   treeHistory: TreeNode[] = [];
   expandedNodes = new Set<string>();
+  isTouchHold = false;
+  touchTimeout: any;
 
   private memMap = new Map<string, Member>();
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.node?.member?.userID && this.node?.member?.memId) {
@@ -101,7 +103,7 @@ export class TreeNodeComponent implements OnInit, OnChanges {
           this.node = this.treeRoot;
         }
       },
-      error: () => {},
+      error: () => { },
     });
   }
 
@@ -203,5 +205,15 @@ export class TreeNodeComponent implements OnInit, OnChanges {
       left: this.deepCloneTree(node.left),
       right: this.deepCloneTree(node.right),
     };
+  }
+
+  onTouchStart(details: any) {
+    this.touchTimeout = setTimeout(() => {
+      this.isTouchHold = true;
+    }, 600); // 600ms for long press
+  }
+
+  onTouchEnd() {
+    clearTimeout(this.touchTimeout);
   }
 }

@@ -79,6 +79,7 @@ address: any;
     this.isGameEnabled = sessionStorage.getItem('isGameEnabled') === 'true';
     this.isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     this.userType = sessionStorage.getItem('usertype');
+    this.address = sessionStorage.getItem('address');
 
     // Observe screen size changes
     this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet])
