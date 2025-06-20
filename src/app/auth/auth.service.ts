@@ -51,9 +51,9 @@ export class AuthService {
     });
   }
 
-  register(sponsorAddress,amount, transactionHash) {
+  register(sponsorAddress,amount, transactionHash ,requestId) {
     return new Promise((resolve, reject) => {
-      let payload = { sponsorAddress,amount, transactionHash };
+      let payload = { sponsorAddress,amount, transactionHash ,requestId };
       this.http
         .post(this.apiBaseUrl + 'Register', payload)
         .subscribe((res: any) => {

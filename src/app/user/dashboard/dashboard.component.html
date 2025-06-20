@@ -106,6 +106,24 @@
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
+              <img src="assets/04.png" />
+            </div>
+            <div class="infobox-data">
+              <h5 class="font-weight-normal">Level Income</h5>
+              <div class="text-center">
+                <span class="progress-description"> {{paymentToken}}{{userInfo?.totalLevelIncome }} </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-4">
+      <div class="widget-section">
+        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
+          <div class="infobox card-body">
+            <div class="infobox-icon">
               <img src="assets/050.png" />
             </div>
             <div class="infobox-data">
@@ -160,7 +178,7 @@
 
 
 
-
+    <!-- 
     <div class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
@@ -177,7 +195,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="col-xl-3 col-md-4">
       <div class="widget-section">
@@ -190,7 +208,7 @@
               <h5 class="font-weight-normal">Rank</h5>
               <div class="text-center">
                 <span class="progress-description">
-                 {{ userInfo?.packageValue }}</span>
+                  {{ userInfo?.packageValue }}</span>
               </div>
             </div>
           </div>
@@ -223,25 +241,6 @@
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
             <div class="infobox-icon">
-              <img src="assets/09.png" />
-            </div>
-            <div class="infobox-data">
-              <h5 class="font-weight-normal">Club Rank</h5>
-              <h2 class="mb-0">
-                <span class="progress-description">{{
-                  userInfo?.clubRank }} </span>
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
-      <div class="widget-section">
-        <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
-          <div class="infobox card-body">
-            <div class="infobox-icon">
               <img src="assets/10.png" />
             </div>
             <div class="infobox-data">
@@ -256,7 +255,8 @@
       </div>
     </div>
 
-    <div *ngIf="userInfo" class="col-xl-3 col-md-4">
+
+        <div class="col-xl-3 col-md-4">
       <div class="widget-section">
         <div class="widget-card bg-gradient-danger text-white text-center shadow card-shadow-danger">
           <div class="infobox card-body">
@@ -264,11 +264,10 @@
               <img src="assets/04.png" />
             </div>
             <div class="infobox-data">
-              <h5 class="font-weight-normal">Club Fund</h5>
-              <h2 class="mb-0">
-                <span class="progress-description">{{paymentToken}}{{
-                  userInfo?.weektotalclub }} </span>
-              </h2>
+              <h5 class="font-weight-normal">Wallet Balance Matrix</h5>
+              <div class="text-center">
+                <span class="progress-description"> {{paymentToken}}{{userInfo?.walletBalanceMatrix }} </span>
+              </div>
             </div>
           </div>
         </div>
@@ -333,14 +332,14 @@
       </div>
     </div> -->
 
-    
+
   </div>
 </div>
 
 
 <div *ngIf="!isAdmin" class="w-auto">
   <div class="row">
-    <div  class="col-sm-6">
+    <div class="col-sm-6">
       <div class="card border-radius-8 p-2 shadow">
         <h5 class="font-weight-normal">Referral Link</h5>
         <label id="lblReferralLink" class="form-control font-size-12 overflow-auto">

@@ -2,8 +2,8 @@
   "AppName": "usdtbasket.co",
   "IsDevelopment": false,
   "IsTestNetworkSupported": false,
-  "MainNetContractAddress": "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D",
-  "TestNetContractAddress": "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D",
+  "MainNetContractAddress": "0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93",
+  "TestNetContractAddress": "0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93",
   "DefaultSponsor": "0x3b48F1a6aEf01976cB7Ef98a49321b5926a42439",
   "TokenContractAddress": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
   "CoinName": "Meta",
@@ -15,7 +15,7 @@
   "TestNetExplorer": "https://mumbai.polygonscan.com",
   "MainNetHttpProvider": "https://polygon-rpc.com",
   "ApiUrl": "https://localhost:44320/",
-  "ApiUrlLive": "https://api.usdtbasket.co/",
+  "ApiUrlLive": "https://api.usdtbasket.com/",
   "ImageUrl": "https://hiicall.com/mlm/website/",
   "Abi": [
     {

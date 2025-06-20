@@ -95,6 +95,7 @@ import { ClubIncomeComponent } from './user/club-income/club-income.component';
 import { PoolIncomeComponent } from './user/pool-income/pool-income.component';
 import { MatrixTreeComponent } from './user/matrix-tree/matrix-tree.component';
 import { TreePageComponent } from './user/tree-page/tree-page.component';
+import { LevelIncomeDetailsMatrixComponent } from './user/level-income-details-matrix/level-income-details-matrix.component';
 
 export const routes: Routes = [
   {
@@ -491,6 +492,11 @@ export const routes: Routes = [
         path: 'request-for-withdrawl-admin-side',
         component: RequestForWithdrawlAdminSideComponent,
         title: 'Request For Withdrawl Admin Side',
+      },
+       {
+        path: 'level-income',
+        component: LevelIncomeDetailsMatrixComponent,
+        title: 'level-income',
       },
       {
         path: 'Credit-Debit',

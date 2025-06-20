@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ValidationMessageComponent } from 'src/app/validation-message/validation-message.component';
 import { MatSelectModule } from '@angular/material/select';
 import { LoaderService } from 'src/app/services/loader.service';
+import { FundService } from 'src/app/user/services/fund.service';
 
 @Component({
   selector: 'app-register',
@@ -47,6 +48,7 @@ export class RegisterComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private spinnerService: LoaderService,
     private company: CompanyService,
+    private fundapi: FundService,
     private api: AuthService) {
 
     this.getAddress();
@@ -87,7 +89,7 @@ export class RegisterComponent implements OnInit {
   }
 
   async register() {
-  
+
     await this.getAddress();
 
     // if (!this.sponsorId) {
@@ -95,13 +97,13 @@ export class RegisterComponent implements OnInit {
     // }
 
     if (!this.sponsorId) {
-  Swal.fire({
-    icon: 'warning',
-    text: 'Please enter a valid sponsor ID.',
-    confirmButtonText: 'OK'
-  });
-  return; // Stop further execution if sponsor ID is missing
-}
+      Swal.fire({
+        icon: 'warning',
+        text: 'Please enter a valid sponsor ID.',
+        confirmButtonText: 'OK'
+      });
+      return; 
+    }
 
     const usdtBalance = await this.contractService.fetchUSDTBalance();
 
@@ -131,15 +133,17 @@ export class RegisterComponent implements OnInit {
 
 
         let receipt = await this.contractService.register(this.sponsorId, this.amount);
+        let sponsorIncomeRes = await this.fundapi.CheckSponsorIncome(this.sponsorId);
+        let requestId = sponsorIncomeRes?.data?.table?.[0]?.requestID;
 
         if (receipt.success) {
           let transactionHash = receipt.data?.transactionHash || receipt.data?.hash;
 
-          let result: any = await this.api.register(this.sponsorId, this.amount, transactionHash);
+          let result: any = await this.api.register(this.sponsorId, this.amount, transactionHash , requestId);
 
           this.spinnerService.hide();
 
-          if (result.status) {
+          if (result.status === "TRUE") {
             Swal.fire({
               icon: "success",
               title: '✅ Deposit Successful!',

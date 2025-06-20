@@ -12,7 +12,7 @@ import { LoaderService } from './loader.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ContractService  {
+export class ContractService {
   public provider: ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider;
   public signer: ethers.Signer;
   public account: any = null;
@@ -24,8 +24,8 @@ export class ContractService  {
   accountChange: Subject<string> = new Subject<string>();
 
   constructor(@Inject('Window') private window: any,
-  private fundapi : FundService,
-  private loader: LoaderService,
+    private fundapi: FundService,
+    private loader: LoaderService,
     private router: Router) {
     this.initialize();
     this.getWeb3();
@@ -215,20 +215,20 @@ export class ContractService  {
 
   public async signMessage(message: string): Promise<string> {
     try {
-        const msg = ` ${message}`;
-        const account = await this.signer.getAddress();
-        const hexMessage = "0x" + Buffer.from(msg, "utf8").toString("hex");
+      const msg = ` ${message}`;
+      const account = await this.signer.getAddress();
+      const hexMessage = "0x" + Buffer.from(msg, "utf8").toString("hex");
 
-        if (!this.signer.provider) {
-            throw new Error("No provider found!");
-        }
+      if (!this.signer.provider) {
+        throw new Error("No provider found!");
+      }
 
-        return await (this.signer.provider as any).send("personal_sign", [hexMessage, account]);
+      return await (this.signer.provider as any).send("personal_sign", [hexMessage, account]);
 
     } catch (error) {
-        throw new Error("Failed to sign message! " + error.message);
+      throw new Error("Failed to sign message! " + error.message);
     }
-}
+  }
 
 
   public async login(ethAddress: string): Promise<any> {
@@ -282,13 +282,13 @@ export class ContractService  {
       }
 
       const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
-      
-      const approverecipt= await this.approveToken(USDTValue);
+
+      const approverecipt = await this.approveToken(USDTValue);
       if (!approverecipt.success) {
         return { success: false, message: "Approve Failed." };
       }
 
-      let receipt = await this.sendUSDT(USDTValue , sponsorId);
+      let receipt = await this.sendUSDT(USDTValue, sponsorId);
       if (!receipt.success) {
         return { success: false, message: "Transaction failed!" };
       }
@@ -301,78 +301,83 @@ export class ContractService  {
   }
 
   public async sendUSDT(amount: BigNumber, sponsorId: string) {
+  try {
+    const contract = await this.getPaymentTokenContractmm();
+    const _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
 
-    try {
-      const contract = await this.getPaymentTokenContractmm();
-      const _gasPrice = await (await this.getWeb3()).eth.getGasPrice();
-      //  let doubledGasPrice = BigInt(_gasPrice) * BigInt(4);
+    const sponsorIncomeRes = await this.fundapi.CheckSponsorIncome(sponsorId);
 
-      const sponsorIncomeRes = await this.fundapi.CheckSponsorIncome(sponsorId);
-  
-      if (!sponsorIncomeRes?.status || !sponsorIncomeRes.data?.table?.length) {
-        return {
-          success: false,
-          message: 'Invalid sponsor income response',
-          data: sponsorIncomeRes
-        };
-      }
-  
-      const incomeData = sponsorIncomeRes.data.table[0];
-  
-      let recipients=[];
-      let amounts=[];
-  
-      if (incomeData.admindeposit === "TRUE") {
-        recipients[0]=incomeData.adminaddress;
-        recipients[1]=incomeData.sponsor;
-
-        amounts[0]=ethers.utils.parseUnits(incomeData.sponsoramount, 6).toString();
-        amounts[1] =ethers.utils.parseUnits(incomeData.adminamount, 6).toString()
-      } else {
-        recipients = [incomeData.sponsor];
-        amounts = [amount.toString()];
-      }
-
-
-  
-      const estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
-        from: this.account,
-        gasPrice: _gasPrice,
-      });
-  
-      const finalGas = Math.ceil(Number(estimatedGas) * 2);
-  
-      const data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
-  
-      const receipt = await this.sendTransaction(
-        this.account,
-        "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", 
-        "0",
-        _gasPrice,
-        finalGas.toString(),
-        data
-      );
-  
-      return {
-        success: receipt.success,
-        data: receipt.data,
-        message: receipt.success ? "USDT sent successfully" : receipt.message
-      };
-  
-    } catch (err: any) {
+    if (!sponsorIncomeRes?.status || !sponsorIncomeRes.data?.table?.length) {
       return {
         success: false,
-        data: err,
-        message: 'Transaction Failed'
+        message: 'Invalid sponsor income response',
+        data: sponsorIncomeRes
       };
     }
+
+    const tableData = sponsorIncomeRes.data.table;
+
+    // Dynamic recipients and amounts
+    const recipients: string[] = [];
+    const amounts: string[] = [];
+
+    for (const entry of tableData) {
+      if (entry.leveladddress && entry.finalamount) {
+        recipients.push(entry.leveladddress);
+        // Convert amount to smallest unit (USDT typically has 6 decimals)
+        const parsedAmount = ethers.utils.parseUnits(entry.finalamount.toString(), 6).toString();
+        amounts.push(parsedAmount);
+      }
+    }
+
+    // Safety check
+    if (recipients.length === 0 || amounts.length === 0) {
+      return {
+        success: false,
+        message: 'No valid recipient or amount found in sponsor data.',
+        data: sponsorIncomeRes
+      };
+    }
+
+    const estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
+      from: this.account,
+      gasPrice: _gasPrice,
+    });
+
+    const finalGas = Math.ceil(Number(estimatedGas) * 2);
+
+    const data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
+
+    const receipt = await this.sendTransaction(
+      this.account,
+      "0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93", 
+      "0",
+      _gasPrice,
+      finalGas.toString(),
+      data
+    );
+
+    return {
+      success: receipt.success,
+      data: receipt.data,
+      message: receipt.success ? "USDT sent successfully" : receipt.message
+    };
+
+  } catch (err: any) {
+    return {
+      success: false,
+      data: err,
+      message: 'Transaction Failed'
+    };
   }
+}
 
-  public async sendTransaction(fromAddress: string, toAddress: string, value: string, gasPrice: string, gas: string, data: any ) {
+
+  public async sendTransaction(fromAddress: string, toAddress: string, value: string, gasPrice: string, gas: string, data: any) {
     try {
-      this.loader.show(); 
+      this.loader.show();
 
-      var _gas = Math.ceil(Number(gas) + Number(gas) * 8); 
+      var _gas = Math.ceil(Number(gas) + Number(gas) * 8);
       gas = _gas.toString();
 
       var _gasPrice = Math.ceil(Number(gasPrice) + Number(gasPrice) * 8);
@@ -382,7 +387,7 @@ export class ContractService  {
 
       const estimatedGas = await _web3.eth.estimateGas({
         from: fromAddress,
-        to: toAddress,       
+        to: toAddress,
         gasPrice: gasPrice,
         data: data
       });
@@ -391,12 +396,12 @@ export class ContractService  {
 
       let receipt = await _web3.eth.sendTransaction({
         from: fromAddress,
-        to: toAddress,       
+        to: toAddress,
         gasPrice: gasPrice,
         gas: estimatedGas.toString(),
         data: data
       });
-      
+
 
       return {
         success: receipt.status,
@@ -528,13 +533,13 @@ export class ContractService  {
     return res;
   }
 
-  public async buyToken(amount: number ) {
-      await this.getGasPrice();
-      let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(4).toString();
-      const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
-      await this.approveToken(USDTValue);
-      let receipt = await this.UpgradeRank(USDTValue );
-      return receipt;
+  public async buyToken(amount: number) {
+    await this.getGasPrice();
+    let gasPrice = ethers.utils.parseUnits(this.gasPrice, "gwei").mul(4).toString();
+    const USDTValue = ethers.utils.parseUnits(amount.toString(), 6);
+    await this.approveToken(USDTValue);
+    let receipt = await this.UpgradeRank(USDTValue);
+    return receipt;
   }
 
   public async UpgradeRank(amount: BigNumber) {
@@ -547,28 +552,28 @@ export class ContractService  {
     const amounts = [amount.toString()];
 
     let estimatedGas = await contract.methods.multiSendTokens(recipients, amounts).estimateGas({
-        from: this.account,
-        gasPrice: doubledGasPrice.toString(),
+      from: this.account,
+      gasPrice: doubledGasPrice.toString(),
     });
 
     estimatedGas = Math.ceil(Number(estimatedGas) * 4);
     let data = contract.methods.multiSendTokens(recipients, amounts).encodeABI();
 
     var receipt = await this.sendTransaction(
-        this.account,
-        "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", 
-        "0",
-        doubledGasPrice.toString(),
-        estimatedGas.toString(),
-        data
+      this.account,
+      "0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93",
+      "0",
+      doubledGasPrice.toString(),
+      estimatedGas.toString(),
+      data
     );
 
     return {
-        success: receipt.success,
-        data: receipt.data,
-        message: receipt.success ? "USDT sent successfully" : receipt.message
+      success: receipt.success,
+      data: receipt.data,
+      message: receipt.success ? "USDT sent successfully" : receipt.message
     };
-}
+  }
 
 
   private async getGasPrice() {
@@ -824,7 +829,7 @@ export class ContractService  {
     const contractAbi = Settings.abi;
 
     // Contract address (the deployed contract address)
-    const contractAddress = "0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D";
+    const contractAddress = "0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93";
 
 
     let contract = await new (await this.getWeb3()).eth.Contract(contractAbi, contractAddress);
@@ -846,14 +851,14 @@ export class ContractService  {
       let value = "0";
       let _gasPrice = (await this.getWeb3()).utils.toWei(this.gasPrice, "Gwei");
       let estimatedGas = await contract.methods
-        .approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", amount.toString())
+        .approve("0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93", amount.toString())
         .estimateGas({
           from: this.account,
           value: "0",
           gasPrice: _gasPrice
         });
       let data = contract.methods
-        .approve("0x32522067B5Dc3A56f1D12DaaaF9B332C5d01332D", amount.toString())
+        .approve("0xb7Dc67427ff899b54B0E48405a0Dc4Fdd9335d93", amount.toString())
         .encodeABI();
 
       var receipt = await this.sendTransaction(

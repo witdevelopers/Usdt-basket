@@ -1128,8 +1128,8 @@ export class UserService {
     return this.http.post(`${this.apiBaseUrl}UserHome/NextPool?UserId=${userId}`, {});
   }
 
-  CheckForPoolUpgrade(userId: string): Observable<any>{
-    return this.http.get(`${this.apiBaseUrl}UserHome/CheckForPoolUpgrade?userId=${userId}`,{});
+  CheckForPoolUpgrade(userId: string): Observable<any> {
+    return this.http.get(`${this.apiBaseUrl}UserHome/CheckForPoolUpgrade?userId=${userId}`, {});
   }
 
   updateCustomer(TempUserId: number, customerId: number): Observable<any> {
@@ -1668,16 +1668,26 @@ export class UserService {
       .set('userID', userID)
       .set('SponsoruserID', sponsorUserID)
       .set('PoolID', poolID.toString());
-  
+
     // Correctly pass the API URL as a string
     return this.http.get<any>(`${this.apiBaseUrl}UserHome/GetMatrixTree`, { params });
   }
 
-    getPoolTree(userID: string): Observable<any> {
+  getPoolTree(userID: string): Observable<any> {
     const params = new HttpParams()
       .set('userID', userID)
-  
+
     // Correctly pass the API URL as a string
     return this.http.get<any>(`${this.apiBaseUrl}UserHome/PoolTree`, { params });
   }
+
+  getLevelIncomeDetailsMatrix(userID: string, fromDate: string, toDate: string) {
+  return this.http.get<any>(`${this.apiBaseUrl}UserHome/GetLevelIncomeDetailsMatrix`, {
+    params: {
+      userID,
+      fromDate,
+      toDate
+    }
+  });
+}
 }
