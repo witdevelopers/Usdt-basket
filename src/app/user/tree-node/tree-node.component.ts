@@ -216,4 +216,6 @@ export class TreeNodeComponent implements OnInit, OnChanges {
   onTouchEnd() {
     clearTimeout(this.touchTimeout);
   }
+
+
 }

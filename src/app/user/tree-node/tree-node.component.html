@@ -17,7 +17,7 @@
         {{ formatUserId(node?.member?.userID) }}
       </div>
 
-      <div class="full-details-hover"  *ngIf="node?.member?.memIdDetails">
+      <div class="full-details-hover" *ngIf="node?.member?.memIdDetails">
         <div class="card-view">
           <div class="detail-card" *ngIf="node?.member?.memIdDetails as details">
             <div class="card-field">
@@ -64,12 +64,30 @@
   <!-- Child Nodes -->
   <table width="100%" class="children-table">
     <tr>
-      <td class="child-wrapper" *ngIf="node?.left">
-        <app-tree-node [node]="node.left"></app-tree-node>
+      <!-- Left Child or Add Left Button -->
+      <td class="child-wrapper text-center">
+        <ng-container *ngIf="node?.left; else addLeft">
+          <app-tree-node [node]="node.left"></app-tree-node>
+        </ng-container>
+        <ng-template #addLeft>
+           
+          <img src="assets/binary-tree/newPerson.png"  class="node-image">
+           <p>Vacant</p> 
+        </ng-template>
       </td>
-      <td class="child-wrapper" *ngIf="node?.right">
-        <app-tree-node [node]="node.right"></app-tree-node>
+
+      <!-- Right Child or Add Right Button -->
+      <td class="child-wrapper text-center">
+        <ng-container *ngIf="node?.right; else addRight">
+          <app-tree-node [node]="node.right"></app-tree-node>
+        </ng-container>
+        <ng-template #addRight>
+        
+          <img src="assets/binary-tree/newPerson.png"  class="node-image"> 
+           <p>Vacant</p> 
+        </ng-template>
       </td>
     </tr>
   </table>
+
 </div>

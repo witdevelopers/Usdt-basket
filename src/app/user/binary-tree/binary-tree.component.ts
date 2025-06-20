@@ -43,12 +43,11 @@ export class BinaryTreeComponent implements OnInit {
   }
 
   getUserIdFromSession(): void {
-    this.userId = sessionStorage.getItem('address') || '';
+    this.userId = sessionStorage.getItem('address');
   }
 
   fetchBinaryTreeData(): void {
     if (!this.userId) {
-      console.error('User ID is missing from session.');
       this.isLoading = false;
       return;
     }

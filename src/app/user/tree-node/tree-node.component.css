@@ -197,3 +197,24 @@
   height: 40px;
   z-index: 0;
 }
+.text-center {
+  text-align: center;
+}
+.btn {
+  margin: 4px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+}
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
