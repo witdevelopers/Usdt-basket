@@ -1303,5 +1303,41 @@ namespace FXCapitalApi.Controllers
             return new JsonResult(new { status = false, message = "No data found!", data = new { } });
         }
 
+    [HttpGet("CheckSponsor_new")]
+    public IActionResult CheckSponsor_new(string userId)
+    {
+      // string userAddress = User.getUserId();
+      DataSet ds = userHome.CheckSponsor_new(userId);
+
+      if (ds.HasDataTable() && ds.Tables[0].IsDataTable())
+      {
+        var res = new JsonResult(new { status = true, data = ds });
+        return res;
+      }
+
+      return new JsonResult(new { status = false, message = "No data found!", data = new { } });
     }
+
+    [HttpGet("GetLevelIncomeDetailsMatrix")]
+    public IActionResult GetLevelIncomeDetailsMatrix(string userID, string fromDate, string toDate)
+    {
+      //string userAddress = User.getUserId();
+      DataSet ds = userHome.GetLevelIncomeDetailsMatrix(userID, fromDate, toDate);
+
+      if (ds.HasDataTable() && ds.Tables[0].IsDataTable())
+      {
+        var res = new JsonResult(new { status = true, data = ds });
+        return res;
+      }
+
+      return new JsonResult(new { status = false, message = "No data found!", data = new { } });
+    }
+
+
+
+
+
+
+
+  }
 }

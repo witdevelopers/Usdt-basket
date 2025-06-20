@@ -881,7 +881,16 @@ namespace FXCapitalApi.Repositories
             return ds;
         }
 
-        public DataSet GetMiningIncome(string userAddress)
+    public DataSet CheckSponsor_new(string UserId)
+    {
+      DataSet ds = utils.ExecuteQuery("USP_CheckSponsor_new", new SqlParameter[]
+      {
+                new SqlParameter("@UserId", UserId)
+      });
+      return ds;
+    }
+
+    public DataSet GetMiningIncome(string userAddress)
         {
             DataSet ds = utils.ExecuteQuery("USP_GetROIIncomeDetails", new SqlParameter[]
             {
@@ -890,5 +899,23 @@ namespace FXCapitalApi.Repositories
             return ds;
         }
 
+    public DataSet GetLevelIncomeDetailsMatrix(string userID, string fromDate, string toDate)
+    {
+      DataSet ds = utils.ExecuteQuery("USP_GetLevelIncomeDetailsMatrix", new SqlParameter[]
+      {
+         new SqlParameter("@UserId", userID),
+         new SqlParameter("@Fromdate", fromDate),
+         new SqlParameter("@Todate", toDate)
+
+      });
+      return ds;
     }
+
+
+
+
+
+
+
+  }
 }

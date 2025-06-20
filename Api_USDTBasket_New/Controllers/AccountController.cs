@@ -483,7 +483,7 @@ namespace FXCapitalApi.Controllers
         {
             return usdAmount / rate;
         }
-        private IActionResult ProcessTransaction_NativeERCToken(string transactionHash, decimal transactionAmount, string sponsorAddress)
+        private IActionResult ProcessTransaction_NativeERCToken(string transactionHash, decimal transactionAmount, string sponsorAddress, string requestId)
         {
             try
             {
@@ -518,7 +518,7 @@ namespace FXCapitalApi.Controllers
 
                                 DataSet result = accountRepository.InsertCryptoTransactionInfo(payload, transactionValidity.fromAddress, transactionAmount);
 
-                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount, transactionHash);
+                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount, transactionHash, requestId);
 
                                 //if (result.HasDataTable() && result.Tables[0].IsDataTable())
                                 //{
@@ -890,7 +890,7 @@ namespace FXCapitalApi.Controllers
         [HttpPost("Register")]
         public IActionResult Register(RegistrationPayload payload)
         {
-            return ProcessTransaction_NativeERCToken(payload.transactionHash, payload.Amount,payload.sponsorAddress);
+            return ProcessTransaction_NativeERCToken(payload.transactionHash, payload.Amount,payload.sponsorAddress, payload.requestId);
         }
         private IActionResult ProcessTransaction_NativeERCToken_NewTransactions(string transactionHash, decimal transactionAmount)
         {
@@ -931,7 +931,7 @@ namespace FXCapitalApi.Controllers
                                     transactionHash = transactionHash
                                 };
                                 DataSet result = accountRepository.InsertCryptoTransactionInfo(payload, transactionValidity.fromAddress, transactionAmount);
-                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount, transactionHash);
+                                DataSet res = accountRepository.SaveMemberRegistration(payload, transactionValidity.fromAddress, transactionValidity.transactionAmount, transactionHash, payload.requestId);
 
                                 if (res.HasDataTable() && res.Tables[0].IsDataTable())
                                 {

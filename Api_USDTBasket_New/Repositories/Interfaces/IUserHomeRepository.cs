@@ -98,5 +98,7 @@ namespace FXCapitalApi.Repositories.Interfaces
         DataSet INSERTINTOtblPoolGUser(string UserId,int Pool);
         DataSet NextPool(string UserId);
         DataSet CheckForPoolUpgrade(string UserId);
-    }
+    DataSet CheckSponsor_new(string UserId);
+    DataSet GetLevelIncomeDetailsMatrix(string userID, string fromDate, string toDate);
+  }
 }

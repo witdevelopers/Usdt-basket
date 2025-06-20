@@ -1531,11 +1531,6 @@ D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\ref\FXCapi
 D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.xml
 D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.pdb
 D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.genruntimeconfig.cache
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.sourcelink.json
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\staticwebassets\FXCapitalApi.StaticWebAssets.Pack.cache
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\staticwebassets\msbuild.FXCapitalApi.Microsoft.AspNetCore.StaticWebAssets.props
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\staticwebassets\msbuild.build.FXCapitalApi.props
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\staticwebassets\msbuild.buildMultiTargeting.FXCapitalApi.props
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\staticwebassets\msbuild.buildTransitive.FXCapitalApi.props
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\FXCapita.E7D9C8CC.Up2Date
-D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\refint\FXCapitalApi.dll
+D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\bin\Debug\net5.0\ref\FXCapitalApi.dll
+D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\staticwebassets\FXCapitalApi.StaticWebAssets.xml
+D:\Website\AngularGit\Usdt-basket\Api_USDTBasket_New\obj\Debug\net5.0\FXCapitalApi.csproj.CopyComplete

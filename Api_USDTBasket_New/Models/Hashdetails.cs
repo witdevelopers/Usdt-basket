@@ -1,4 +1,4 @@
-﻿namespace FXCapitalApi.Models
+namespace FXCapitalApi.Models
 {
     public class Hashdetails
     {
@@ -9,5 +9,6 @@
         public string Status { get; set; }
          public decimal Amount { get; set; }
         public string HashID { get; set; }
-    }
+       //public string requestID { get; set; }
+  }
 }
